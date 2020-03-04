@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { path } from 'd3-path';
-import { clamp } from 'ramda';
+import { clamp, sum } from 'ramda';
 
 enum Stat {
   ATT,
@@ -16,7 +16,9 @@ type Stats = { [key in Stat]: number };
 
 const SIZE = 150;
 const RADIUS = SIZE / 2;
-const INPUT_SIZE = 25;
+const INPUT_SIZE = 40;
+
+const MAX_EVS = 508;
 
 const INITIAL_STATS: Stats = {
   [Stat.ATT]: 252,
@@ -27,18 +29,31 @@ const INITIAL_STATS: Stats = {
   [Stat.HP]: 4,
 };
 
+const STAT_LABEL = {
+  [Stat.ATT]: 'Attack',
+  [Stat.DEF]: 'Defense',
+  [Stat.SPA]: 'Sp. Atk',
+  [Stat.SPD]: 'Sp. Def',
+  [Stat.SPE]: 'Speed',
+  [Stat.HP]: 'HP',
+};
+
 const ev = scaleLinear()
   .domain([0, 252])
   .range([10, RADIUS]);
 
+const polarToCartesian = ([radius, angle]: [number, number]) => [
+  Math.sin(angle) * radius,
+  -Math.cos(angle) * radius,
+];
+
 const drawHexagon = ([first, ...rest]: number[]) => {
   const hexagonPath = path();
-  hexagonPath.moveTo(0, -first);
+  const [x, y] = polarToCartesian([first, 0]);
+  hexagonPath.moveTo(x, y);
   rest.forEach((radius, i) => {
-    hexagonPath.lineTo(
-      Math.sin(2 * Math.PI * ((i + 1) / 6)) * radius,
-      -Math.cos(2 * Math.PI * ((i + 1) / 6)) * radius,
-    );
+    const [x, y] = polarToCartesian([radius, 2 * Math.PI * ((i + 1) / 6)]);
+    hexagonPath.lineTo(x, y);
   });
   hexagonPath.closePath();
 
@@ -73,35 +88,59 @@ function App() {
         minHeight: '100vh',
       }}
     >
-      <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
-        <g transform={`translate(${RADIUS} ${RADIUS})`}>
-          <path
-            d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
-            fill="white"
-          />
-          <path d={drawHexagon(dataFromStats(stats, ev))} fill="violet" />
-        </g>
-      </svg>
-
-      {[Stat.HP, Stat.ATT, Stat.DEF, Stat.SPE, Stat.SPD, Stat.SPA].map(
-        (key, i) => (
-          <div
-            style={{
-              color: 'white',
-              position: 'absolute',
-              transform: `translate(${Math.sin(2 * Math.PI * (i / 6)) *
-                (RADIUS + INPUT_SIZE)}px,
-          ${-Math.cos(2 * Math.PI * (i / 6)) * (RADIUS + INPUT_SIZE)}px)`,
-            }}
-          >
-            <input
-              onChange={handleStatChange(key)}
-              style={{ border: 'none', maxWidth: INPUT_SIZE }}
-              value={stats[key]}
+      <div
+        style={{
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
+          <g transform={`translate(${RADIUS} ${RADIUS})`}>
+            <path
+              d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
+              fill="white"
             />
-          </div>
-        ),
-      )}
+            <path
+              d={drawHexagon(dataFromStats(stats, ev))}
+              fill={sum(Object.values(stats)) <= MAX_EVS ? 'gold' : 'red'}
+            />
+          </g>
+        </svg>
+
+        {[Stat.HP, Stat.ATT, Stat.DEF, Stat.SPE, Stat.SPD, Stat.SPA].map(
+          (key, i) => {
+            const [x, y] = polarToCartesian([
+              RADIUS + INPUT_SIZE,
+              2 * Math.PI * (i / 6),
+            ]);
+
+            return (
+              <div
+                style={{
+                  color: 'white',
+                  position: 'absolute',
+                  transform: `translate(${x}px, ${y}px)`,
+                  textAlign: 'center',
+                }}
+              >
+                <p style={{ margin: '0 0 8px' }}>{STAT_LABEL[key]}</p>
+                <input
+                  type="number"
+                  onChange={handleStatChange(key)}
+                  style={{
+                    border: 'none',
+                    fontSize: 16,
+                    maxWidth: INPUT_SIZE,
+                  }}
+                  value={stats[key]}
+                />
+              </div>
+            );
+          },
+        )}
+      </div>
     </div>
   );
 }
