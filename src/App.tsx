@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { path } from 'd3-path';
 import { clamp, sum } from 'ramda';
@@ -74,8 +74,8 @@ const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
 function App() {
   const [stats, setStats] = useState(INITIAL_STATS);
 
-  const handleStatChange = (key: Stat) => (event: any) => {
-    const newValue = clamp(0, 252, event.target.value);
+  const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = clamp(0, 252, parseInt(event.target.value));
     setStats(stats => ({ ...stats, [key]: newValue }));
   };
 
