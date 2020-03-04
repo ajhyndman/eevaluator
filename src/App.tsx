@@ -1,18 +1,11 @@
+import { calcStat, Stat, StatsTable } from '@smogon/calc';
 import React, { ChangeEvent, useState } from 'react';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { path } from 'd3-path';
 import { clamp, sum } from 'ramda';
 
-enum Stat {
-  ATT,
-  DEF,
-  SPA,
-  SPD,
-  SPE,
-  HP,
-}
-
-type Stats = { [key in Stat]: number };
+type Stats = StatsTable<number>;
+type ModernStat = Exclude<Stat, 'spc'>
 
 const SIZE = 150;
 const RADIUS = SIZE / 2;
@@ -20,22 +13,32 @@ const INPUT_SIZE = 40;
 
 const MAX_EVS = 508;
 
-const INITIAL_STATS: Stats = {
-  [Stat.ATT]: 252,
-  [Stat.DEF]: 0,
-  [Stat.SPA]: 0,
-  [Stat.SPD]: 0,
-  [Stat.SPE]: 252,
-  [Stat.HP]: 4,
+const PIKACHU_BASE_STATS: Stats = {
+  atk: 55,
+  def: 40,
+  spa: 50,
+  spd: 50,
+  spe: 90,
+  hp: 35,
 };
 
-const STAT_LABEL = {
-  [Stat.ATT]: 'Attack',
-  [Stat.DEF]: 'Defense',
-  [Stat.SPA]: 'Sp. Atk',
-  [Stat.SPD]: 'Sp. Def',
-  [Stat.SPE]: 'Speed',
-  [Stat.HP]: 'HP',
+const INITIAL_STATS: Stats = {
+  atk: 252,
+  def: 0,
+  spa: 0,
+  spd: 0,
+  spe: 252,
+  hp: 4,
+};
+
+const STAT_LABEL: { [key in Stat]: string } = {
+  atk: 'Attack',
+  def: 'Defense',
+  hp: 'HP',
+  spa: 'Sp. Atk',
+  spc: 'Special',
+  spd: 'Sp. Def',
+  spe: 'Speed',
 };
 
 const ev = scaleLinear()
@@ -61,20 +64,32 @@ const drawHexagon = ([first, ...rest]: number[]) => {
 };
 
 const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
-  return [
-    stats[Stat.HP],
-    stats[Stat.ATT],
-    stats[Stat.DEF],
-    stats[Stat.SPE],
-    stats[Stat.SPD],
-    stats[Stat.SPA],
-  ].map(scale);
+  return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(
+    scale,
+  );
+};
+
+const computeActualStat = (
+  key: ModernStat,
+  effortValue: number,
+  individualValue: number = 31,
+) => {
+  return calcStat(
+    8,
+    key,
+    PIKACHU_BASE_STATS[key],
+    individualValue,
+    effortValue,
+    50,
+  );
 };
 
 function App() {
   const [stats, setStats] = useState(INITIAL_STATS);
 
-  const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
+  const handleStatChange = (key: Stat) => (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
     const newValue = clamp(0, 252, parseInt(event.target.value));
     setStats(stats => ({ ...stats, [key]: newValue }));
   };
@@ -109,7 +124,7 @@ function App() {
           </g>
         </svg>
 
-        {[Stat.HP, Stat.ATT, Stat.DEF, Stat.SPE, Stat.SPD, Stat.SPA].map(
+        {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map(
           (key, i) => {
             const [x, y] = polarToCartesian([
               RADIUS + INPUT_SIZE,
@@ -131,11 +146,15 @@ function App() {
                   onChange={handleStatChange(key)}
                   style={{
                     border: 'none',
+                    padding: '2px 4px',
                     fontSize: 16,
                     maxWidth: INPUT_SIZE,
                   }}
                   value={stats[key]}
                 />
+                <p style={{ margin: '8px 0 0' }}>
+                  {computeActualStat(key, stats[key])}
+                </p>
               </div>
             );
           },
