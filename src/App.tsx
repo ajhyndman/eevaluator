@@ -64,32 +64,17 @@ const drawHexagon = ([first, ...rest]: number[]) => {
 };
 
 const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
-  return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(
-    scale,
-  );
+  return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(scale);
 };
 
-const computeActualStat = (
-  key: ModernStat,
-  effortValue: number,
-  individualValue: number = 31,
-) => {
-  return calcStat(
-    8,
-    key,
-    PIKACHU_BASE_STATS[key],
-    individualValue,
-    effortValue,
-    50,
-  );
+const computeActualStat = (key: ModernStat, effortValue: number, individualValue: number = 31) => {
+  return calcStat(8, key, PIKACHU_BASE_STATS[key], individualValue, effortValue, 50);
 };
 
 function App() {
   const [stats, setStats] = useState(INITIAL_STATS);
 
-  const handleStatChange = (key: Stat) => (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, 252, numericValue);
     setStats(stats => ({ ...stats, [key]: newValue }));
@@ -114,10 +99,7 @@ function App() {
       >
         <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
           <g transform={`translate(${RADIUS} ${RADIUS})`}>
-            <path
-              d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
-              fill="white"
-            />
+            <path d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])} fill="white" />
             <path
               d={drawHexagon(dataFromStats(stats, ev))}
               fill={sum(Object.values(stats)) <= MAX_EVS ? 'gold' : 'red'}
@@ -125,41 +107,34 @@ function App() {
           </g>
         </svg>
 
-        {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map(
-          (key, i) => {
-            const [x, y] = polarToCartesian([
-              RADIUS + INPUT_SIZE,
-              2 * Math.PI * (i / 6),
-            ]);
+        {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
+          const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE, 2 * Math.PI * (i / 6)]);
 
-            return (
-              <div
+          return (
+            <div
+              style={{
+                color: 'white',
+                position: 'absolute',
+                transform: `translate(${x}px, ${y}px)`,
+                textAlign: 'center',
+              }}
+            >
+              <p style={{ margin: '0 0 8px' }}>{STAT_LABEL[key]}</p>
+              <input
+                type="number"
+                onChange={handleStatChange(key)}
                 style={{
-                  color: 'white',
-                  position: 'absolute',
-                  transform: `translate(${x}px, ${y}px)`,
-                  textAlign: 'center',
+                  border: 'none',
+                  padding: '2px 4px',
+                  fontSize: 16,
+                  maxWidth: INPUT_SIZE,
                 }}
-              >
-                <p style={{ margin: '0 0 8px' }}>{STAT_LABEL[key]}</p>
-                <input
-                  type="number"
-                  onChange={handleStatChange(key)}
-                  style={{
-                    border: 'none',
-                    padding: '2px 4px',
-                    fontSize: 16,
-                    maxWidth: INPUT_SIZE,
-                  }}
-                  value={stats[key]}
-                />
-                <p style={{ margin: '8px 0 0' }}>
-                  {computeActualStat(key, stats[key])}
-                </p>
-              </div>
-            );
-          },
-        )}
+                value={stats[key]}
+              />
+              <p style={{ margin: '8px 0 0' }}>{computeActualStat(key, stats[key])}</p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
