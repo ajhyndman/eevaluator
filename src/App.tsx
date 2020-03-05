@@ -20,15 +20,17 @@ import { shortForm } from '@smogon/calc/dist/stats';
 type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
 
+const RED = 'rgb(230, 12, 91)';
+const BLUE = 'rgb(4, 160, 237)';
+
 const THEME = createMuiTheme({
   palette: createPalette({
-    type: 'dark',
-    primary: { main: 'rgb(230, 12, 91)' },
-    secondary: { main: 'rgb(4, 160, 237)' },
-    background: { default: 'rgb(4, 160, 237)' },
+    primary: { main: RED },
+    secondary: { main: BLUE },
+    background: { default: BLUE },
     text: {
-      primary: 'white',
-      secondary: 'rgba(255, 255, 255, 0.8)',
+      primary: '#222233',
+      secondary: 'rgba(0, 0, 10, 0.8)',
     },
   }),
 });
@@ -110,16 +112,16 @@ function App() {
     <ThemeProvider theme={THEME}>
       <Container
         maxWidth="xs"
-        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: 8 }}
       >
         <Autocomplete
-          options={Object.keys(SPECIES[8])}
           getOptionLabel={option => option}
-          value={pokemon}
           onChange={(e: ChangeEvent<any>, value: any) => {
             setPokemon(value);
           }}
+          options={Object.keys(SPECIES[8])}
           renderInput={params => <TextField {...params} label="Pokemon" variant="outlined" />}
+          value={pokemon}
         />
 
         <FormControlLabel
@@ -130,15 +132,28 @@ function App() {
               color="primary"
             />
           }
+          style={{ margin: 0 }}
           label="Dynamax"
           labelPlacement="start"
         />
+
+        {pokemon && (
+          <div
+            style={{ alignItems: 'center', display: 'flex', height: 150, justifyContent: 'center' }}
+          >
+            <img
+              alt="Pokemon sprite"
+              src={`https://img.pokemondb.net/artwork/${pokemon.toLocaleLowerCase()}.jpg`}
+              style={{ alignSelf: 'center', maxWidth: 150, maxHeight: 150 }}
+            />
+          </div>
+        )}
+
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            flexGrow: 1,
           }}
         >
           <div
@@ -147,6 +162,7 @@ function App() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              padding: `${INPUT_SIZE * 2}px 0`,
             }}
           >
             <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
@@ -154,6 +170,7 @@ function App() {
                 <path
                   d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
                   fill="white"
+                  stroke={BLUE}
                 />
                 <path
                   d={drawHexagon(dataFromStats(stats, ev))}
@@ -168,7 +185,6 @@ function App() {
               return (
                 <div
                   style={{
-                    color: 'white',
                     position: 'absolute',
                     transform: `translate(${x}px, ${y}px)`,
                     textAlign: 'center',
@@ -182,8 +198,9 @@ function App() {
                     value={stats[key]}
                   />
                   <p style={{ margin: '4px 0 0' }}>
-                    {computeActualStat(key, selectedSpecies.bs[shortForm(key)]!, stats[key]) *
-                      (isDynamaxed && key === 'hp' ? 2 : 1)}
+                    {pokemon &&
+                      computeActualStat(key, selectedSpecies.bs[shortForm(key)]!, stats[key]) *
+                        (isDynamaxed && key === 'hp' ? 2 : 1)}
                   </p>
                 </div>
               );
