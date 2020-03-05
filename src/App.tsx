@@ -3,9 +3,25 @@ import React, { ChangeEvent, useState } from 'react';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { path } from 'd3-path';
 import { clamp, sum } from 'ramda';
+import { Input, ThemeProvider, FormControlLabel, Switch } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core/styles';
+import createPalette from '@material-ui/core/styles/createPalette';
 
 type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
+
+const THEME = createMuiTheme({
+  palette: createPalette({
+    type: 'dark',
+    primary: { main: 'rgb(230, 12, 91)' },
+    secondary: { main: 'rgb(4, 160, 237)' },
+    background: { default: 'rgb(4, 160, 237)' },
+    text: {
+      primary: 'white',
+      secondary: 'rgba(255, 255, 255, 0.8)',
+    },
+  }),
+});
 
 const SIZE = 150;
 const RADIUS = SIZE / 2;
@@ -81,62 +97,63 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-      }}
-    >
+    <ThemeProvider theme={THEME}>
+      <FormControlLabel control={<Switch />} label="Dynamax" labelPlacement="start" />
       <div
         style={{
-          position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          minHeight: '100vh',
         }}
       >
-        <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
-          <g transform={`translate(${RADIUS} ${RADIUS})`}>
-            <path d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])} fill="white" />
-            <path
-              d={drawHexagon(dataFromStats(stats, ev))}
-              fill={sum(Object.values(stats)) <= MAX_EVS ? 'gold' : 'red'}
-            />
-          </g>
-        </svg>
-
-        {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
-          const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE, 2 * Math.PI * (i / 6)]);
-
-          return (
-            <div
-              style={{
-                color: 'white',
-                position: 'absolute',
-                transform: `translate(${x}px, ${y}px)`,
-                textAlign: 'center',
-              }}
-            >
-              <p style={{ margin: '0 0 8px' }}>{STAT_LABEL[key]}</p>
-              <input
-                type="number"
-                onChange={handleStatChange(key)}
-                style={{
-                  border: 'none',
-                  padding: '2px 4px',
-                  fontSize: 16,
-                  maxWidth: INPUT_SIZE,
-                }}
-                value={stats[key]}
+        <div
+          style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
+            <g transform={`translate(${RADIUS} ${RADIUS})`}>
+              <path
+                d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
+                fill="white"
               />
-              <p style={{ margin: '8px 0 0' }}>{computeActualStat(key, stats[key])}</p>
-            </div>
-          );
-        })}
+              <path
+                d={drawHexagon(dataFromStats(stats, ev))}
+                fill={sum(Object.values(stats)) <= MAX_EVS ? 'gold' : 'red'}
+              />
+            </g>
+          </svg>
+
+          {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
+            const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE, 2 * Math.PI * (i / 6)]);
+
+            return (
+              <div
+                style={{
+                  color: 'white',
+                  position: 'absolute',
+                  transform: `translate(${x}px, ${y}px)`,
+                  textAlign: 'center',
+                }}
+              >
+                <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
+                <Input
+                  type="number"
+                  onChange={handleStatChange(key)}
+                  style={{ maxWidth: INPUT_SIZE }}
+                  value={stats[key]}
+                />
+                <p style={{ margin: '4px 0 0' }}>{computeActualStat(key, stats[key])}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </ThemeProvider>
   );
 }
 
