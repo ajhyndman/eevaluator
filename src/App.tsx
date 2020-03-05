@@ -5,7 +5,7 @@ import { path } from 'd3-path';
 import { clamp, sum } from 'ramda';
 
 type Stats = StatsTable<number>;
-type ModernStat = Exclude<Stat, 'spc'>
+type ModernStat = Exclude<Stat, 'spc'>;
 
 const SIZE = 150;
 const RADIUS = SIZE / 2;
@@ -23,12 +23,12 @@ const PIKACHU_BASE_STATS: Stats = {
 };
 
 const INITIAL_STATS: Stats = {
-  atk: 252,
+  atk: 0,
   def: 0,
   spa: 0,
   spd: 0,
-  spe: 252,
-  hp: 4,
+  spe: 0,
+  hp: 0,
 };
 
 const STAT_LABEL: { [key in Stat]: string } = {
@@ -90,7 +90,8 @@ function App() {
   const handleStatChange = (key: Stat) => (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
-    const newValue = clamp(0, 252, parseInt(event.target.value));
+    const numericValue = parseInt(event.target.value || '0');
+    const newValue = clamp(0, 252, numericValue);
     setStats(stats => ({ ...stats, [key]: newValue }));
   };
 
