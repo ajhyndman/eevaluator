@@ -35,7 +35,7 @@ const THEME = createMuiTheme({
 
 const SIZE = 150;
 const RADIUS = SIZE / 2;
-const INPUT_SIZE = 40;
+const INPUT_SIZE = 50;
 
 const MAX_EVS = 508;
 
@@ -108,7 +108,10 @@ function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      <Container maxWidth="xs">
+      <Container
+        maxWidth="xs"
+        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+      >
         <Autocomplete
           options={Object.keys(SPECIES[8])}
           getOptionLabel={option => option}
@@ -135,7 +138,7 @@ function App() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            minHeight: '100vh',
+            flexGrow: 1,
           }}
         >
           <div
