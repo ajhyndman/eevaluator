@@ -130,6 +130,13 @@ function PokemonPicker({ pokemon, onChange }: Props) {
   };
   const item = pokemon.item;
 
+  const setCurrentHp = (nextHp: number) => {
+    const nextPokemon = pokemon.clone();
+    nextPokemon.curHP = nextHp;
+    onChange(nextPokemon);
+  };
+  const currentHp = pokemon.curHP;
+
   const maxHp = pokemon.maxHP();
   const marks = [
     {
@@ -310,7 +317,14 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
         <div style={{ margin: '10px 0' }}>
           <Typography gutterBottom>Current HP</Typography>
-          <Slider min={0} max={maxHp} defaultValue={maxHp} valueLabelDisplay="auto" marks={marks} />
+          <Slider
+            min={0}
+            max={maxHp}
+            value={currentHp}
+            onChange={(e: any, value: any) => setCurrentHp(value)}
+            valueLabelDisplay="auto"
+            marks={marks}
+          />
         </div>
 
         <Autocomplete
