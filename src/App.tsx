@@ -17,8 +17,6 @@ function App() {
   const result = move && calculate(GENERATION, pokemon1, pokemon2, move);
   const desc = result && result.damage.length > 1 && result.fullDesc();
 
-  console.log(pikachu);
-
   return (
     <Container maxWidth="lg">
       {desc}

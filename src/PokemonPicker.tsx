@@ -1,7 +1,7 @@
 import { path } from 'd3-path';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { clamp, sum } from 'ramda';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 
 import {
   Container,
@@ -16,17 +16,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
-import {
-  ABILITIES,
-  calcStat,
-  ITEMS,
-  MOVES,
-  Pokemon,
-  SPECIES,
-  Stat,
-  StatsTable,
-} from '@smogon/calc';
-import { shortForm } from '@smogon/calc/dist/stats';
+import { ABILITIES, ITEMS, MOVES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
 type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
@@ -95,18 +85,7 @@ const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
   return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(scale);
 };
 
-const computeActualStat = (
-  key: ModernStat,
-  baseStat: number,
-  effortValue: number,
-  individualValue: number = 31,
-) => {
-  return calcStat(8, key, baseStat, individualValue, effortValue, 50);
-};
-
 function PokemonPicker({ pokemon, onChange }: Props) {
-  const [isDynamaxed, setIsDynamaxed] = useState(false);
-
   const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, 252, numericValue);
@@ -116,30 +95,15 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     onChange(nextPokemon);
   };
 
-  const stats = pokemon.evs;
-
-  const selectedSpecies = pokemon.species;
+  const evs = pokemon.evs;
   const pokemonName = pokemon.name;
-  const maxHp = computeActualStat('hp', selectedSpecies.bs.hp!, stats.hp) * (isDynamaxed ? 2 : 1);
 
-  const marks = [
-    {
-      value: 0,
-      label: 0,
-    },
-    {
-      value: Math.floor(maxHp / 3),
-      label: '33%',
-    },
-    {
-      value: Math.floor(maxHp * 0.5),
-      label: '50%',
-    },
-    {
-      value: maxHp,
-      label: maxHp,
-    },
-  ];
+  const setIsMax = (nextIsMax: boolean) => {
+    const nextPokemon = pokemon.clone();
+    nextPokemon.isMax = nextIsMax;
+    onChange(nextPokemon);
+  };
+  const isMax = pokemon.isMax || false;
 
   const setSpecies = (nextSpecies: string) => {
     onChange(new Pokemon(GENERATION, nextSpecies));
@@ -166,6 +130,26 @@ function PokemonPicker({ pokemon, onChange }: Props) {
   };
   const item = pokemon.item;
 
+  const maxHp = pokemon.maxHP();
+  const marks = [
+    {
+      value: 0,
+      label: 0,
+    },
+    {
+      value: Math.floor(maxHp / 3),
+      label: '33%',
+    },
+    {
+      value: Math.floor(maxHp * 0.5),
+      label: '50%',
+    },
+    {
+      value: maxHp,
+      label: maxHp,
+    },
+  ];
+
   return (
     <ThemeProvider theme={THEME}>
       <Container
@@ -191,8 +175,8 @@ function PokemonPicker({ pokemon, onChange }: Props) {
         <FormControlLabel
           control={
             <Switch
-              checked={isDynamaxed}
-              onChange={(e: any, value: any) => setIsDynamaxed(value)}
+              checked={isMax}
+              onChange={(e: any, value: any) => setIsMax(value)}
               color="primary"
             />
           }
@@ -237,8 +221,8 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                   stroke={BLUE}
                 />
                 <path
-                  d={drawHexagon(dataFromStats(stats, ev))}
-                  fill={sum(Object.values(stats)) <= MAX_EVS ? 'gold' : 'red'}
+                  d={drawHexagon(dataFromStats(evs, ev))}
+                  fill={sum(Object.values(evs)) <= MAX_EVS ? 'gold' : 'red'}
                 />
               </g>
             </svg>
@@ -248,6 +232,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
               return (
                 <div
+                  key={key}
                   style={{
                     position: 'absolute',
                     transform: `translate(${x}px, ${y}px)`,
@@ -259,12 +244,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                     type="number"
                     onChange={handleStatChange(key)}
                     style={{ maxWidth: INPUT_SIZE }}
-                    value={stats[key]}
+                    value={evs[key]}
                   />
                   <p style={{ margin: '4px 0 0' }}>
-                    {pokemon &&
-                      computeActualStat(key, selectedSpecies.bs[shortForm(key)]!, stats[key]) *
-                        (isDynamaxed && key === 'hp' ? 2 : 1)}
+                    {pokemon && key === 'hp' ? maxHp : pokemon.stats[key]}
                   </p>
                 </div>
               );
