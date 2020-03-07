@@ -7,12 +7,14 @@ import {
   Container,
   FormControlLabel,
   Input,
+  Slider,
   Switch,
   TextField,
   ThemeProvider,
 } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
+import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, calcStat, ITEMS, MOVES, SPECIES, Stat, StatsTable } from '@smogon/calc';
 import { shortForm } from '@smogon/calc/dist/stats';
@@ -110,6 +112,18 @@ function App() {
   };
 
   const selectedSpecies = SPECIES[8][pokemon];
+
+  const maxHp = computeActualStat('hp', selectedSpecies.bs.hp!, stats.hp) * (isDynamaxed ? 2 : 1);
+  const marks = [
+    {
+      value: 0,
+      label: 0,
+    },
+    {
+      value: maxHp,
+      label: maxHp,
+    },
+  ];
 
   return (
     <ThemeProvider theme={THEME}>
@@ -231,6 +245,18 @@ function App() {
             options={ABILITIES[8]}
             renderInput={params => <TextField {...params} label="Ability" variant="outlined" />}
             value={ability}
+          />
+        </div>
+
+        <div style={{ margin: 20 }}>
+          <Typography gutterBottom>Current HP</Typography>
+          <Slider
+            min={0}
+            max={maxHp}
+            defaultValue={maxHp}
+            valueLabelDisplay="on"
+            marks={marks}
+            valueLabelFormat={value => `${Math.round((value / maxHp) * 100)}%`}
           />
         </div>
 
