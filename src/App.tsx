@@ -145,7 +145,7 @@ function App() {
             style={{ alignItems: 'center', display: 'flex', height: 150, justifyContent: 'center' }}
           >
             <img
-              alt="Pokemon sprite"
+              alt={`Illustration of ${pokemon}`}
               src={`https://img.pokemondb.net/artwork/${pokemon.toLocaleLowerCase()}.jpg`}
               style={{ alignSelf: 'center', maxWidth: 150, maxHeight: 150 }}
             />
