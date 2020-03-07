@@ -279,6 +279,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                     onChange={handleStatChange(key)}
                     style={{ maxWidth: INPUT_SIZE }}
                     value={evs[key]}
+                    type="number"
                   />
                   <p style={{ margin: '4px 0 0' }}>
                     {pokemon && key === 'hp' ? maxHp : pokemon.stats[key]}

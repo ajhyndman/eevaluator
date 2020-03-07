@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Container } from '@material-ui/core';
+import { Container, Typography } from '@material-ui/core';
 import { calculate, Move, Pokemon } from '@smogon/calc';
 
 import PokemonPicker from './PokemonPicker';
@@ -15,11 +15,14 @@ function App() {
 
   const move = pokemon1.moves[0] && new Move(GENERATION, pokemon1.moves[0]);
   const result = move && calculate(GENERATION, pokemon1, pokemon2, move);
-  const desc = result && result.damage.length > 1 && result.fullDesc();
+  const desc = result && result.damage.length > 1 && result.moveDesc();
+  const desc2 = result && result.damage.length > 1 && result.kochance().text;
 
   return (
     <Container maxWidth="lg">
-      {desc}
+      <Typography gutterBottom style={{ textAlign: 'center' }}>
+        {desc && `${desc} (${desc2})`}
+      </Typography>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between' }}>
         <PokemonPicker pokemon={pokemon1} onChange={setPokemon1} />
         <PokemonPicker pokemon={pokemon2} onChange={setPokemon2} />
