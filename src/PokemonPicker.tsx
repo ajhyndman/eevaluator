@@ -45,7 +45,7 @@ const THEME = createMuiTheme({
 
 const SIZE = 150;
 const RADIUS = SIZE / 2;
-const INPUT_SIZE = 50;
+const INPUT_SIZE = 55;
 
 const MAX_EVS = 508;
 
@@ -168,7 +168,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
             setSpecies(value);
           }}
           options={Object.keys(SPECIES[GENERATION])}
-          renderInput={params => <TextField {...params} label="Pokemon" variant="outlined" />}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Pokemon" variant="outlined" />
+          )}
           value={pokemonName}
         />
 
@@ -185,7 +187,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
           labelPlacement="start"
         />
 
-        {pokemon && (
+        {/* pokemon && (
           <div
             style={{ alignItems: 'center', display: 'flex', height: 150, justifyContent: 'center' }}
           >
@@ -195,13 +197,19 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               style={{ alignSelf: 'center', maxWidth: 150, maxHeight: 150 }}
             />
           </div>
-        )}
+        ) */}
 
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            backgroundImage:
+              pokemon &&
+              `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
           }}
         >
           <div
@@ -234,7 +242,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
             </svg>
 
             {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
-              const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE, 2 * Math.PI * (i / 6)]);
+              const [x, y] = polarToCartesian([
+                RADIUS + INPUT_SIZE * (4 / 5),
+                2 * Math.PI * (i / 6),
+              ]);
 
               return (
                 <div
@@ -245,9 +256,16 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                     textAlign: 'center',
                   }}
                 >
-                  <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
+                  {/* <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
                   <Input
                     type="number"
+                    onChange={handleStatChange(key)}
+                    style={{ maxWidth: INPUT_SIZE }}
+                    value={evs[key]}
+                  /> */}
+                  <TextField
+                    size="small"
+                    label={STAT_LABEL[key]}
                     onChange={handleStatChange(key)}
                     style={{ maxWidth: INPUT_SIZE }}
                     value={evs[key]}
@@ -269,7 +287,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               setItem(value);
             }}
             options={ITEMS[GENERATION]}
-            renderInput={params => <TextField {...params} label="Item" variant="outlined" />}
+            renderInput={params => (
+              <TextField {...params} size="small" label="Item" variant="outlined" />
+            )}
             value={item}
           />
           <Autocomplete
@@ -279,14 +299,16 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               setAbility(value);
             }}
             options={ABILITIES[GENERATION]}
-            renderInput={params => <TextField {...params} label="Ability" variant="outlined" />}
+            renderInput={params => (
+              <TextField {...params} size="small" label="Ability" variant="outlined" />
+            )}
             value={ability}
           />
         </div>
 
-        <div style={{ margin: 20 }}>
+        <div style={{ margin: '10px 0' }}>
           <Typography gutterBottom>Current HP</Typography>
-          <Slider min={0} max={maxHp} defaultValue={maxHp} valueLabelDisplay="on" marks={marks} />
+          <Slider min={0} max={maxHp} defaultValue={maxHp} valueLabelDisplay="auto" marks={marks} />
         </div>
 
         <Autocomplete
@@ -295,7 +317,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
             setMove(value);
           }}
           options={Object.keys(MOVES[GENERATION])}
-          renderInput={params => <TextField {...params} label="Move" variant="outlined" />}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Move" variant="outlined" />
+          )}
           value={move || ''}
         />
       </Container>
