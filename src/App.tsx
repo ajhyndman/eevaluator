@@ -8,7 +8,7 @@ import PokemonPicker from './PokemonPicker';
 const GENERATION = 8;
 
 function App() {
-  const pikachu = new Pokemon(GENERATION, 'Pikachu');
+  const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
 
   const [pokemon1, setPokemon1] = useState(pikachu);
   const [pokemon2, setPokemon2] = useState(pikachu);
