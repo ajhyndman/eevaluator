@@ -14,7 +14,7 @@ import {
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import { Autocomplete } from '@material-ui/lab';
-import { calcStat, SPECIES, Stat, StatsTable } from '@smogon/calc';
+import { ABILITIES, calcStat, ITEMS, MOVES, SPECIES, Stat, StatsTable } from '@smogon/calc';
 import { shortForm } from '@smogon/calc/dist/stats';
 
 type Stats = StatsTable<number>;
@@ -99,6 +99,9 @@ function App() {
   const [stats, setStats] = useState(INITIAL_STATS);
   const [pokemon, setPokemon] = useState('Pikachu');
   const [isDynamaxed, setIsDynamaxed] = useState(false);
+  const [item, setItem] = useState(null);
+  const [ability, setAbility] = useState(null);
+  const [move, setMove] = useState(null);
 
   const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
@@ -207,6 +210,39 @@ function App() {
             })}
           </div>
         </div>
+
+        <div style={{ display: 'flex' }}>
+          <Autocomplete
+            style={{ flexGrow: 1 }}
+            getOptionLabel={option => option}
+            onChange={(e: ChangeEvent<any>, value: any) => {
+              setItem(value);
+            }}
+            options={ITEMS[8]}
+            renderInput={params => <TextField {...params} label="Item" variant="outlined" />}
+            value={item}
+          />
+          <Autocomplete
+            style={{ flexGrow: 1 }}
+            getOptionLabel={option => option}
+            onChange={(e: ChangeEvent<any>, value: any) => {
+              setAbility(value);
+            }}
+            options={ABILITIES[8]}
+            renderInput={params => <TextField {...params} label="Ability" variant="outlined" />}
+            value={ability}
+          />
+        </div>
+
+        <Autocomplete
+          style={{ flexGrow: 1 }}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setMove(value);
+          }}
+          options={Object.keys(MOVES[8])}
+          renderInput={params => <TextField {...params} label="Move" variant="outlined" />}
+          value={move}
+        />
       </Container>
     </ThemeProvider>
   );
