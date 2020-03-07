@@ -222,7 +222,13 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                 />
                 <path
                   d={drawHexagon(dataFromStats(evs, ev))}
-                  fill={sum(Object.values(evs)) <= MAX_EVS ? 'gold' : 'red'}
+                  fill={
+                    sum(Object.values(evs)) === MAX_EVS
+                      ? 'powderBlue'
+                      : sum(Object.values(evs)) < MAX_EVS
+                      ? 'gold'
+                      : 'red'
+                  }
                 />
               </g>
             </svg>
