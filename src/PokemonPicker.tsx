@@ -203,13 +203,13 @@ function PokemonPicker({ pokemon, onChange }: Props) {
           style={{
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
             backgroundImage:
               pokemon &&
               `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'contain',
             backgroundPosition: 'center',
+            margin: `${INPUT_SIZE / 4}px 0`,
           }}
         >
           <div
@@ -217,8 +217,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               position: 'relative',
               display: 'flex',
               alignItems: 'center',
+              background: 'rgba(255, 255, 255, 0.75)',
+              flexGrow: 1,
               justifyContent: 'center',
-              padding: `${INPUT_SIZE * 2}px 0`,
+              padding: `${INPUT_SIZE * (7 / 4)}px 0`,
             }}
           >
             <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
