@@ -179,7 +179,20 @@ function App() {
                 {dataFromStats(stats, ev).map((radius, i) => {
                   const angle = 2 * Math.PI * (i / 6);
                   const [x, y] = polarToCartesian([radius, angle]);
-                  return <circle cx={x} cy={y} r={10} stroke="black" fill="white" />;
+                  // return <circle cx={x} cy={y} r={10} stroke="black" fill="white" />;
+
+                  const triangleSize = 8;
+                  const trianglePath = path();
+                  trianglePath.moveTo(0, triangleSize);
+                  const [x1, y1] = polarToCartesian([triangleSize, -Math.PI / 3]);
+                  trianglePath.lineTo(x1, y1);
+                  trianglePath.lineTo(-x1, y1);
+                  trianglePath.closePath();
+                  return (
+                    <g transform={`translate(${x} ${y}) rotate(${angle * (180 / Math.PI)})`}>
+                      <path d={trianglePath.toString()} stroke="black" fill="white" />
+                    </g>
+                  );
                 })}
               </g>
             </svg>
