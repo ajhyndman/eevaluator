@@ -176,6 +176,11 @@ function App() {
                   d={drawHexagon(dataFromStats(stats, ev))}
                   fill={sum(Object.values(stats)) <= MAX_EVS ? 'gold' : 'red'}
                 />
+                {dataFromStats(stats, ev).map((radius, i) => {
+                  const angle = 2 * Math.PI * (i / 6);
+                  const [x, y] = polarToCartesian([radius, angle]);
+                  return <circle cx={x} cy={y} r={10} stroke="black" fill="white" />;
+                })}
               </g>
             </svg>
 
