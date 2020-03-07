@@ -132,6 +132,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
   const setCurrentHp = (nextHp: number) => {
     const nextPokemon = pokemon.clone();
+    nextPokemon.isMax = pokemon.isMax; // workaround: isMax isn't cloned
     nextPokemon.curHP = nextHp;
     onChange(nextPokemon);
   };
