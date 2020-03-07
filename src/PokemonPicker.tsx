@@ -16,11 +16,27 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
-import { ABILITIES, calcStat, ITEMS, MOVES, SPECIES, Stat, StatsTable } from '@smogon/calc';
+import {
+  ABILITIES,
+  calcStat,
+  ITEMS,
+  MOVES,
+  Pokemon,
+  SPECIES,
+  Stat,
+  StatsTable,
+} from '@smogon/calc';
 import { shortForm } from '@smogon/calc/dist/stats';
 
 type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
+
+type Props = {
+  pokemon: Pokemon;
+  onChange: (pokemon: Pokemon) => void;
+};
+
+const GENERATION = 8;
 
 const RED = 'rgb(230, 12, 91)';
 const BLUE = 'rgb(4, 160, 237)';
@@ -42,15 +58,6 @@ const RADIUS = SIZE / 2;
 const INPUT_SIZE = 50;
 
 const MAX_EVS = 508;
-
-const INITIAL_STATS: Stats = {
-  atk: 0,
-  def: 0,
-  spa: 0,
-  spd: 0,
-  spe: 0,
-  hp: 0,
-};
 
 const STAT_LABEL: { [key in Stat]: string } = {
   atk: 'Attack',
@@ -97,27 +104,36 @@ const computeActualStat = (
   return calcStat(8, key, baseStat, individualValue, effortValue, 50);
 };
 
-function PokemonPicker() {
-  const [stats, setStats] = useState(INITIAL_STATS);
-  const [pokemon, setPokemon] = useState('Pikachu');
+function PokemonPicker({ pokemon, onChange }: Props) {
   const [isDynamaxed, setIsDynamaxed] = useState(false);
-  const [item, setItem] = useState(null);
-  const [ability, setAbility] = useState(null);
-  const [move, setMove] = useState(null);
 
   const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, 252, numericValue);
-    setStats(stats => ({ ...stats, [key]: newValue }));
+
+    const nextPokemon = pokemon.clone();
+    nextPokemon.evs[key] = newValue;
+    onChange(nextPokemon);
   };
 
-  const selectedSpecies = SPECIES[8][pokemon];
+  const stats = pokemon.evs;
 
+  const selectedSpecies = pokemon.species;
+  const pokemonName = pokemon.name;
   const maxHp = computeActualStat('hp', selectedSpecies.bs.hp!, stats.hp) * (isDynamaxed ? 2 : 1);
+
   const marks = [
     {
       value: 0,
       label: 0,
+    },
+    {
+      value: Math.floor(maxHp / 3),
+      label: '33%',
+    },
+    {
+      value: Math.floor(maxHp * 0.5),
+      label: '50%',
     },
     {
       value: maxHp,
@@ -125,20 +141,51 @@ function PokemonPicker() {
     },
   ];
 
+  const setSpecies = (nextSpecies: string) => {
+    onChange(new Pokemon(GENERATION, nextSpecies));
+  };
+
+  const setMove = (nextMove: string) => {
+    const nextPokemon = pokemon.clone();
+    nextPokemon.moves[0] = nextMove;
+    onChange(nextPokemon);
+  };
+  const move = pokemon.moves[0];
+
+  const setAbility = (nextAbility: string) => {
+    const nextPokemon = pokemon.clone();
+    nextPokemon.ability = nextAbility;
+    onChange(nextPokemon);
+  };
+  const ability = pokemon.ability;
+
+  const setItem = (nextItem: string) => {
+    const nextPokemon = pokemon.clone();
+    nextPokemon.item = nextItem;
+    onChange(nextPokemon);
+  };
+  const item = pokemon.item;
+
   return (
     <ThemeProvider theme={THEME}>
       <Container
         maxWidth="xs"
-        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', padding: 8 }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+          padding: 8,
+          margin: 0,
+        }}
       >
         <Autocomplete
           getOptionLabel={option => option}
           onChange={(e: ChangeEvent<any>, value: any) => {
-            setPokemon(value);
+            setSpecies(value);
           }}
-          options={Object.keys(SPECIES[8])}
+          options={Object.keys(SPECIES[GENERATION])}
           renderInput={params => <TextField {...params} label="Pokemon" variant="outlined" />}
-          value={pokemon}
+          value={pokemonName}
         />
 
         <FormControlLabel
@@ -160,7 +207,7 @@ function PokemonPicker() {
           >
             <img
               alt={`Illustration of ${pokemon}`}
-              src={`https://img.pokemondb.net/artwork/${pokemon.toLocaleLowerCase()}.jpg`}
+              src={`https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg`}
               style={{ alignSelf: 'center', maxWidth: 150, maxHeight: 150 }}
             />
           </div>
@@ -232,7 +279,7 @@ function PokemonPicker() {
             onChange={(e: ChangeEvent<any>, value: any) => {
               setItem(value);
             }}
-            options={ITEMS[8]}
+            options={ITEMS[GENERATION]}
             renderInput={params => <TextField {...params} label="Item" variant="outlined" />}
             value={item}
           />
@@ -242,7 +289,7 @@ function PokemonPicker() {
             onChange={(e: ChangeEvent<any>, value: any) => {
               setAbility(value);
             }}
-            options={ABILITIES[8]}
+            options={ABILITIES[GENERATION]}
             renderInput={params => <TextField {...params} label="Ability" variant="outlined" />}
             value={ability}
           />
@@ -250,14 +297,7 @@ function PokemonPicker() {
 
         <div style={{ margin: 20 }}>
           <Typography gutterBottom>Current HP</Typography>
-          <Slider
-            min={0}
-            max={maxHp}
-            defaultValue={maxHp}
-            valueLabelDisplay="on"
-            marks={marks}
-            valueLabelFormat={value => `${Math.round((value / maxHp) * 100)}%`}
-          />
+          <Slider min={0} max={maxHp} defaultValue={maxHp} valueLabelDisplay="on" marks={marks} />
         </div>
 
         <Autocomplete
@@ -265,9 +305,9 @@ function PokemonPicker() {
           onChange={(e: ChangeEvent<any>, value: any) => {
             setMove(value);
           }}
-          options={Object.keys(MOVES[8])}
+          options={Object.keys(MOVES[GENERATION])}
           renderInput={params => <TextField {...params} label="Move" variant="outlined" />}
-          value={move}
+          value={move || ''}
         />
       </Container>
     </ThemeProvider>
