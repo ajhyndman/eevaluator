@@ -106,7 +106,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
   const isMax = pokemon.isMax || false;
 
   const setSpecies = (nextSpecies: string) => {
-    onChange(new Pokemon(GENERATION, nextSpecies));
+    onChange(new Pokemon(GENERATION, nextSpecies, { level: 50 }));
   };
 
   const setMove = (nextMove: string) => {
