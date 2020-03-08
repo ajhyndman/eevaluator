@@ -347,7 +347,14 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                       />
                       <p
                         style={{
-                          color: key === plusStat ? RED : key === minusStat ? BLUE : 'inherit',
+                          color:
+                            key === plusStat && key === minusStat
+                              ? 'inherit'
+                              : key === plusStat
+                              ? RED
+                              : key === minusStat
+                              ? BLUE
+                              : 'inherit',
                           margin: '4px 0 0',
                         }}
                       >
