@@ -6,7 +6,8 @@ import React, { ChangeEvent } from 'react';
 import {
   Container,
   FormControlLabel,
-  Input,
+  Grid,
+  MenuItem,
   Slider,
   Switch,
   TextField,
@@ -16,7 +17,16 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
-import { ABILITIES, ITEMS, MOVES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
+import {
+  ABILITIES,
+  ITEMS,
+  MOVES,
+  NATURES as SMOGON_NATURES,
+  Pokemon,
+  SPECIES,
+  Stat,
+  StatsTable,
+} from '@smogon/calc';
 
 type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
@@ -24,6 +34,16 @@ type ModernStat = Exclude<Stat, 'spc'>;
 type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
+};
+
+// TODO: Remove this patching after upstream fix
+const NATURES: typeof SMOGON_NATURES = {
+  ...SMOGON_NATURES,
+  Bashful: ['spa', 'spa'],
+  Docile: ['def', 'def'],
+  Hardy: ['atk', 'atk'],
+  Quirky: ['spd', 'spd'],
+  Serious: ['spe', 'spe'],
 };
 
 const GENERATION = 8;
@@ -81,11 +101,39 @@ const drawHexagon = ([first, ...rest]: number[]) => {
   return hexagonPath.toString();
 };
 
+const getNature = (plusStat?: Stat, minusStat?: Stat) => {
+  return Object.keys(NATURES).find((name: string) => {
+    const [a, b] = NATURES[name];
+    return a === plusStat && b === minusStat;
+  })!;
+};
+
 const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
   return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(scale);
 };
 
 function PokemonPicker({ pokemon, onChange }: Props) {
+  // const [plusStat, setPlusStat] = useState<ModernStat>('atk');
+  // const [minusStat, setMinusStat] = useState<ModernStat>('atk');
+  // const nature = getNature(plusStat, minusStat);
+
+  const nature = pokemon.nature;
+  const [plusStat, minusStat] = NATURES[nature];
+  const setPlusStat = (value: ModernStat) => {
+    const minusStat = NATURES[nature][1];
+    const nextNature = getNature(value, minusStat);
+
+    const nextPokemon = new Pokemon(GENERATION, pokemon.name, { ...pokemon, nature: nextNature });
+    onChange(nextPokemon);
+  };
+  const setMinusStat = (value: ModernStat) => {
+    const plusStat = NATURES[nature][0];
+    const nextNature = getNature(plusStat, value);
+
+    const nextPokemon = new Pokemon(GENERATION, pokemon.name, { ...pokemon, nature: nextNature });
+    onChange(nextPokemon);
+  };
+
   const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, 252, numericValue);
@@ -281,7 +329,12 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                     value={evs[key]}
                     type="number"
                   />
-                  <p style={{ margin: '4px 0 0' }}>
+                  <p
+                    style={{
+                      color: key === plusStat ? RED : key === minusStat ? BLUE : 'inherit',
+                      margin: '4px 0 0',
+                    }}
+                  >
                     {pokemon && key === 'hp' ? maxHp : pokemon.stats[key]}
                   </p>
                 </div>
@@ -290,32 +343,67 @@ function PokemonPicker({ pokemon, onChange }: Props) {
           </div>
         </div>
 
-        <div style={{ display: 'flex' }}>
-          <Autocomplete
-            style={{ flexGrow: 1 }}
-            getOptionLabel={option => option}
-            onChange={(e: ChangeEvent<any>, value: any) => {
-              setItem(value);
-            }}
-            options={ITEMS[GENERATION]}
-            renderInput={params => (
-              <TextField {...params} size="small" label="Item" variant="outlined" />
-            )}
-            value={item}
-          />
-          <Autocomplete
-            style={{ flexGrow: 1 }}
-            getOptionLabel={option => option}
-            onChange={(e: ChangeEvent<any>, value: any) => {
-              setAbility(value);
-            }}
-            options={ABILITIES[GENERATION]}
-            renderInput={params => (
-              <TextField {...params} size="small" label="Ability" variant="outlined" />
-            )}
-            value={ability}
-          />
-        </div>
+        <Grid container spacing={1}>
+          <Grid item xs={4}>
+            <TextField
+              size="small"
+              variant="outlined"
+              select
+              label="↑"
+              value={plusStat}
+              onChange={(event: any) => setPlusStat(event.target.value)}
+            >
+              {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+                <MenuItem value={stat}>{STAT_LABEL[stat]}</MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={4}>
+            <TextField
+              size="small"
+              variant="outlined"
+              select
+              label="↓"
+              value={minusStat}
+              onChange={(event: any) => setMinusStat(event.target.value)}
+            >
+              {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+                <MenuItem value={stat}>{STAT_LABEL[stat]}</MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={4} style={{ display: 'flex', alignItems: 'center' }}>
+            <Typography>{nature}</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              style={{ flexGrow: 1 }}
+              getOptionLabel={option => option}
+              onChange={(e: ChangeEvent<any>, value: any) => {
+                setItem(value);
+              }}
+              options={ITEMS[GENERATION]}
+              renderInput={params => (
+                <TextField {...params} size="small" label="Item" variant="outlined" />
+              )}
+              value={item}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Autocomplete
+              style={{ flexGrow: 1 }}
+              getOptionLabel={option => option}
+              onChange={(e: ChangeEvent<any>, value: any) => {
+                setAbility(value);
+              }}
+              options={ABILITIES[GENERATION]}
+              renderInput={params => (
+                <TextField {...params} size="small" label="Ability" variant="outlined" />
+              )}
+              value={ability}
+            />
+          </Grid>
+        </Grid>
 
         <div style={{ margin: '10px 0' }}>
           <Typography gutterBottom>Current HP</Typography>
