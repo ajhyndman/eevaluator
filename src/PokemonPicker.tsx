@@ -1,7 +1,7 @@
 import { path } from 'd3-path';
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { clamp, sum } from 'ramda';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
 import {
   Container,
@@ -10,6 +10,8 @@ import {
   MenuItem,
   Slider,
   Switch,
+  Tab,
+  Tabs,
   TextField,
   ThemeProvider,
 } from '@material-ui/core';
@@ -79,6 +81,9 @@ const STAT_LABEL: { [key in Stat]: string } = {
   spe: 'Speed',
 };
 
+const iv = scaleLinear()
+  .domain([0, 31])
+  .range([10, RADIUS]);
 const ev = scaleLinear()
   .domain([0, 252])
   .range([10, RADIUS]);
@@ -113,9 +118,9 @@ const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
 };
 
 function PokemonPicker({ pokemon, onChange }: Props) {
-  // const [plusStat, setPlusStat] = useState<ModernStat>('atk');
-  // const [minusStat, setMinusStat] = useState<ModernStat>('atk');
-  // const nature = getNature(plusStat, minusStat);
+  const [statTab, setStatTab] = useState(1);
+  const statKey = statTab === 0 ? 'ivs' : 'evs';
+  const statScale = statKey === 'ivs' ? iv : ev;
 
   const nature = pokemon.nature;
   const [plusStat, minusStat] = NATURES[nature];
@@ -136,16 +141,15 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
   const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
-    const newValue = clamp(0, 252, numericValue);
+    const newValue = clamp(0, statTab === 0 ? 31 : 252, numericValue);
 
     const nextPokemon = new Pokemon(GENERATION, pokemon.name, {
       ...pokemon,
-      evs: { ...pokemon.evs, [key]: newValue },
+      [statKey]: { ...pokemon[statKey], [key]: newValue },
     });
     onChange(nextPokemon);
   };
-
-  const evs = pokemon.evs;
+  const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
   const setIsMax = (nextIsMax: boolean) => {
@@ -261,6 +265,13 @@ function PokemonPicker({ pokemon, onChange }: Props) {
         ) */}
           </Grid>
           <Grid item xs={12}>
+            <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
+              <Tab label="IV" />
+              <Tab label="EV" />
+            </Tabs>
+          </Grid>
+
+          <Grid item xs={12}>
             <div
               style={{
                 display: 'flex',
@@ -293,11 +304,11 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                       stroke={BLUE}
                     />
                     <path
-                      d={drawHexagon(dataFromStats(evs, ev))}
+                      d={drawHexagon(dataFromStats(stats, statScale))}
                       fill={
-                        sum(Object.values(evs)) === MAX_EVS
+                        sum(Object.values(stats)) === MAX_EVS
                           ? 'powderBlue'
-                          : sum(Object.values(evs)) < MAX_EVS
+                          : sum(Object.values(stats)) < MAX_EVS
                           ? 'gold'
                           : 'red'
                       }
@@ -321,18 +332,18 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                       }}
                     >
                       {/* <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
-                  <Input
-                    type="number"
-                    onChange={handleStatChange(key)}
-                    style={{ maxWidth: INPUT_SIZE }}
-                    value={evs[key]}
-                  /> */}
+                      <Input
+                        type="number"
+                        onChange={handleStatChange(key)}
+                        style={{ maxWidth: INPUT_SIZE }}
+                        value={evs[key]}
+                      /> */}
                       <TextField
                         size="small"
                         label={STAT_LABEL[key]}
                         onChange={handleStatChange(key)}
                         style={{ maxWidth: INPUT_SIZE }}
-                        value={evs[key]}
+                        value={stats[key]}
                         type="number"
                       />
                       <p
