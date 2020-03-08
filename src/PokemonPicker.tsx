@@ -229,6 +229,19 @@ function PokemonPicker({ pokemon, onChange }: Props) {
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Autocomplete
+              style={{ flexGrow: 1 }}
+              onChange={(e: ChangeEvent<any>, value: any) => {
+                setMove(value);
+              }}
+              options={Object.keys(MOVES[GENERATION])}
+              renderInput={params => (
+                <TextField {...params} size="small" label="Move" variant="outlined" />
+              )}
+              value={move || ''}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Autocomplete
               getOptionLabel={option => option}
               onChange={(e: ChangeEvent<any>, value: any) => {
                 setSpecies(value);
@@ -440,19 +453,6 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               onChange={(e: any, value: any) => setCurrentHp(value)}
               valueLabelDisplay="auto"
               marks={marks}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Autocomplete
-              style={{ flexGrow: 1 }}
-              onChange={(e: ChangeEvent<any>, value: any) => {
-                setMove(value);
-              }}
-              options={Object.keys(MOVES[GENERATION])}
-              renderInput={params => (
-                <TextField {...params} size="small" label="Move" variant="outlined" />
-              )}
-              value={move || ''}
             />
           </Grid>
         </Grid>
