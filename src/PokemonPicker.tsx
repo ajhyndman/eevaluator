@@ -282,7 +282,6 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'contain',
                 backgroundPosition: 'center',
-                margin: `${INPUT_SIZE / 4}px 0`,
               }}
             >
               <div
@@ -293,7 +292,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                   background: 'rgba(255, 255, 255, 0.75)',
                   flexGrow: 1,
                   justifyContent: 'center',
-                  padding: `${INPUT_SIZE * (7 / 4)}px 0`,
+                  padding: `${INPUT_SIZE * (3 / 2)}px 0`,
                 }}
               >
                 <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
