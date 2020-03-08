@@ -30,6 +30,8 @@ import {
   StatsTable,
 } from '@smogon/calc';
 
+import TypeIcon from './TypeIcon';
+
 type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
 
@@ -238,7 +240,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               value={pokemonName}
             />
           </Grid>
-          <Grid item xs={12} style={{ display: 'flex' }}>
+          <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
+            <TypeIcon type={pokemon.type1} />
+            <div style={{ width: 8 }} />
+            {pokemon.type2 && <TypeIcon type={pokemon.type2} />}
             <FormControlLabel
               control={
                 <Switch
