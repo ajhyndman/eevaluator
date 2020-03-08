@@ -138,8 +138,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, 252, numericValue);
 
-    const nextPokemon = pokemon.clone();
-    nextPokemon.evs[key] = newValue;
+    const nextPokemon = new Pokemon(GENERATION, pokemon.name, {
+      ...pokemon,
+      evs: { ...pokemon.evs, [key]: newValue },
+    });
     onChange(nextPokemon);
   };
 
