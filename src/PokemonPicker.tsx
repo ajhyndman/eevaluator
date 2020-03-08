@@ -220,32 +220,35 @@ function PokemonPicker({ pokemon, onChange }: Props) {
           margin: 0,
         }}
       >
-        <Autocomplete
-          getOptionLabel={option => option}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setSpecies(value);
-          }}
-          options={Object.keys(SPECIES[GENERATION])}
-          renderInput={params => (
-            <TextField {...params} size="small" label="Pokemon" variant="outlined" />
-          )}
-          value={pokemonName}
-        />
-
-        <FormControlLabel
-          control={
-            <Switch
-              checked={isMax}
-              onChange={(e: any, value: any) => setIsMax(value)}
-              color="primary"
+        <Grid container spacing={1}>
+          <Grid item xs={12}>
+            <Autocomplete
+              getOptionLabel={option => option}
+              onChange={(e: ChangeEvent<any>, value: any) => {
+                setSpecies(value);
+              }}
+              options={Object.keys(SPECIES[GENERATION])}
+              renderInput={params => (
+                <TextField {...params} size="small" label="Pokemon" variant="outlined" />
+              )}
+              value={pokemonName}
             />
-          }
-          style={{ margin: 0 }}
-          label="Dynamax"
-          labelPlacement="start"
-        />
+          </Grid>
+          <Grid item xs={12} style={{ display: 'flex' }}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isMax}
+                  onChange={(e: any, value: any) => setIsMax(value)}
+                  color="primary"
+                />
+              }
+              style={{ flexGrow: 1 }}
+              label="Dynamax"
+              labelPlacement="start"
+            />
 
-        {/* pokemon && (
+            {/* pokemon && (
           <div
             style={{ alignItems: 'center', display: 'flex', height: 150, justifyContent: 'center' }}
           >
@@ -256,96 +259,97 @@ function PokemonPicker({ pokemon, onChange }: Props) {
             />
           </div>
         ) */}
+          </Grid>
+          <Grid item xs={12}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                backgroundImage:
+                  pokemon &&
+                  `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                margin: `${INPUT_SIZE / 4}px 0`,
+              }}
+            >
+              <div
+                style={{
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: 'rgba(255, 255, 255, 0.75)',
+                  flexGrow: 1,
+                  justifyContent: 'center',
+                  padding: `${INPUT_SIZE * (7 / 4)}px 0`,
+                }}
+              >
+                <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
+                  <g transform={`translate(${RADIUS} ${RADIUS})`}>
+                    <path
+                      d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
+                      fill="white"
+                      stroke={BLUE}
+                    />
+                    <path
+                      d={drawHexagon(dataFromStats(evs, ev))}
+                      fill={
+                        sum(Object.values(evs)) === MAX_EVS
+                          ? 'powderBlue'
+                          : sum(Object.values(evs)) < MAX_EVS
+                          ? 'gold'
+                          : 'red'
+                      }
+                    />
+                  </g>
+                </svg>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            backgroundImage:
-              pokemon &&
-              `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            backgroundPosition: 'center',
-            margin: `${INPUT_SIZE / 4}px 0`,
-          }}
-        >
-          <div
-            style={{
-              position: 'relative',
-              display: 'flex',
-              alignItems: 'center',
-              background: 'rgba(255, 255, 255, 0.75)',
-              flexGrow: 1,
-              justifyContent: 'center',
-              padding: `${INPUT_SIZE * (7 / 4)}px 0`,
-            }}
-          >
-            <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
-              <g transform={`translate(${RADIUS} ${RADIUS})`}>
-                <path
-                  d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
-                  fill="white"
-                  stroke={BLUE}
-                />
-                <path
-                  d={drawHexagon(dataFromStats(evs, ev))}
-                  fill={
-                    sum(Object.values(evs)) === MAX_EVS
-                      ? 'powderBlue'
-                      : sum(Object.values(evs)) < MAX_EVS
-                      ? 'gold'
-                      : 'red'
-                  }
-                />
-              </g>
-            </svg>
+                {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
+                  const [x, y] = polarToCartesian([
+                    RADIUS + INPUT_SIZE * (4 / 5),
+                    2 * Math.PI * (i / 6),
+                  ]);
 
-            {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
-              const [x, y] = polarToCartesian([
-                RADIUS + INPUT_SIZE * (4 / 5),
-                2 * Math.PI * (i / 6),
-              ]);
-
-              return (
-                <div
-                  key={key}
-                  style={{
-                    position: 'absolute',
-                    transform: `translate(${x}px, ${y}px)`,
-                    textAlign: 'center',
-                  }}
-                >
-                  {/* <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
+                  return (
+                    <div
+                      key={key}
+                      style={{
+                        position: 'absolute',
+                        transform: `translate(${x}px, ${y}px)`,
+                        textAlign: 'center',
+                      }}
+                    >
+                      {/* <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
                   <Input
                     type="number"
                     onChange={handleStatChange(key)}
                     style={{ maxWidth: INPUT_SIZE }}
                     value={evs[key]}
                   /> */}
-                  <TextField
-                    size="small"
-                    label={STAT_LABEL[key]}
-                    onChange={handleStatChange(key)}
-                    style={{ maxWidth: INPUT_SIZE }}
-                    value={evs[key]}
-                    type="number"
-                  />
-                  <p
-                    style={{
-                      color: key === plusStat ? RED : key === minusStat ? BLUE : 'inherit',
-                      margin: '4px 0 0',
-                    }}
-                  >
-                    {pokemon && key === 'hp' ? maxHp : pokemon.stats[key]}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <Grid container spacing={1}>
+                      <TextField
+                        size="small"
+                        label={STAT_LABEL[key]}
+                        onChange={handleStatChange(key)}
+                        style={{ maxWidth: INPUT_SIZE }}
+                        value={evs[key]}
+                        type="number"
+                      />
+                      <p
+                        style={{
+                          color: key === plusStat ? RED : key === minusStat ? BLUE : 'inherit',
+                          margin: '4px 0 0',
+                        }}
+                      >
+                        {pokemon && key === 'hp' ? maxHp : pokemon.stats[key]}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </Grid>
+          <Grid item xs={12}></Grid>
           <Grid item xs={4}>
             <TextField
               size="small"
@@ -405,31 +409,31 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               value={ability}
             />
           </Grid>
+          <Grid item xs={12}>
+            <Typography gutterBottom>Current HP</Typography>
+            <Slider
+              min={0}
+              max={maxHp}
+              value={currentHp}
+              onChange={(e: any, value: any) => setCurrentHp(value)}
+              valueLabelDisplay="auto"
+              marks={marks}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Autocomplete
+              style={{ flexGrow: 1 }}
+              onChange={(e: ChangeEvent<any>, value: any) => {
+                setMove(value);
+              }}
+              options={Object.keys(MOVES[GENERATION])}
+              renderInput={params => (
+                <TextField {...params} size="small" label="Move" variant="outlined" />
+              )}
+              value={move || ''}
+            />
+          </Grid>
         </Grid>
-
-        <div style={{ margin: '10px 0' }}>
-          <Typography gutterBottom>Current HP</Typography>
-          <Slider
-            min={0}
-            max={maxHp}
-            value={currentHp}
-            onChange={(e: any, value: any) => setCurrentHp(value)}
-            valueLabelDisplay="auto"
-            marks={marks}
-          />
-        </div>
-
-        <Autocomplete
-          style={{ flexGrow: 1 }}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setMove(value);
-          }}
-          options={Object.keys(MOVES[GENERATION])}
-          renderInput={params => (
-            <TextField {...params} size="small" label="Move" variant="outlined" />
-          )}
-          value={move || ''}
-        />
       </Container>
     </ThemeProvider>
   );
