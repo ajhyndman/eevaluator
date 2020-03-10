@@ -1183,10 +1183,10 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#8013f2af54a2b7d735f71560ff360d3a8176a87b"
   integrity sha512-vTCdPp/T/Q3oSqwHmZ5Kpa9oI7iLtGl3RQaA/NyLHikvcrPxACkkKVr/XzkSPJWXHRhKGzVvb0urJsbMlRxi1Q==
 
-"@smogon/calc@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.0.4.tgz#c12856410073456c1520556138f3b51fa48ac46d"
-  integrity sha512-jtVFDmFNUhjMCPvtIXqhmdGEun9KPRb9komVLRJq/B2sfTI4Qtl/pjkdaFj16A1we0MRq6M8VMwMMDAYddbz6g==
+"@smogon/calc@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.0.5.tgz#80f279b72003197d31e9d0dde72c93f93de296ab"
+  integrity sha512-tt6okZOXFEiUWPK6S3FIm0G9KB0HCAnBUW9jASeoo2GY8W7CMI5ErcZT7Xvn2oNnUgd/iRh5UEseR3cDKN9efw==
   dependencies:
     "@types/node" "^13.7.5"
 
