@@ -162,6 +162,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
   const isMax = pokemon.isMax || false;
 
   const setSpecies = (nextSpecies: string) => {
+    if (nextSpecies == null) {
+      return;
+    }
     onChange(new Pokemon(GENERATION, nextSpecies, { level: 50 }));
   };
 
