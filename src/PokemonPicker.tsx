@@ -19,16 +19,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
-import {
-  ABILITIES,
-  ITEMS,
-  MOVES,
-  NATURES as SMOGON_NATURES,
-  Pokemon,
-  SPECIES,
-  Stat,
-  StatsTable,
-} from '@smogon/calc';
+import { ABILITIES, ITEMS, MOVES, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
 import TypeIcon from './TypeIcon';
 
@@ -38,16 +29,6 @@ type ModernStat = Exclude<Stat, 'spc'>;
 type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
-};
-
-// TODO: Remove this patching after upstream fix
-const NATURES: typeof SMOGON_NATURES = {
-  ...SMOGON_NATURES,
-  Bashful: ['spa', 'spa'],
-  Docile: ['def', 'def'],
-  Hardy: ['atk', 'atk'],
-  Quirky: ['spd', 'spd'],
-  Serious: ['spe', 'spe'],
 };
 
 const GENERATION = 8;
@@ -155,11 +136,16 @@ function PokemonPicker({ pokemon, onChange }: Props) {
   const pokemonName = pokemon.name;
 
   const setIsMax = (nextIsMax: boolean) => {
-    const nextPokemon = pokemon.clone();
-    nextPokemon.isMax = nextIsMax;
+    const curHpFraction = pokemon.curHP / pokemon.maxHP();
+
+    const nextPokemon = new Pokemon(GENERATION, pokemon.name, {
+      ...pokemon,
+      isDynamaxed: nextIsMax,
+    });
+    nextPokemon.curHP = Math.floor(curHpFraction * nextPokemon.maxHP());
     onChange(nextPokemon);
   };
-  const isMax = pokemon.isMax || false;
+  const isMax = pokemon.isDynamaxed || false;
 
   const setSpecies = (nextSpecies: string) => {
     if (nextSpecies == null) {
@@ -191,7 +177,6 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
   const setCurrentHp = (nextHp: number) => {
     const nextPokemon = pokemon.clone();
-    nextPokemon.isMax = pokemon.isMax; // workaround: isMax isn't cloned
     nextPokemon.curHP = nextHp;
     onChange(nextPokemon);
   };
