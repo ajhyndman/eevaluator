@@ -3,6 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import {
   FormControlLabel,
   Grid,
+  InputAdornment,
   MenuItem,
   Slider,
   Switch,
@@ -15,10 +16,11 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
-import { ABILITIES, ITEMS, MOVES, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
+import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util';
+import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
 import TypeIcon from './TypeIcon';
 
@@ -226,8 +228,23 @@ function PokemonPicker({ pokemon, onChange }: Props) {
             setItem(value);
           }}
           options={ITEMS[GENERATION]}
-          renderInput={params => (
-            <TextField {...params} size="small" label="Item" variant="outlined" />
+          renderInput={(params: any) => (
+            <TextField
+              {...{
+                ...params,
+                InputProps: {
+                  ...params.InputProps,
+                  startAdornment: params.inputProps.value && (
+                    <InputAdornment position="start">
+                      <ItemIcon item={params.inputProps.value} />
+                    </InputAdornment>
+                  ),
+                },
+              }}
+              size="small"
+              label="Item"
+              variant="outlined"
+            />
           )}
           value={item}
         />
