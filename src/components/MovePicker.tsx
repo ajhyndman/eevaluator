@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
@@ -8,6 +8,8 @@ import { GENERATION } from '../util';
 import TypeIcon from './TypeIcon';
 
 type Props = {
+  move?: string;
+  onChangeMove: (move: string | undefined) => void;
   attacker: Pokemon;
   defender: Pokemon;
 };
@@ -17,9 +19,7 @@ const printPercent = (numerator: number, denominator: number) =>
 
 const printHko = (n: number) => `${n === 1 ? 'O' : n}HKO`;
 
-const MovePicker = ({ attacker, defender }: Props) => {
-  const [moveName, setMoveName] = useState<string | null>(null);
-
+const MovePicker = ({ attacker, defender, move: moveName, onChangeMove }: Props) => {
   const defenderMaxHp = defender.maxHP();
 
   let description;
@@ -49,7 +49,7 @@ const MovePicker = ({ attacker, defender }: Props) => {
         <Autocomplete
           style={{ flexGrow: 1 }}
           onChange={(e: ChangeEvent<any>, value: any) => {
-            setMoveName(value);
+            onChangeMove(value);
           }}
           options={Object.keys(MOVES[GENERATION])}
           renderInput={params => (
