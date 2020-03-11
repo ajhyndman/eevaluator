@@ -10,7 +10,7 @@ import { BLUE, RED } from '../styles';
 import { STAT_LABEL } from '../util';
 
 type ModernStat = Exclude<Stat, 'spc'>;
-export type Stats = StatsTable<number>;
+export type Stats = { [stat in ModernStat]: number };
 
 type Props = {
   natureFavoredStat: Stat;
