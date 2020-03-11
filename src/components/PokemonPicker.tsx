@@ -19,9 +19,9 @@ import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, MOVES, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
-import TypeIcon from '../TypeIcon';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util';
 import StatHexagon from './StatHexagon';
+import TypeIcon from './TypeIcon';
 
 type ModernStat = Exclude<Stat, 'spc'>;
 
