@@ -20,7 +20,7 @@ import { ABILITIES, ITEMS, MOVES, NATURES, Pokemon, SPECIES, Stat, StatsTable } 
 
 import { BLUE, RED } from '../styles';
 import TypeIcon from '../TypeIcon';
-import { STAT_LABEL } from '../util';
+import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util';
 import StatHexagon, { INPUT_SIZE } from './StatHexagon';
 
 type ModernStat = Exclude<Stat, 'spc'>;
@@ -29,8 +29,6 @@ type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
 };
-
-const GENERATION = 8;
 
 const THEME = createMuiTheme({
   palette: createPalette({
@@ -44,13 +42,6 @@ const THEME = createMuiTheme({
   }),
 });
 
-const getNature = (plusStat?: Stat, minusStat?: Stat) => {
-  return Object.keys(NATURES).find((name: string) => {
-    const [a, b] = NATURES[name];
-    return a === plusStat && b === minusStat;
-  })!;
-};
-
 function PokemonPicker({ pokemon, onChange }: Props) {
   const [statTab, setStatTab] = useState(1);
   const statKey = statTab === 0 ? 'ivs' : 'evs';
@@ -61,73 +52,46 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     const minusStat = NATURES[nature][1];
     const nextNature = getNature(value, minusStat);
 
-    const nextPokemon = new Pokemon(GENERATION, pokemon.name, { ...pokemon, nature: nextNature });
-    onChange(nextPokemon);
+    onChange(clonePokemon(pokemon, { nature: nextNature }));
   };
   const setMinusStat = (value: ModernStat) => {
     const plusStat = NATURES[nature][0];
     const nextNature = getNature(plusStat, value);
 
-    const nextPokemon = new Pokemon(GENERATION, pokemon.name, { ...pokemon, nature: nextNature });
-    onChange(nextPokemon);
+    onChange(clonePokemon(pokemon, { nature: nextNature }));
   };
 
-  const handleStatsChange = (stats: StatsTable<number>) => {
-    const nextPokemon = new Pokemon(GENERATION, pokemon.name, {
-      ...pokemon,
-      [statKey]: stats,
-    });
-
-    onChange(nextPokemon);
-  };
+  const handleStatsChange = (stats: StatsTable<number>) =>
+    onChange(clonePokemon(pokemon, { [statKey]: stats }));
   const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
   const setIsMax = (nextIsMax: boolean) => {
     const curHpFraction = pokemon.curHP / pokemon.maxHP();
 
-    const nextPokemon = new Pokemon(GENERATION, pokemon.name, {
-      ...pokemon,
-      isDynamaxed: nextIsMax,
-    });
+    const nextPokemon = clonePokemon(pokemon, { isDynamaxed: nextIsMax });
     nextPokemon.curHP = Math.floor(curHpFraction * nextPokemon.maxHP());
     onChange(nextPokemon);
   };
   const isMax = pokemon.isDynamaxed || false;
 
   const setSpecies = (nextSpecies: string) => {
-    if (nextSpecies == null) {
-      return;
+    if (nextSpecies != null) {
+      onChange(new Pokemon(GENERATION, nextSpecies, { level: 50 }));
     }
-    onChange(new Pokemon(GENERATION, nextSpecies, { level: 50 }));
   };
 
-  const setMove = (nextMove: string) => {
-    const nextPokemon = pokemon.clone();
-    nextPokemon.moves[0] = nextMove;
-    onChange(nextPokemon);
-  };
+  const setMove = (nextMove: string) => onChange(clonePokemon(pokemon, { moves: [nextMove] }));
   const move = pokemon.moves[0];
 
-  const setAbility = (nextAbility: string) => {
-    const nextPokemon = pokemon.clone();
-    nextPokemon.ability = nextAbility;
-    onChange(nextPokemon);
-  };
+  const setAbility = (nextAbility: string) =>
+    onChange(clonePokemon(pokemon, { ability: nextAbility }));
   const ability = pokemon.ability;
 
-  const setItem = (nextItem: string) => {
-    const nextPokemon = pokemon.clone();
-    nextPokemon.item = nextItem;
-    onChange(nextPokemon);
-  };
+  const setItem = (nextItem: string) => onChange(clonePokemon(pokemon, { item: nextItem }));
   const item = pokemon.item;
 
-  const setCurrentHp = (nextHp: number) => {
-    const nextPokemon = pokemon.clone();
-    nextPokemon.curHP = nextHp;
-    onChange(nextPokemon);
-  };
+  const setCurrentHp = (nextHp: number) => onChange(clonePokemon(pokemon, { curHP: nextHp }));
   const currentHp = pokemon.curHP;
 
   const maxHp = pokemon.maxHP();
