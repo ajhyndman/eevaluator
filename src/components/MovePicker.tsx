@@ -23,7 +23,7 @@ const MovePicker = ({ attacker, defender }: Props) => {
 
   let description;
   if (moveName) {
-    const move = new Move(GENERATION, moveName);
+    const move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
     const result = calculate(GENERATION, attacker, defender, move);
     const damage = result.damage;
 
