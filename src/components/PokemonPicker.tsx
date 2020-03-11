@@ -102,10 +102,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
   const maxHp = pokemon.maxHP();
   const marks = [
-    {
-      value: 0,
-      label: 0,
-    },
+    // {
+    //   value: 0,
+    //   label: 0,
+    // },
     {
       value: Math.floor(maxHp / 3),
       label: '33%',
@@ -114,10 +114,10 @@ function PokemonPicker({ pokemon, onChange }: Props) {
       value: Math.floor(maxHp * 0.5),
       label: '50%',
     },
-    {
-      value: maxHp,
-      label: maxHp,
-    },
+    // {
+    //   value: maxHp,
+    //   label: maxHp,
+    // },
   ];
 
   return (
