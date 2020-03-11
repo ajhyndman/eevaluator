@@ -90,9 +90,6 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     }
   };
 
-  const setMove = (nextMove: string) => onChange(clonePokemon(pokemon, { moves: [nextMove] }));
-  const move = pokemon.moves[0];
-
   const setAbility = (nextAbility: string) =>
     onChange(clonePokemon(pokemon, { ability: nextAbility }));
   const ability = pokemon.ability;
@@ -125,168 +122,142 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
   return (
     <ThemeProvider theme={THEME}>
-      <Container
-        maxWidth="xs"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
-          padding: 8,
-          margin: 0,
-        }}
-      >
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <Autocomplete
-              style={{ flexGrow: 1 }}
-              onChange={(e: ChangeEvent<any>, value: any) => {
-                setMove(value);
-              }}
-              options={Object.keys(MOVES[GENERATION])}
-              renderInput={params => (
-                <TextField {...params} size="small" label="Move" variant="outlined" />
-              )}
-              value={move || ''}
+      <Grid item xs={12}>
+        <Autocomplete
+          getOptionLabel={option => option}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setSpecies(value);
+          }}
+          options={Object.keys(SPECIES[GENERATION])}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Pokemon" variant="outlined" />
+          )}
+          value={pokemonName}
+        />
+      </Grid>
+      <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
+        <TypeIcon type={pokemon.type1} />
+        <div style={{ width: 8 }} />
+        {pokemon.type2 && <TypeIcon type={pokemon.type2} />}
+        <FormControlLabel
+          control={
+            <Switch
+              checked={isMax}
+              onChange={(e: any, value: any) => setIsMax(value)}
+              color="primary"
             />
-          </Grid>
-          <Grid item xs={12}>
-            <Autocomplete
-              getOptionLabel={option => option}
-              onChange={(e: ChangeEvent<any>, value: any) => {
-                setSpecies(value);
-              }}
-              options={Object.keys(SPECIES[GENERATION])}
-              renderInput={params => (
-                <TextField {...params} size="small" label="Pokemon" variant="outlined" />
-              )}
-              value={pokemonName}
-            />
-          </Grid>
-          <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
-            <TypeIcon type={pokemon.type1} />
-            <div style={{ width: 8 }} />
-            {pokemon.type2 && <TypeIcon type={pokemon.type2} />}
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={isMax}
-                  onChange={(e: any, value: any) => setIsMax(value)}
-                  color="primary"
-                />
-              }
-              style={{ flexGrow: 1 }}
-              label="Dynamax"
-              labelPlacement="start"
-            />
-          </Grid>
+          }
+          style={{ flexGrow: 1 }}
+          label="Dynamax"
+          labelPlacement="start"
+        />
+      </Grid>
 
-          <Grid item xs={12}>
-            <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
-              <Tab label="IV" />
-              <Tab label="EV" />
-            </Tabs>
-          </Grid>
+      <Grid item xs={12}>
+        <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
+          <Tab label="IV" />
+          <Tab label="EV" />
+        </Tabs>
+      </Grid>
 
-          <Grid item xs={12}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                backgroundImage:
-                  pokemon &&
-                  `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-              }}
-            >
-              <StatHexagon
-                natureFavoredStat={plusStat!}
-                natureUnfavoredStat={minusStat!}
-                onChange={handleStatsChange}
-                realStats={{ ...pokemon.stats, hp: pokemon.maxHP() }}
-                statKey={statKey}
-                stats={stats}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12}></Grid>
-          <Grid item xs={4}>
-            <TextField
-              size="small"
-              variant="outlined"
-              select
-              label="↑"
-              value={plusStat}
-              onChange={(event: any) => setPlusStat(event.target.value)}
-            >
-              {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
-                <MenuItem key={stat} value={stat}>
-                  {STAT_LABEL[stat]}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              size="small"
-              variant="outlined"
-              select
-              label="↓"
-              value={minusStat}
-              onChange={(event: any) => setMinusStat(event.target.value)}
-            >
-              {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
-                <MenuItem key={stat} value={stat}>
-                  {STAT_LABEL[stat]}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-          <Grid item xs={4} style={{ display: 'flex', alignItems: 'center' }}>
-            <Typography>{nature}</Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Autocomplete
-              style={{ flexGrow: 1 }}
-              getOptionLabel={option => option}
-              onChange={(e: ChangeEvent<any>, value: any) => {
-                setItem(value);
-              }}
-              options={ITEMS[GENERATION]}
-              renderInput={params => (
-                <TextField {...params} size="small" label="Item" variant="outlined" />
-              )}
-              value={item}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Autocomplete
-              style={{ flexGrow: 1 }}
-              getOptionLabel={option => option}
-              onChange={(e: ChangeEvent<any>, value: any) => {
-                setAbility(value);
-              }}
-              options={ABILITIES[GENERATION]}
-              renderInput={params => (
-                <TextField {...params} size="small" label="Ability" variant="outlined" />
-              )}
-              value={ability}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Typography gutterBottom>Current HP</Typography>
-            <Slider
-              min={0}
-              max={maxHp}
-              value={currentHp}
-              onChange={(e: any, value: any) => setCurrentHp(value)}
-              valueLabelDisplay="auto"
-              marks={marks}
-            />
-          </Grid>
-        </Grid>
-      </Container>
+      <Grid item xs={12}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            backgroundImage:
+              pokemon &&
+              `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+          }}
+        >
+          <StatHexagon
+            natureFavoredStat={plusStat!}
+            natureUnfavoredStat={minusStat!}
+            onChange={handleStatsChange}
+            realStats={{ ...pokemon.stats, hp: pokemon.maxHP() }}
+            statKey={statKey}
+            stats={stats}
+          />
+        </div>
+      </Grid>
+      <Grid item xs={12}></Grid>
+      <Grid item xs={4}>
+        <TextField
+          size="small"
+          variant="outlined"
+          select
+          label="↑"
+          value={plusStat}
+          onChange={(event: any) => setPlusStat(event.target.value)}
+        >
+          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+            <MenuItem key={stat} value={stat}>
+              {STAT_LABEL[stat]}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+      <Grid item xs={4}>
+        <TextField
+          size="small"
+          variant="outlined"
+          select
+          label="↓"
+          value={minusStat}
+          onChange={(event: any) => setMinusStat(event.target.value)}
+        >
+          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+            <MenuItem key={stat} value={stat}>
+              {STAT_LABEL[stat]}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+      <Grid item xs={4} style={{ display: 'flex', alignItems: 'center' }}>
+        <Typography>{nature}</Typography>
+      </Grid>
+      <Grid item xs={6}>
+        <Autocomplete
+          style={{ flexGrow: 1 }}
+          getOptionLabel={option => option}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setItem(value);
+          }}
+          options={ITEMS[GENERATION]}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Item" variant="outlined" />
+          )}
+          value={item}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <Autocomplete
+          style={{ flexGrow: 1 }}
+          getOptionLabel={option => option}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setAbility(value);
+          }}
+          options={ABILITIES[GENERATION]}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Ability" variant="outlined" />
+          )}
+          value={ability}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <Typography gutterBottom>Current HP</Typography>
+        <Slider
+          min={0}
+          max={maxHp}
+          value={currentHp}
+          onChange={(e: any, value: any) => setCurrentHp(value)}
+          valueLabelDisplay="auto"
+          marks={marks}
+        />
+      </Grid>
     </ThemeProvider>
   );
 }
