@@ -27,16 +27,18 @@ const MovePicker = ({ attacker, defender }: Props) => {
     const result = calculate(GENERATION, attacker, defender, move);
     const damage = result.damage;
 
-    const minDamage = damage[0] * move.hits;
-    const maxDamage = damage[damage.length - 1] * move.hits;
-    const { chance, n } = result.kochance();
+    if (damage.length > 1) {
+      const minDamage = damage[0] * move.hits;
+      const maxDamage = damage[damage.length - 1] * move.hits;
+      const { chance, n } = result.kochance();
 
-    description =
-      `${printPercent(minDamage, defenderMaxHp)}—${printPercent(
-        maxDamage,
-        defenderMaxHp,
-      )}% ${printHko(n)}` +
-      (chance != null && chance !== 1 ? ` (${Math.round(chance * 100)}%)` : '');
+      description =
+        `${printPercent(minDamage, defenderMaxHp)}—${printPercent(
+          maxDamage,
+          defenderMaxHp,
+        )}% ${printHko(n)}` +
+        (chance != null && chance !== 1 ? ` (${Math.round(chance * 100)}%)` : '');
+    }
   }
 
   return (
