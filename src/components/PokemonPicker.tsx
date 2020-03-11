@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 
 import {
-  Container,
   FormControlLabel,
   Grid,
   MenuItem,
