@@ -1,6 +1,3 @@
-import { path } from 'd3-path';
-import { scaleLinear, ScaleLinear } from 'd3-scale';
-import { clamp, sum } from 'ramda';
 import React, { ChangeEvent, useState } from 'react';
 
 import {
@@ -21,9 +18,11 @@ import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, MOVES, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
+import StatHexagon, { INPUT_SIZE } from './StatHexagon';
+import { BLUE, RED } from './styles';
 import TypeIcon from './TypeIcon';
+import { STAT_LABEL } from './util';
 
-type Stats = StatsTable<number>;
 type ModernStat = Exclude<Stat, 'spc'>;
 
 type Props = {
@@ -32,9 +31,6 @@ type Props = {
 };
 
 const GENERATION = 8;
-
-const RED = 'rgb(230, 12, 91)';
-const BLUE = 'rgb(4, 160, 237)';
 
 const THEME = createMuiTheme({
   palette: createPalette({
@@ -48,47 +44,6 @@ const THEME = createMuiTheme({
   }),
 });
 
-const SIZE = 150;
-const RADIUS = SIZE / 2;
-const INPUT_SIZE = 55;
-
-const MAX_EVS = 508;
-
-const STAT_LABEL: { [key in Stat]: string } = {
-  atk: 'Attack',
-  def: 'Defense',
-  hp: 'HP',
-  spa: 'Sp. Atk',
-  spc: 'Special',
-  spd: 'Sp. Def',
-  spe: 'Speed',
-};
-
-const iv = scaleLinear()
-  .domain([0, 31])
-  .range([10, RADIUS]);
-const ev = scaleLinear()
-  .domain([0, 252])
-  .range([10, RADIUS]);
-
-const polarToCartesian = ([radius, angle]: [number, number]) => [
-  Math.sin(angle) * radius,
-  -Math.cos(angle) * radius,
-];
-
-const drawHexagon = ([first, ...rest]: number[]) => {
-  const hexagonPath = path();
-  const [x, y] = polarToCartesian([first, 0]);
-  hexagonPath.moveTo(x, y);
-  rest.forEach((radius, i) => {
-    const [x, y] = polarToCartesian([radius, 2 * Math.PI * ((i + 1) / 6)]);
-    hexagonPath.lineTo(x, y);
-  });
-  hexagonPath.closePath();
-
-  return hexagonPath.toString();
-};
-
 const getNature = (plusStat?: Stat, minusStat?: Stat) => {
   return Object.keys(NATURES).find((name: string) => {
     const [a, b] = NATURES[name];
@@ -96,14 +51,9 @@ const getNature = (plusStat?: Stat, minusStat?: Stat) => {
   })!;
 };
 
-const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
-  return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(scale);
-};
-
 function PokemonPicker({ pokemon, onChange }: Props) {
   const [statTab, setStatTab] = useState(1);
   const statKey = statTab === 0 ? 'ivs' : 'evs';
-  const statScale = statKey === 'ivs' ? iv : ev;
 
   const nature = pokemon.nature;
   const [plusStat, minusStat] = NATURES[nature];
@@ -122,14 +72,12 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     onChange(nextPokemon);
   };
 
-  const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = parseInt(event.target.value || '0');
-    const newValue = clamp(0, statTab === 0 ? 31 : 252, numericValue);
-
+  const handleStatsChange = (stats: StatsTable<number>) => {
     const nextPokemon = new Pokemon(GENERATION, pokemon.name, {
       ...pokemon,
-      [statKey]: { ...pokemon[statKey], [key]: newValue },
+      [statKey]: stats,
     });
+
     onChange(nextPokemon);
   };
   const stats = pokemon[statKey];
@@ -257,19 +205,8 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               label="Dynamax"
               labelPlacement="start"
             />
-
-            {/* pokemon && (
-          <div
-            style={{ alignItems: 'center', display: 'flex', height: 150, justifyContent: 'center' }}
-          >
-            <img
-              alt={`Illustration of ${pokemon}`}
-              src={`https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg`}
-              style={{ alignSelf: 'center', maxWidth: 150, maxHeight: 150 }}
-            />
-          </div>
-        ) */}
           </Grid>
+
           <Grid item xs={12}>
             <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
               <Tab label="IV" />
@@ -301,74 +238,14 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                   padding: `${INPUT_SIZE * (3 / 2)}px 0`,
                 }}
               >
-                <svg width={SIZE} height={SIZE} viewBox={`0 0 ${SIZE} ${SIZE}`}>
-                  <g transform={`translate(${RADIUS} ${RADIUS})`}>
-                    <path
-                      d={drawHexagon([RADIUS, RADIUS, RADIUS, RADIUS, RADIUS, RADIUS])}
-                      fill="white"
-                      stroke={BLUE}
-                    />
-                    <path
-                      d={drawHexagon(dataFromStats(stats, statScale))}
-                      fill={
-                        sum(Object.values(stats)) === MAX_EVS
-                          ? 'powderBlue'
-                          : sum(Object.values(stats)) < MAX_EVS
-                          ? 'gold'
-                          : 'red'
-                      }
-                    />
-                  </g>
-                </svg>
-
-                {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
-                  const [x, y] = polarToCartesian([
-                    RADIUS + INPUT_SIZE * (4 / 5),
-                    2 * Math.PI * (i / 6),
-                  ]);
-
-                  return (
-                    <div
-                      key={key}
-                      style={{
-                        position: 'absolute',
-                        transform: `translate(${x}px, ${y}px)`,
-                        textAlign: 'center',
-                      }}
-                    >
-                      {/* <p style={{ margin: 0 }}>{STAT_LABEL[key]}</p>
-                      <Input
-                        type="number"
-                        onChange={handleStatChange(key)}
-                        style={{ maxWidth: INPUT_SIZE }}
-                        value={evs[key]}
-                      /> */}
-                      <TextField
-                        size="small"
-                        label={STAT_LABEL[key]}
-                        onChange={handleStatChange(key)}
-                        style={{ maxWidth: INPUT_SIZE }}
-                        value={stats[key]}
-                        type="number"
-                      />
-                      <p
-                        style={{
-                          color:
-                            key === plusStat && key === minusStat
-                              ? 'inherit'
-                              : key === plusStat
-                              ? RED
-                              : key === minusStat
-                              ? BLUE
-                              : 'inherit',
-                          margin: '4px 0 0',
-                        }}
-                      >
-                        {pokemon && key === 'hp' ? maxHp : pokemon.stats[key]}
-                      </p>
-                    </div>
-                  );
-                })}
+                <StatHexagon
+                  natureFavoredStat={plusStat!}
+                  natureUnfavoredStat={minusStat!}
+                  onChange={handleStatsChange}
+                  realStats={{ ...pokemon.stats, hp: pokemon.maxHP() }}
+                  statKey={statKey}
+                  stats={stats}
+                />
               </div>
             </div>
           </Grid>
