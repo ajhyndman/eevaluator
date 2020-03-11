@@ -22,6 +22,7 @@ import iconSteel from '../assets/Steel_icon_SwSh.png';
 import iconWater from '../assets/Water_icon_SwSh.png';
 
 type Props = {
+  size?: 'small' | 'medium';
   type: Type;
 };
 
@@ -46,7 +47,12 @@ const TYPE_ICONS = {
   Water: iconWater,
 };
 
-const TypeIcon = ({ type }: Props) =>
-  type !== 'None' ? <img style={{ width: 32 }} alt={type} src={TYPE_ICONS[type]} /> : null;
+const SIZES = {
+  small: 24,
+  medium: 32,
+};
+
+const TypeIcon = ({ size = 'small', type }: Props) =>
+  type !== 'None' ? <img style={{ width: SIZES[size] }} alt={type} src={TYPE_ICONS[type]} /> : null;
 
 export default TypeIcon;

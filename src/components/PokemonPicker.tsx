@@ -3,7 +3,6 @@ import React, { ChangeEvent, useState } from 'react';
 import {
   FormControlLabel,
   Grid,
-  InputAdornment,
   MenuItem,
   Slider,
   Switch,
@@ -235,9 +234,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
                 InputProps: {
                   ...params.InputProps,
                   startAdornment: params.inputProps.value && (
-                    <InputAdornment position="start">
-                      <ItemIcon item={params.inputProps.value} />
-                    </InputAdornment>
+                    <ItemIcon item={params.inputProps.value} />
                   ),
                 },
               }}

@@ -5,6 +5,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { calculate, Move, MOVES, Pokemon } from '@smogon/calc';
 
 import { GENERATION } from '../util';
+import TypeIcon from './TypeIcon';
 
 type Props = {
   attacker: Pokemon;
@@ -22,8 +23,9 @@ const MovePicker = ({ attacker, defender }: Props) => {
   const defenderMaxHp = defender.maxHP();
 
   let description;
+  let move: Move | undefined;
   if (moveName) {
-    const move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
+    move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
     const result = calculate(GENERATION, attacker, defender, move);
     const damage = result.damage;
 
@@ -51,7 +53,18 @@ const MovePicker = ({ attacker, defender }: Props) => {
           }}
           options={Object.keys(MOVES[GENERATION])}
           renderInput={params => (
-            <TextField {...params} size="small" label="Move" variant="outlined" />
+            <TextField
+              {...{
+                ...params,
+                InputProps: {
+                  ...params.InputProps,
+                  startAdornment: move && <TypeIcon size="small" type={move.type} />,
+                },
+              }}
+              size="small"
+              label="Move"
+              variant="outlined"
+            />
           )}
           value={moveName || ''}
         />
