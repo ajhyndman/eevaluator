@@ -61,8 +61,17 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     onChange(clonePokemon(pokemon, { nature: nextNature }));
   };
 
-  const handleStatsChange = (stats: StatsTable<number>) =>
-    onChange(clonePokemon(pokemon, { [statKey]: stats }));
+  const handleStatsChange = (stats: StatsTable<number>) => {
+    const nextPokemon = clonePokemon(pokemon, { [statKey]: stats });
+
+    // for convenience, if pokemon was at full health, ensure it's still at
+    // full health.
+    const isFullHp = pokemon.curHP === pokemon.maxHP();
+    if (isFullHp) {
+      nextPokemon.curHP = nextPokemon.maxHP();
+    }
+    onChange(nextPokemon);
+  };
   const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
