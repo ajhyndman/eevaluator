@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Container, Grid } from '@material-ui/core';
 import { Pokemon } from '@smogon/calc';
 
-import { clonePokemon, readFromLocalStorage, writeToLocalStorage } from '../util';
+import { clonePokemon, pageview, readFromLocalStorage, writeToLocalStorage } from '../util';
 import MovePicker from './MovePicker';
 import PokemonPicker from './PokemonPicker';
 
@@ -11,6 +11,9 @@ const GENERATION = 8;
 
 function App() {
   const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
+
+  // Log pageview to Google Analytics
+  useEffect(pageview, []);
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
     const pokemon = readFromLocalStorage('pokemon-left');

@@ -1,7 +1,8 @@
+import ReactGA from 'react-ga';
+
 import { NATURES, Pokemon, Stat } from '@smogon/calc';
 
 export const GENERATION = 8;
-
 export const STAT_LABEL: { [key in Stat]: string } = {
   atk: 'Attack',
   def: 'Defense',
@@ -11,6 +12,8 @@ export const STAT_LABEL: { [key in Stat]: string } = {
   spd: 'Sp. Def',
   spe: 'Speed',
 };
+
+const PROPERTY_ID = 'UA-97182834-3';
 
 /**
  * Creates a new pokemon with the properties of the first pokemon merged with
@@ -43,5 +46,12 @@ export const readFromLocalStorage = (key: string) => {
     }
     const json = JSON.parse(jsonString);
     return new Pokemon(GENERATION, json.name, json);
+  }
+};
+
+export const pageview = () => {
+  if (window.location.hostname !== 'localhost') {
+    ReactGA.initialize(PROPERTY_ID);
+    ReactGA.pageview(window.location.pathname);
   }
 };
