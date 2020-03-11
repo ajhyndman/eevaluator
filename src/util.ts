@@ -26,3 +26,22 @@ export const getNature = (plusStat?: Stat, minusStat?: Stat) => {
     return a === plusStat && b === minusStat;
   })!;
 };
+
+export const writeToLocalStorage = (key: string, pokemon: Pokemon) => {
+  const jsonString = JSON.stringify(pokemon);
+
+  if (window.localStorage) {
+    window.localStorage.setItem(key, jsonString);
+  }
+};
+
+export const readFromLocalStorage = (key: string) => {
+  if (window.localStorage) {
+    const jsonString = window.localStorage.getItem(key);
+    if (jsonString == null) {
+      return;
+    }
+    const json = JSON.parse(jsonString);
+    return new Pokemon(GENERATION, json.name, json);
+  }
+};
