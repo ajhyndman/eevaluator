@@ -52,7 +52,7 @@ const SIZES = {
   medium: 32,
 };
 
-const TypeIcon = ({ size = 'small', type }: Props) =>
+const TypeIcon = ({ size = 'medium', type }: Props) =>
   type !== 'None' ? <img style={{ width: SIZES[size] }} alt={type} src={TYPE_ICONS[type]} /> : null;
 
 export default TypeIcon;
