@@ -212,7 +212,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               onChange={(event: any) => setPlusStat(event.target.value)}
             >
               {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
-                <MenuItem value={stat}>{STAT_LABEL[stat]}</MenuItem>
+                <MenuItem key={stat} value={stat}>
+                  {STAT_LABEL[stat]}
+                </MenuItem>
               ))}
             </TextField>
           </Grid>
@@ -226,7 +228,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
               onChange={(event: any) => setMinusStat(event.target.value)}
             >
               {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
-                <MenuItem value={stat}>{STAT_LABEL[stat]}</MenuItem>
+                <MenuItem key={stat} value={stat}>
+                  {STAT_LABEL[stat]}
+                </MenuItem>
               ))}
             </TextField>
           </Grid>
