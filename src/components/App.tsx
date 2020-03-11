@@ -28,10 +28,10 @@ function App() {
         </Grid>
         <Grid item xs={12} md={6}>
           <Grid container spacing={1}>
-            <MovePicker attacker={pokemon1} defender={pokemon2} />
-            <MovePicker attacker={pokemon1} defender={pokemon2} />
-            <MovePicker attacker={pokemon1} defender={pokemon2} />
-            <MovePicker attacker={pokemon1} defender={pokemon2} />
+            <MovePicker attacker={pokemon2} defender={pokemon1} />
+            <MovePicker attacker={pokemon2} defender={pokemon1} />
+            <MovePicker attacker={pokemon2} defender={pokemon1} />
+            <MovePicker attacker={pokemon2} defender={pokemon1} />
             <PokemonPicker pokemon={pokemon2} onChange={setPokemon2} />
           </Grid>
         </Grid>
