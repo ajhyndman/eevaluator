@@ -18,10 +18,10 @@ import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, MOVES, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
+import { BLUE, RED } from '../styles';
+import TypeIcon from '../TypeIcon';
+import { STAT_LABEL } from '../util';
 import StatHexagon, { INPUT_SIZE } from './StatHexagon';
-import { BLUE, RED } from './styles';
-import TypeIcon from './TypeIcon';
-import { STAT_LABEL } from './util';
 
 type ModernStat = Exclude<Stat, 'spc'>;
 
