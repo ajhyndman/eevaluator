@@ -8,14 +8,17 @@ import { Stat } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
 import { polarToCartesian, STAT_LABEL } from '../util';
+import TriangleSlider from './TriangleSlider';
 
 type ModernStat = Exclude<Stat, 'spc'>;
 export type Stats = { [stat in ModernStat]: number };
 
 type Props = {
+  boosts: Stats;
+  onBoostsChange: (boosts: Stats) => void;
   natureFavoredStat: Stat;
   natureUnfavoredStat: Stat;
-  onChange: (stats: Stats) => void;
+  onStatsChange: (stats: Stats) => void;
   realStats: Stats;
   statKey: 'ivs' | 'evs';
   stats: Stats;
@@ -47,9 +50,11 @@ const drawHexagon = ([first, ...rest]: number[]) => {
 };
 
 const StatHexagon = ({
+  boosts,
+  onBoostsChange,
   natureFavoredStat,
   natureUnfavoredStat,
-  onChange,
+  onStatsChange,
   realStats,
   statKey,
   stats,
@@ -60,8 +65,11 @@ const StatHexagon = ({
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, statMax, numericValue);
 
-    onChange({ ...stats, [key]: newValue });
+    onStatsChange({ ...stats, [key]: newValue });
   };
+
+  const handleBoostChange = (key: ModernStat) => (value: number) =>
+    onBoostsChange({ ...boosts, [key]: value });
 
   const statScale = scaleLinear()
     .domain([0, statMax])
@@ -100,41 +108,48 @@ const StatHexagon = ({
       </svg>
 
       {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
-        const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (4 / 5), 2 * Math.PI * (i / 6)]);
+        const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (5 / 6), 2 * Math.PI * (i / 6)]);
 
         return (
-          <div
-            key={key}
-            style={{
-              position: 'absolute',
-              transform: `translate(${x}px, ${y}px)`,
-              textAlign: 'center',
-            }}
-          >
-            <TextField
-              size="small"
-              label={STAT_LABEL[key]}
-              onChange={handleStatChange(key)}
-              style={{ maxWidth: INPUT_SIZE }}
-              value={stats[key]}
-              type="number"
-            />
-            <p
+          <>
+            <div
+              key={key}
               style={{
-                color:
-                  key === natureFavoredStat && key === natureUnfavoredStat
-                    ? 'inherit'
-                    : key === natureFavoredStat
-                    ? RED
-                    : key === natureUnfavoredStat
-                    ? BLUE
-                    : 'inherit',
-                margin: '4px 0 0',
+                alignItems: 'center',
+                display: 'flex',
+                position: 'absolute',
+                textAlign: 'center',
+                transform: `translate(${x}px, ${y}px)`,
               }}
             >
-              {realStats[key]}
-            </p>
-          </div>
+              <TriangleSlider value={boosts[key]} onChange={handleBoostChange(key)} />
+              <div style={{ order: i === 1 || i === 2 ? -1 : 1 }}>
+                <TextField
+                  size="small"
+                  label={STAT_LABEL[key]}
+                  onChange={handleStatChange(key)}
+                  style={{ maxWidth: INPUT_SIZE }}
+                  value={stats[key]}
+                  type="number"
+                />
+                <p
+                  style={{
+                    color:
+                      key === natureFavoredStat && key === natureUnfavoredStat
+                        ? 'inherit'
+                        : key === natureFavoredStat
+                        ? RED
+                        : key === natureUnfavoredStat
+                        ? BLUE
+                        : 'inherit',
+                    margin: '4px 0 0',
+                  }}
+                >
+                  {realStats[key]}
+                </p>
+              </div>
+            </div>
+          </>
         );
       })}
     </div>

@@ -120,6 +120,9 @@ function PokemonPicker({ pokemon, onChange }: Props) {
     // },
   ];
 
+  const setBoosts = (boosts: StatsTable) => onChange(clonePokemon(pokemon, { boosts }));
+  const boosts = pokemon.boosts;
+
   return (
     <ThemeProvider theme={THEME}>
       <Grid item xs={12}>
@@ -174,9 +177,11 @@ function PokemonPicker({ pokemon, onChange }: Props) {
           }}
         >
           <StatHexagon
+            boosts={boosts}
+            onBoostsChange={setBoosts}
             natureFavoredStat={plusStat!}
             natureUnfavoredStat={minusStat!}
-            onChange={handleStatsChange}
+            onStatsChange={handleStatsChange}
             realStats={{ ...pokemon.stats, hp: pokemon.maxHP() }}
             statKey={statKey}
             stats={stats}
