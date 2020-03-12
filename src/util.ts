@@ -55,3 +55,8 @@ export const pageview = () => {
     ReactGA.pageview(window.location.pathname);
   }
 };
+
+export const polarToCartesian = ([radius, angle]: [number, number]) => [
+  Math.sin(angle) * radius,
+  -Math.cos(angle) * radius,
+];

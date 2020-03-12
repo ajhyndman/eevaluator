@@ -4,10 +4,10 @@ import { clamp, sum } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { TextField } from '@material-ui/core';
-import { Stat, StatsTable } from '@smogon/calc';
+import { Stat } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
-import { STAT_LABEL } from '../util';
+import { polarToCartesian, STAT_LABEL } from '../util';
 
 type ModernStat = Exclude<Stat, 'spc'>;
 export type Stats = { [stat in ModernStat]: number };
@@ -45,11 +45,6 @@ const drawHexagon = ([first, ...rest]: number[]) => {
 
   return hexagonPath.toString();
 };
-
-const polarToCartesian = ([radius, angle]: [number, number]) => [
-  Math.sin(angle) * radius,
-  -Math.cos(angle) * radius,
-];
 
 const StatHexagon = ({
   natureFavoredStat,
