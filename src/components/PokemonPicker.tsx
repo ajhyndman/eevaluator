@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import CodeIcon from '@material-ui/icons/Code';
+import EditIcon from '@material-ui/icons/Edit';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
@@ -135,7 +135,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           </Grid>
           <Grid item>
             <IconButton size="small" onClick={onExportClick} title="import">
-              <CodeIcon />
+              <EditIcon />
             </IconButton>
           </Grid>
         </Grid>
