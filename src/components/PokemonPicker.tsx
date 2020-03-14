@@ -9,15 +9,11 @@ import {
   Tab,
   Tabs,
   TextField,
-  ThemeProvider,
 } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
-import createPalette from '@material-ui/core/styles/createPalette';
 import Typography from '@material-ui/core/Typography';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
-import { BLUE, RED } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
@@ -29,18 +25,6 @@ type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
 };
-
-const THEME = createMuiTheme({
-  palette: createPalette({
-    primary: { main: RED },
-    secondary: { main: BLUE },
-    background: { default: BLUE },
-    text: {
-      primary: '#222233',
-      secondary: 'rgba(0, 0, 10, 0.8)',
-    },
-  }),
-});
 
 function PokemonPicker({ pokemon, onChange }: Props) {
   const [statTab, setStatTab] = useState(1);
@@ -124,7 +108,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
   const boosts = pokemon.boosts;
 
   return (
-    <ThemeProvider theme={THEME}>
+    <>
       <Grid item xs={12}>
         <Autocomplete
           getOptionLabel={option => option}
@@ -276,7 +260,7 @@ function PokemonPicker({ pokemon, onChange }: Props) {
           marks={marks}
         />
       </Grid>
-    </ThemeProvider>
+    </>
   );
 }
 
