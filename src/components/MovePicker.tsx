@@ -4,7 +4,7 @@ import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { calculate, Move, MOVES, Pokemon } from '@smogon/calc';
 
-import { GENERATION } from '../util';
+import { GENERATION } from '../util/misc';
 import TypeIcon from './TypeIcon';
 
 type Props = {

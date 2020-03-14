@@ -18,7 +18,7 @@ import { clamp } from 'ramda';
 
 import { Pokemon, Stat, StatsTable } from '@smogon/calc';
 
-import { GENERATION } from './util';
+import { GENERATION } from './misc';
 
 type PokemonConfiguration = {
   firstRow?: {

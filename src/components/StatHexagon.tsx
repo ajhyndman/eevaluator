@@ -7,7 +7,7 @@ import { TextField } from '@material-ui/core';
 import { Stat } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
-import { polarToCartesian, STAT_LABEL } from '../util';
+import { polarToCartesian, STAT_LABEL } from '../util/misc';
 import TriangleSlider from './TriangleSlider';
 
 type ModernStat = Exclude<Stat, 'spc'>;

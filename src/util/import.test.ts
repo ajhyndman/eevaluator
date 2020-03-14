@@ -1,4 +1,4 @@
-import { importPokemon } from './export';
+import { importPokemon } from './import';
 
 describe('importPokemon', () => {
   it('throws on empty string', () => {

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Grid } from '@material-ui/core';
 import { Pokemon } from '@smogon/calc';
 
-import { clonePokemon, pageview, readFromLocalStorage, writeToLocalStorage } from '../util';
+import { clonePokemon, pageview, readFromLocalStorage, writeToLocalStorage } from '../util/misc';
 import MovePicker from './MovePicker';
 import PokemonPicker from './PokemonPicker';
 

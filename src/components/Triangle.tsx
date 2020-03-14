@@ -1,7 +1,7 @@
 import { path } from 'd3-path';
 import React from 'react';
 
-import { polarToCartesian } from '../util';
+import { polarToCartesian } from '../util/misc';
 
 const SIZE = 8;
 

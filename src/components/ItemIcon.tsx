@@ -1,7 +1,7 @@
 import React from 'react';
 
 import itemSpritesheet from '../assets/item-spritesheet.png';
-import { SHOWDOWN_ITEMS } from '../showdown-item-data';
+import { SHOWDOWN_ITEMS } from '../util/showdown-item-data';
 
 type Props = {
   item: string;

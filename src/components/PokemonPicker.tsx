@@ -18,7 +18,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
-import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util';
+import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
 import TypeIcon from './TypeIcon';
