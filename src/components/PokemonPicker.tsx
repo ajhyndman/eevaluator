@@ -3,6 +3,7 @@ import React, { ChangeEvent, useState } from 'react';
 import {
   FormControlLabel,
   Grid,
+  IconButton,
   MenuItem,
   Slider,
   Switch,
@@ -11,6 +12,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import CodeIcon from '@material-ui/icons/Code';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
@@ -24,9 +26,10 @@ type ModernStat = Exclude<Stat, 'spc'>;
 type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
+  onExportClick: () => void;
 };
 
-function PokemonPicker({ pokemon, onChange }: Props) {
+function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
   const [statTab, setStatTab] = useState(1);
   const statKey = statTab === 0 ? 'ivs' : 'evs';
 
@@ -109,18 +112,33 @@ function PokemonPicker({ pokemon, onChange }: Props) {
 
   return (
     <>
-      <Grid item xs={12}>
-        <Autocomplete
-          getOptionLabel={option => option}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setSpecies(value);
-          }}
-          options={Object.keys(SPECIES[GENERATION])}
-          renderInput={params => (
-            <TextField {...params} size="small" label="Pokemon" variant="outlined" />
-          )}
-          value={pokemonName}
-        />
+      <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row' }}>
+        <Grid container alignItems="center" spacing={1}>
+          <Grid item style={{ flexGrow: 1 }}>
+            <Autocomplete
+              getOptionLabel={option => option}
+              onChange={(e: ChangeEvent<any>, value: any) => {
+                setSpecies(value);
+              }}
+              options={Object.keys(SPECIES[GENERATION])}
+              renderInput={params => (
+                <TextField
+                  {...params}
+                  size="small"
+                  style={{ flexGrow: 1 }}
+                  label="Pokemon"
+                  variant="outlined"
+                />
+              )}
+              value={pokemonName}
+            />
+          </Grid>
+          <Grid item>
+            <IconButton size="small" onClick={onExportClick} title="import">
+              <CodeIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
         <TypeIcon type={pokemon.type1} />

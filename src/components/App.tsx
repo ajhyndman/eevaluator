@@ -1,6 +1,7 @@
+import { range } from 'ramda';
 import React, { useEffect, useState } from 'react';
 
-import { Container, Grid, ThemeProvider } from '@material-ui/core';
+import { Container, Dialog, Grid, ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import { Pokemon } from '@smogon/calc';
@@ -13,8 +14,11 @@ import {
   readFromLocalStorage,
   writeToLocalStorage,
 } from '../util/misc';
+import ImportExport from './ImportExport';
 import MovePicker from './MovePicker';
 import PokemonPicker from './PokemonPicker';
+
+type PokemonKey = 'pokemon-left' | 'pokemon-right';
 
 const THEME = createMuiTheme({
   palette: createPalette({
@@ -29,10 +33,10 @@ const THEME = createMuiTheme({
 });
 
 function App() {
-  const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
-
   // Log pageview to Google Analytics
   useEffect(pageview, []);
+
+  const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
     const pokemon = readFromLocalStorage('pokemon-left');
@@ -49,14 +53,28 @@ function App() {
     return pikachu;
   });
 
-  const savePokemon = (setState: any, key: string) => (pokemon: Pokemon) => {
+  const savePokemon = (setState: any, key: PokemonKey) => (pokemon: Pokemon) => {
     writeToLocalStorage(key, pokemon);
     setState(pokemon);
   };
 
-  const handleMoveChange = (prevPokemon: Pokemon, setState: any, key: string, index: number) => (
-    move: string | undefined,
-  ) => {
+  const [showImportExport, setShowImportExport] = useState<'pokemon-left' | 'pokemon-right' | null>(
+    null,
+  );
+  const handleOpenImportExport = (key: PokemonKey) => () => setShowImportExport(key);
+  const handleCloseImportExport = () => setShowImportExport(null);
+  const handleImportPokemon = (pokemon: Pokemon) => {
+    const setPokemon = showImportExport === 'pokemon-left' ? setPokemonLeft : setPokemonRight;
+    savePokemon(setPokemon, showImportExport!)(pokemon);
+    handleCloseImportExport();
+  };
+
+  const handleMoveChange = (
+    prevPokemon: Pokemon,
+    setState: any,
+    key: PokemonKey,
+    index: number,
+  ) => (move: string | undefined) => {
     const nextMoves: any = prevPokemon.moves.slice();
     nextMoves[index] = move;
     const nextPokemon = clonePokemon(prevPokemon, { moves: nextMoves });
@@ -70,69 +88,52 @@ function App() {
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
-              <MovePicker
-                move={pokemonLeft.moves[0]}
-                onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', 0)}
-                attacker={pokemonLeft}
-                defender={pokemonRight}
-              />
-              <MovePicker
-                move={pokemonLeft.moves[1]}
-                onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', 1)}
-                attacker={pokemonLeft}
-                defender={pokemonRight}
-              />
-              <MovePicker
-                move={pokemonLeft.moves[2]}
-                onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', 2)}
-                attacker={pokemonLeft}
-                defender={pokemonRight}
-              />
-              <MovePicker
-                move={pokemonLeft.moves[3]}
-                onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', 3)}
-                attacker={pokemonLeft}
-                defender={pokemonRight}
-              />
+              {range(0, 4).map(n => (
+                <MovePicker
+                  key={n}
+                  index={n}
+                  move={pokemonLeft.moves[n]}
+                  onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', n)}
+                  attacker={pokemonLeft}
+                  defender={pokemonRight}
+                />
+              ))}
               <PokemonPicker
                 pokemon={pokemonLeft}
                 onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
+                onExportClick={handleOpenImportExport('pokemon-left')}
               />
             </Grid>
           </Grid>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
-              <MovePicker
-                move={pokemonRight.moves[0]}
-                onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', 0)}
-                attacker={pokemonRight}
-                defender={pokemonLeft}
-              />
-              <MovePicker
-                move={pokemonRight.moves[1]}
-                onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', 1)}
-                attacker={pokemonRight}
-                defender={pokemonLeft}
-              />
-              <MovePicker
-                move={pokemonRight.moves[2]}
-                onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', 2)}
-                attacker={pokemonRight}
-                defender={pokemonLeft}
-              />
-              <MovePicker
-                move={pokemonRight.moves[3]}
-                onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', 3)}
-                attacker={pokemonRight}
-                defender={pokemonLeft}
-              />
+              {range(0, 4).map(n => (
+                <MovePicker
+                  key={n}
+                  index={n}
+                  move={pokemonRight.moves[n]}
+                  onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', n)}
+                  attacker={pokemonRight}
+                  defender={pokemonLeft}
+                />
+              ))}
               <PokemonPicker
                 pokemon={pokemonRight}
                 onChange={savePokemon(setPokemonRight, 'pokemon-right')}
+                onExportClick={handleOpenImportExport('pokemon-right')}
               />
             </Grid>
           </Grid>
         </Grid>
+
+        <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
+          {showImportExport != null && (
+            <ImportExport
+              pokemon={showImportExport === 'pokemon-left' ? pokemonLeft : pokemonRight}
+              onImport={handleImportPokemon}
+            />
+          )}
+        </Dialog>
       </Container>
     </ThemeProvider>
   );

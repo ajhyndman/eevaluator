@@ -8,6 +8,7 @@ import { GENERATION } from '../util/misc';
 import TypeIcon from './TypeIcon';
 
 type Props = {
+  index: number;
   move?: string;
   onChangeMove: (move: string | undefined) => void;
   attacker: Pokemon;
@@ -19,7 +20,7 @@ const printPercent = (numerator: number, denominator: number) =>
 
 const printHko = (n: number) => `${n === 1 ? 'O' : n}HKO`;
 
-const MovePicker = ({ attacker, defender, move: moveName, onChangeMove }: Props) => {
+const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }: Props) => {
   const defenderMaxHp = defender.maxHP();
 
   let description;
@@ -62,7 +63,7 @@ const MovePicker = ({ attacker, defender, move: moveName, onChangeMove }: Props)
                 },
               }}
               size="small"
-              label="Move"
+              label={`Move ${index + 1}`}
               variant="outlined"
             />
           )}
