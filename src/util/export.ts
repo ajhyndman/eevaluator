@@ -36,16 +36,14 @@ const GENDER_PRINT_TEXT = {
 };
 
 function statsAllDefault(defaultValue: number, stats: StatsTable): boolean {
-  return Object.values(stats).some(value => value === defaultValue);
+  return Object.values(stats).every(value => value === defaultValue);
 }
 
 function printStats(defaultValue: number, stats: StatsTable): string {
-  // @ts-ignore: TypeScript can't follow the type of key/value through map.
-  const ivEntries = Object.entries(stats).map(([key, value]: [Stat, number]) => {
-    if (value !== defaultValue) {
-      return `${value} ${STAT_PRINT_NAMES[key]}`;
-    }
-  }, '');
+  const ivEntries = Object.entries(stats)
+    .filter(([, value]) => value !== defaultValue)
+    // @ts-ignore: TypeScript can't follow the type of key/value through map.
+    .map(([key, value]: [Stat, number]) => `${value} ${STAT_PRINT_NAMES[key]}`, '');
   return ivEntries.join(' / ');
 }
 
@@ -95,6 +93,9 @@ export function exportPokemon(pokemon: Pokemon): string {
 
   // Print all learned moves
   pokemon.moves.forEach(move => {
+    if (move == null) {
+      return;
+    }
     const moveLine = `- ${move}`;
     lines.push(moveLine);
   });
