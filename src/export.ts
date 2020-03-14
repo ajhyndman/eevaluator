@@ -56,6 +56,31 @@ const matchHappinessRow = /^\s*Happiness:\s*(\d{1,3})$/i;
 const matchShinyRow = /^\s*Shiny:\s*(Yes|No)\s*$/i;
 const matchMoveRow = /^\s*-\s*(.*?)\s*$/i;
 
+function rowMatches(condition: boolean, matcher: RegExp, row: string): boolean {
+  return condition && matcher.test(row);
+}
+
+/**
+ * Parse a string containing stat values into a partial StatsTable
+ *
+ * @example
+ * parseStatText('0 Atk / 0 Spd') // => { atk: 0, spd: 0 }
+ */
+function parseStatText(statsText: string): Partial<StatsTable> {
+  if (!statsText.trim()) {
+    // if string is only whitespace, return
+    return {};
+  }
+  // statEntries should look like: ['0 Atk', '0 Spd']
+  const statEntries = statsText.split('/');
+  // reduce list into object map
+  return statEntries.reduce((acc, statEntry) => {
+    const [value, key] = statEntry.trim().split(/\s+/);
+    const normalizedKey = key.toLocaleLowerCase() as Stat;
+    return { ...acc, [normalizedKey]: clamp(0, 255, parseInt(value)) };
+  }, {});
+}
+
 export function importPokemon(text: string): Pokemon {
   const rows = text.split('\n');
 
@@ -90,95 +115,59 @@ export function importPokemon(text: string): Pokemon {
     // remaining rows may be parsed in any order
 
     // if not already parsed, accept evs
-    if (config.evs == null) {
-      const result = matchEvRow.exec(row);
-      if (result != null) {
-        const [, stats] = result;
-        if (!stats.trim()) {
-          continue;
-        }
-        config.evs = stats.split('/').reduce((acc, statString) => {
-          const [value, key] = statString.trim().split(/\s+/);
-          return { ...acc, [key.toLocaleLowerCase() as Stat]: clamp(0, 255, parseInt(value)) };
-        }, {});
-        continue;
-      }
+    if (rowMatches(config.evs == null, matchEvRow, row)) {
+      const [, statText] = matchEvRow.exec(row)!;
+      config.evs = parseStatText(statText);
+      continue;
     }
 
-    // if not already parsed, accept ivs
-    if (config.ivs == null) {
-      const result = matchIvRow.exec(row);
-      if (result != null) {
-        const [, stats] = result;
-        if (!stats.trim()) {
-          continue;
-        }
-        config.ivs = stats.split('/').reduce((acc, statString) => {
-          const [value, key] = statString.trim().split(/\s+/);
-          return { ...acc, [key.toLocaleLowerCase() as Stat]: clamp(0, 31, parseInt(value)) };
-        }, {});
-        continue;
-      }
+    // // if not already parsed, accept ivs
+    if (rowMatches(config.ivs == null, matchIvRow, row)) {
+      const [, statText] = matchIvRow.exec(row)!;
+      config.ivs = parseStatText(statText);
+      continue;
     }
 
     // if not already parsed, accept level
-    if (config.level == null) {
-      const result = matchLevelRow.exec(row);
-      if (result != null) {
-        const [, level] = result;
-        config.level = parseInt(level);
-        continue;
-      }
+    if (rowMatches(config.level == null, matchLevelRow, row)) {
+      const [, level] = matchLevelRow.exec(row)!;
+      config.level = parseInt(level);
+      continue;
     }
 
     // if not already parsed, accept ability
-    if (config.ability == null) {
-      const result = matchAbilityRow.exec(row);
-      if (result != null) {
-        const [, ability] = result;
-        config.ability = ability;
-        continue;
-      }
+    if (rowMatches(config.ability == null, matchAbilityRow, row)) {
+      const [, ability] = matchAbilityRow.exec(row)!;
+      config.ability = ability;
+      continue;
     }
 
     // if not already parsed, accept nature
-    if (config.nature == null) {
-      const result = matchNatureRow.exec(row);
-      if (result != null) {
-        const [, nature] = result;
-        config.nature = nature;
-        continue;
-      }
+    if (rowMatches(config.nature == null, matchNatureRow, row)) {
+      const [, nature] = matchNatureRow.exec(row)!;
+      config.nature = nature;
+      continue;
     }
 
     // if not already parsed, accept happiness row
-    if (config.happiness == null) {
-      const result = matchHappinessRow.exec(row);
-      if (result != null) {
-        const [, happiness] = result;
-        config.happiness = parseInt(happiness);
-        continue;
-      }
+    if (rowMatches(config.happiness == null, matchHappinessRow, row)) {
+      const [, happiness] = matchHappinessRow.exec(row)!;
+      config.happiness = parseInt(happiness);
+      continue;
     }
 
     // if not already parsed, accept shiny row
-    if (config.shiny == null) {
-      const result = matchShinyRow.exec(row);
-      if (result != null) {
-        const [, shiny] = result;
-        config.shiny = shiny.toLocaleLowerCase() === 'yes';
-        continue;
-      }
+    if (rowMatches(config.shiny == null, matchShinyRow, row)) {
+      const [, shiny] = matchShinyRow.exec(row)!;
+      config.shiny = shiny.toLocaleLowerCase() === 'yes';
+      continue;
     }
 
     // if four moves have not already been parsed, accpet move row
-    if (config.moves.length < 4) {
-      const result = matchMoveRow.exec(row);
-      if (result != null) {
-        const [, move] = result;
-        config.moves.push(move);
-        continue;
-      }
+    if (rowMatches(config.moves.length < 4, matchMoveRow, row)) {
+      const [, move] = matchMoveRow.exec(row)!;
+      config.moves.push(move);
+      continue;
     }
 
     throw new Error('Row could not be matched');
