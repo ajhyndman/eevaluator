@@ -110,6 +110,9 @@ const StatHexagon = ({
       {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
         const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (4 / 5), 2 * Math.PI * (i / 6)]);
 
+        const boostStage = boosts[key];
+        const boostMultiplier = boostStage >= 0 ? (2 + boostStage) / 2 : 2 / (2 - boostStage);
+
         return (
           <div
             key={key}
@@ -159,7 +162,7 @@ const StatHexagon = ({
                 margin: '4px 0 0',
               }}
             >
-              {realStats[key]}
+              {Math.floor(realStats[key] * boostMultiplier)}
             </p>
           </div>
         );
