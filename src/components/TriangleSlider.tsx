@@ -19,7 +19,7 @@ const SPACING = 3;
 const DRAG_INCREMENT = 15;
 const THROTTLE_TIMING = 5;
 
-const GRAY = 'rgba(160, 160, 160, 0.5)';
+const GRAY = 'rgba(160, 160, 160, 0.4)';
 const PINK = '#F424CF';
 const PURPLE = '#7524F4';
 

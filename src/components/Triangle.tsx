@@ -3,7 +3,7 @@ import React from 'react';
 
 import { polarToCartesian } from '../util/misc';
 
-const SIZE = 8;
+const SIZE = 10;
 
 const Triangle = ({ color, flip = false }: { color: string; flip?: boolean }) => {
   const [x, y] = polarToCartesian([SIZE, Math.PI * (5 / 6)]);

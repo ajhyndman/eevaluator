@@ -160,6 +160,7 @@ const StatHexagon = ({
                     ? BLUE
                     : 'inherit',
                 margin: '4px 0 0',
+                fontWeight: boostMultiplier !== 1 ? 'bold' : 'normal',
               }}
             >
               {Math.floor(realStats[key] * boostMultiplier)}
