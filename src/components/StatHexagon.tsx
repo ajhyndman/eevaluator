@@ -111,59 +111,57 @@ const StatHexagon = ({
         const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (4 / 5), 2 * Math.PI * (i / 6)]);
 
         return (
-          <>
-            <div
-              key={key}
-              style={{
-                position: 'absolute',
-                textAlign: 'center',
-                transform: `translate(${x}px, ${y}px)`,
-              }}
-            >
-              {key !== 'hp' && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    ...(['atk', 'def'].includes(key)
-                      ? {
-                          right: 0,
-                          transform: `translate(100%, -50%)`,
-                        }
-                      : {
-                          left: 0,
-                          transform: `translate(-100%, -50%)`,
-                        }),
-                  }}
-                >
-                  <TriangleSlider value={boosts[key]} onChange={handleBoostChange(key)} />
-                </div>
-              )}
-              <TextField
-                size="small"
-                label={STAT_LABEL[key]}
-                onChange={handleStatChange(key)}
-                style={{ maxWidth: INPUT_SIZE }}
-                value={stats[key]}
-                type="number"
-              />
-              <p
+          <div
+            key={key}
+            style={{
+              position: 'absolute',
+              textAlign: 'center',
+              transform: `translate(${x}px, ${y}px)`,
+            }}
+          >
+            {key !== 'hp' && (
+              <div
                 style={{
-                  color:
-                    key === natureFavoredStat && key === natureUnfavoredStat
-                      ? 'inherit'
-                      : key === natureFavoredStat
-                      ? RED
-                      : key === natureUnfavoredStat
-                      ? BLUE
-                      : 'inherit',
-                  margin: '4px 0 0',
+                  position: 'absolute',
+                  top: '50%',
+                  ...(['atk', 'def'].includes(key)
+                    ? {
+                        right: 0,
+                        transform: `translate(100%, -50%)`,
+                      }
+                    : {
+                        left: 0,
+                        transform: `translate(-100%, -50%)`,
+                      }),
                 }}
               >
-                {realStats[key]}
-              </p>
-            </div>
-          </>
+                <TriangleSlider value={boosts[key]} onChange={handleBoostChange(key)} />
+              </div>
+            )}
+            <TextField
+              size="small"
+              label={STAT_LABEL[key]}
+              onChange={handleStatChange(key)}
+              style={{ maxWidth: INPUT_SIZE }}
+              value={stats[key]}
+              type="number"
+            />
+            <p
+              style={{
+                color:
+                  key === natureFavoredStat && key === natureUnfavoredStat
+                    ? 'inherit'
+                    : key === natureFavoredStat
+                    ? RED
+                    : key === natureUnfavoredStat
+                    ? BLUE
+                    : 'inherit',
+                margin: '4px 0 0',
+              }}
+            >
+              {realStats[key]}
+            </p>
+          </div>
         );
       })}
     </div>
