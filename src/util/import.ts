@@ -1,5 +1,5 @@
 /**
- * Import and export from the standard Pokemon text format.
+ * Import from the standard Pokemon text format.
  *
  * Smogonbirb (Talonflame) (F) @ Flyinium Z
  * Ability: Gale Wings
@@ -21,7 +21,7 @@ import { Pokemon, Stat, StatsTable } from '@smogon/calc';
 import { GENERATION } from './misc';
 
 type PokemonConfiguration = {
-  firstRow?: {
+  firstLine?: {
     gender?: 'female' | 'male';
     item?: string;
     nickname?: string;
@@ -45,19 +45,19 @@ const GENDER_NAMES = {
 // To debug or experiment with regex in this file, I recommend using a railroad
 // diagram visualizer, such as: https://regexper.com/
 
-const matchBlankRow = /^\s*$/;
-const matchFirstRow = /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*))?\s*$/i;
-const matchLevelRow = /^\s*Level:\s*(\d{1,3})\s*$/i;
-const matchAbilityRow = /^\s*Ability:\s*(.*?)\s*$/i;
-const matchEvRow = /^\s*EVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
-const matchIvRow = /^\s*IVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
-const matchNatureRow = /^\s*(.*?)\s*Nature\s*$/i;
-const matchHappinessRow = /^\s*Happiness:\s*(\d{1,3})$/i;
-const matchShinyRow = /^\s*Shiny:\s*(Yes|No)\s*$/i;
-const matchMoveRow = /^\s*-\s*(.*?)\s*$/i;
+const matchBlankLine = /^\s*$/;
+const matchFirstLine = /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*))?\s*$/i;
+const matchLevelLine = /^\s*Level:\s*(\d{1,3})\s*$/i;
+const matchAbilityLine = /^\s*Ability:\s*(.*?)\s*$/i;
+const matchEvLine = /^\s*EVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
+const matchIvLine = /^\s*IVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
+const matchNatureLine = /^\s*(.*?)\s*Nature\s*$/i;
+const matchHappinessLine = /^\s*Happiness:\s*(\d{1,3})$/i;
+const matchShinyLine = /^\s*Shiny:\s*(Yes|No)\s*$/i;
+const matchMoveLine = /^\s*-\s*(.*?)\s*$/i;
 
-function rowMatches(condition: boolean, matcher: RegExp, row: string): boolean {
-  return condition && matcher.test(row);
+function lineMatches(condition: boolean, matcher: RegExp, line: string): boolean {
+  return condition && matcher.test(line);
 }
 
 /**
@@ -82,28 +82,28 @@ function parseStatText(statsText: string): Partial<StatsTable> {
 }
 
 export function importPokemon(text: string): Pokemon {
-  const rows = text.split('\n');
+  const lines = text.split('\n');
 
   const config: PokemonConfiguration = {
     moves: [],
   };
 
-  while (rows.length > 0) {
-    const row = rows.shift()!;
+  while (lines.length > 0) {
+    const line = lines.shift()!;
 
     // blank lines are always ignored
-    if (matchBlankRow.test(row)) {
+    if (matchBlankLine.test(line)) {
       continue;
     }
 
-    // if not already found, only accept first row
-    if (config.firstRow == null) {
-      const result = matchFirstRow.exec(row);
+    // if not already found, only accept first line
+    if (config.firstLine == null) {
+      const result = matchFirstLine.exec(line);
       if (result == null) {
         throw new Error('Pokemon text must always start with name');
       }
       const [, name1, name2, gender, item] = result;
-      config.firstRow = {
+      config.firstLine = {
         species: name2 || name1,
         nickname: name2 ? name1 : undefined,
         gender: gender != null ? GENDER_NAMES[gender.toLocaleUpperCase() as 'M' | 'F'] : undefined,
@@ -112,79 +112,79 @@ export function importPokemon(text: string): Pokemon {
       continue;
     }
 
-    // remaining rows may be parsed in any order
+    // remaining lines may be parsed in any order
 
     // if not already parsed, accept evs
-    if (rowMatches(config.evs == null, matchEvRow, row)) {
-      const [, statText] = matchEvRow.exec(row)!;
+    if (lineMatches(config.evs == null, matchEvLine, line)) {
+      const [, statText] = matchEvLine.exec(line)!;
       config.evs = parseStatText(statText);
       continue;
     }
 
     // // if not already parsed, accept ivs
-    if (rowMatches(config.ivs == null, matchIvRow, row)) {
-      const [, statText] = matchIvRow.exec(row)!;
+    if (lineMatches(config.ivs == null, matchIvLine, line)) {
+      const [, statText] = matchIvLine.exec(line)!;
       config.ivs = parseStatText(statText);
       continue;
     }
 
     // if not already parsed, accept level
-    if (rowMatches(config.level == null, matchLevelRow, row)) {
-      const [, level] = matchLevelRow.exec(row)!;
+    if (lineMatches(config.level == null, matchLevelLine, line)) {
+      const [, level] = matchLevelLine.exec(line)!;
       config.level = parseInt(level);
       continue;
     }
 
     // if not already parsed, accept ability
-    if (rowMatches(config.ability == null, matchAbilityRow, row)) {
-      const [, ability] = matchAbilityRow.exec(row)!;
+    if (lineMatches(config.ability == null, matchAbilityLine, line)) {
+      const [, ability] = matchAbilityLine.exec(line)!;
       config.ability = ability;
       continue;
     }
 
     // if not already parsed, accept nature
-    if (rowMatches(config.nature == null, matchNatureRow, row)) {
-      const [, nature] = matchNatureRow.exec(row)!;
+    if (lineMatches(config.nature == null, matchNatureLine, line)) {
+      const [, nature] = matchNatureLine.exec(line)!;
       config.nature = nature;
       continue;
     }
 
-    // if not already parsed, accept happiness row
-    if (rowMatches(config.happiness == null, matchHappinessRow, row)) {
-      const [, happiness] = matchHappinessRow.exec(row)!;
+    // if not already parsed, accept happiness line
+    if (lineMatches(config.happiness == null, matchHappinessLine, line)) {
+      const [, happiness] = matchHappinessLine.exec(line)!;
       config.happiness = parseInt(happiness);
       continue;
     }
 
-    // if not already parsed, accept shiny row
-    if (rowMatches(config.shiny == null, matchShinyRow, row)) {
-      const [, shiny] = matchShinyRow.exec(row)!;
+    // if not already parsed, accept shiny line
+    if (lineMatches(config.shiny == null, matchShinyLine, line)) {
+      const [, shiny] = matchShinyLine.exec(line)!;
       config.shiny = shiny.toLocaleLowerCase() === 'yes';
       continue;
     }
 
-    // if four moves have not already been parsed, accpet move row
-    if (rowMatches(config.moves.length < 4, matchMoveRow, row)) {
-      const [, move] = matchMoveRow.exec(row)!;
+    // if four moves have not already been parsed, accpet move line
+    if (lineMatches(config.moves.length < 4, matchMoveLine, line)) {
+      const [, move] = matchMoveLine.exec(line)!;
       config.moves.push(move);
       continue;
     }
 
-    throw new Error('Row could not be matched');
+    throw new Error('Line could not be matched');
   }
 
-  if (config.firstRow == null) {
+  if (config.firstLine == null) {
     throw new Error('No pokemon data found');
   }
 
-  return new Pokemon(GENERATION, config.firstRow.species, {
+  return new Pokemon(GENERATION, config.firstLine.species, {
     level: config.level,
     ability: config.ability,
-    item: config.firstRow.item,
+    item: config.firstLine.item,
     evs: config.evs,
     ivs: config.ivs,
     moves: config.moves,
     nature: config.nature,
-    gender: config.firstRow.gender,
+    gender: config.firstLine.gender,
   });
 }
