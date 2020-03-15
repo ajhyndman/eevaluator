@@ -1,15 +1,17 @@
 import { range } from 'ramda';
 import React, { useEffect, useState } from 'react';
 
-import { Container, Dialog, Grid, ThemeProvider } from '@material-ui/core';
+import { Button, Container, Dialog, Grid, Link, ThemeProvider, Toolbar } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { Pokemon } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
 import {
   clonePokemon,
   GENERATION,
+  GITHUB_URL,
   pageview,
   readFromLocalStorage,
   writeToLocalStorage,
@@ -134,6 +136,15 @@ function App() {
           )}
         </Dialog>
       </Container>
+
+      <Toolbar variant="dense">
+        <div style={{ flexGrow: 1 }} />
+        <Link href={GITHUB_URL}>
+          <Button startIcon={<GitHubIcon />} size="small">
+            GitHub
+          </Button>
+        </Link>
+      </Toolbar>
     </ThemeProvider>
   );
 }

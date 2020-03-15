@@ -15,6 +15,8 @@ export const STAT_LABEL: { [key in Stat]: string } = {
 
 const PROPERTY_ID = 'UA-97182834-3';
 
+export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issues/1';
+
 /**
  * Creates a new pokemon with the properties of the first pokemon merged with
  * the properties of the options configuration.  If a key exists in both
