@@ -205,9 +205,13 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           />
         </div>
       </Grid>
-      <Grid item xs={12}></Grid>
-      <Grid item xs={4}>
+      <Grid item xs={2} />
+      <Grid item xs={2} style={{ display: 'flex', alignItems: 'center' }}>
+        <Typography>{nature}</Typography>
+      </Grid>
+      <Grid item xs={3}>
         <TextField
+          fullWidth
           size="small"
           variant="outlined"
           select
@@ -222,8 +226,9 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <TextField
+          fullWidth
           size="small"
           variant="outlined"
           select
@@ -238,9 +243,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           ))}
         </TextField>
       </Grid>
-      <Grid item xs={4} style={{ display: 'flex', alignItems: 'center' }}>
-        <Typography>{nature}</Typography>
-      </Grid>
+      <Grid item xs={2} />
       <Grid item xs={6}>
         <Autocomplete
           style={{ flexGrow: 1 }}
