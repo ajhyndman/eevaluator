@@ -46,7 +46,7 @@ const GENDER_NAMES = {
 // diagram visualizer, such as: https://regexper.com/
 
 const matchBlankLine = /^\s*$/;
-const matchFirstLine = /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*))?\s*$/i;
+const matchFirstLine = /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*?))?\s*$/i;
 const matchLevelLine = /^\s*Level:\s*(\d{1,3})\s*$/i;
 const matchAbilityLine = /^\s*Ability:\s*(.*?)\s*$/i;
 const matchEvLine = /^\s*EVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;

@@ -40,6 +40,11 @@ describe('importPokemon', () => {
       expect(pokemon.name).toBe('Pikachu');
       expect(pokemon.item).toBe('Magnet');
     });
+
+    it('handles trailing whitespace', () => {
+      const pokemon = importPokemon('Crawdaunt @ Life Orb  \n');
+      expect(pokemon.item).toBe('Life Orb');
+    });
   });
 
   describe('stat row parser', () => {
