@@ -189,8 +189,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
               backgroundPosition: 'center',
               filter: 'opacity(25%)',
               mixBlendMode: 'multiply',
-              pointerEvents: 'none',
               transition: `top ${TRANSITION}, left ${TRANSITION}, right ${TRANSITION}, bottom ${TRANSITION}`,
+              zIndex: -1,
             }}
           />
           <StatHexagon
