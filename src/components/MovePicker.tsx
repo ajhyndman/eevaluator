@@ -18,6 +18,13 @@ type Props = {
 const printPercent = (numerator: number, denominator: number) =>
   Math.round((numerator / denominator) * 100);
 
+const printRange = (minDamage: number, maxDamage: number, maxHp: number) => {
+  if (minDamage === maxDamage) {
+    return `${printPercent(maxDamage, maxHp)}%`;
+  }
+  return `${printPercent(minDamage, maxHp)}—${printPercent(maxDamage, maxHp)}%`;
+};
+
 const printHko = (n: number) => `${n === 1 ? 'O' : n}HKO`;
 
 const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }: Props) => {
@@ -30,13 +37,13 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
     const result = calculate(GENERATION, attacker, defender, move);
     const damage = result.damage;
 
-    if (damage.length > 1) {
+    if (damage.some(value => value !== 0)) {
       const minDamage = damage[0] * move.hits;
       const maxDamage = damage[damage.length - 1] * move.hits;
       const { chance, n } = result.kochance();
 
       description =
-        `${printPercent(minDamage, defenderMaxHp)}—${printPercent(maxDamage, defenderMaxHp)}%` +
+        printRange(minDamage, maxDamage, defenderMaxHp) +
         (n > 0 ? ` ${printHko(n)}` : '') +
         (chance != null && chance !== 1 && chance !== 0 ? ` (${Math.round(chance * 100)}%)` : '');
     }
