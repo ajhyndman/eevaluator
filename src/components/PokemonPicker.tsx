@@ -207,7 +207,9 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
       </Grid>
       <Grid item xs={2} />
       <Grid item xs={2} style={{ display: 'flex', alignItems: 'center' }}>
-        <Typography>{nature}</Typography>
+        <Typography align="right" style={{ flexGrow: 1 }}>
+          {nature}
+        </Typography>
       </Grid>
       <Grid item xs={3}>
         <TextField
