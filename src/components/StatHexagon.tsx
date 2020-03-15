@@ -81,7 +81,6 @@ const StatHexagon = ({
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
-        background: 'rgba(255, 255, 255, 0.75)',
         flexGrow: 1,
         justifyContent: 'center',
         padding: `${INPUT_SIZE * (3 / 2)}px 0`,

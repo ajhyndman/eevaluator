@@ -24,7 +24,6 @@ const THEME = createMuiTheme({
   palette: createPalette({
     primary: { main: RED },
     secondary: { main: BLUE },
-    background: { default: BLUE },
     text: {
       primary: '#222233',
       secondary: 'rgba(0, 0, 10, 0.8)',

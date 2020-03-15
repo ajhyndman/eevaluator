@@ -170,14 +170,28 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           style={{
             display: 'flex',
             alignItems: 'center',
-            backgroundImage:
-              pokemon &&
-              `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'contain',
-            backgroundPosition: 'center',
+            position: 'relative',
           }}
         >
+          <div
+            style={{
+              position: 'absolute',
+              top: pokemon.isDynamaxed ? '-50%' : 0,
+              left: pokemon.isDynamaxed ? '-50%' : 0,
+              right: pokemon.isDynamaxed ? '-50%' : 0,
+              bottom: pokemon.isDynamaxed ? '-50%' : 0,
+              backgroundImage:
+                pokemon &&
+                `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              filter: 'opacity(25%)',
+              mixBlendMode: 'multiply',
+              pointerEvents: 'none',
+              transition: 'top 0.2s ease, left 0.2s ease, right 0.2s ease, bottom 0.2s ease',
+            }}
+          />
           <StatHexagon
             boosts={boosts}
             onBoostsChange={setBoosts}
