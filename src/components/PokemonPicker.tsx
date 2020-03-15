@@ -265,7 +265,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
               variant="outlined"
             />
           )}
-          value={item}
+          // pass empty string to ensure this input is always "controlled"
+          value={item || ''}
         />
       </Grid>
       <Grid item xs={6}>
