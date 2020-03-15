@@ -16,6 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 
+import { TRANSITION } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
@@ -189,7 +190,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
               filter: 'opacity(25%)',
               mixBlendMode: 'multiply',
               pointerEvents: 'none',
-              transition: 'top 0.2s ease, left 0.2s ease, right 0.2s ease, bottom 0.2s ease',
+              transition: `top ${TRANSITION}, left ${TRANSITION}, right ${TRANSITION}, bottom ${TRANSITION}`,
             }}
           />
           <StatHexagon
