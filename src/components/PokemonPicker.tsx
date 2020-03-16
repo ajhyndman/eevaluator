@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
+import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
+import SaveIcon from '@material-ui/icons/Save';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 import { Status } from '@smogon/calc/dist/pokemon';
@@ -130,6 +132,16 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
               selectOnFocus
               value={pokemonName}
             />
+          </Grid>
+          <Grid item>
+            <IconButton size="small" onClick={onExportClick} title="save to favorites">
+              <SaveIcon />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton size="small" onClick={onExportClick} title="favorites">
+              <FolderSpecialIcon />
+            </IconButton>
           </Grid>
           <Grid item>
             <IconButton size="small" onClick={onExportClick} title="import">
