@@ -33,21 +33,21 @@ const THEME = createMuiTheme({
 });
 
 function App() {
-  const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
+  const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
     const pokemon = readFromLocalStorage('pokemon-left');
     if (pokemon) {
       return pokemon;
     }
-    return pikachu;
+    return eevee;
   });
   const [pokemonRight, setPokemonRight] = useState(() => {
     const pokemon = readFromLocalStorage('pokemon-right');
     if (pokemon) {
       return pokemon;
     }
-    return pikachu;
+    return eevee;
   });
 
   const savePokemon = (setState: any, key: PokemonKey) => (pokemon: Pokemon) => {
