@@ -1,5 +1,5 @@
 import { range } from 'ramda';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Button, Container, Dialog, Grid, Link, ThemeProvider, Toolbar } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -12,7 +12,6 @@ import {
   clonePokemon,
   GENERATION,
   GITHUB_URL,
-  pageview,
   readFromLocalStorage,
   writeToLocalStorage,
 } from '../util/misc';
@@ -34,9 +33,6 @@ const THEME = createMuiTheme({
 });
 
 function App() {
-  // Log pageview to Google Analytics
-  useEffect(pageview, []);
-
   const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
