@@ -21,6 +21,7 @@ import { TRANSITION } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
+import StatusLabel from './StatusLabel';
 import TypeIcon from './TypeIcon';
 
 type ModernStat = Exclude<Stat, 'spc'>;
@@ -35,7 +36,7 @@ const STATUS: Status[] = [
   'Healthy',
   'Paralyzed',
   'Poisoned',
-  'Badly Poisoned',
+  // 'Badly Poisoned',
   'Burned',
   'Asleep',
   'Frozen',
@@ -174,7 +175,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
         >
           {STATUS.map(status => (
             <MenuItem key={status} value={status}>
-              {status}
+              <StatusLabel status={status} />
             </MenuItem>
           ))}
         </TextField>
