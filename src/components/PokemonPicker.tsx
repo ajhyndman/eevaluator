@@ -177,10 +177,10 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           <div
             style={{
               position: 'absolute',
-              top: pokemon.isDynamaxed ? '-50%' : 0,
-              left: pokemon.isDynamaxed ? '-50%' : 0,
-              right: pokemon.isDynamaxed ? '-50%' : 0,
-              bottom: pokemon.isDynamaxed ? '-50%' : 0,
+              top: 0,
+              right: 0,
+              bottom: 0,
+              left: 0,
               backgroundImage:
                 pokemon &&
                 `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
@@ -189,7 +189,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
               backgroundPosition: 'center',
               filter: 'opacity(25%)',
               mixBlendMode: 'multiply',
-              transition: `top ${TRANSITION}, left ${TRANSITION}, right ${TRANSITION}, bottom ${TRANSITION}`,
+              transform: pokemon.isDynamaxed ? 'scale(2, 2)' : '',
+              transition: `transform ${TRANSITION}`,
               zIndex: -1,
             }}
           />
