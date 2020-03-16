@@ -25,6 +25,7 @@ const StatusLabel = ({ status }: Props) => (
       color: status !== 'Healthy' ? 'white' : 'inherit',
       display: 'inline-block',
       padding: '0 4px',
+      margin: '-1px 0',
       borderRadius: 4,
       textTransform: 'uppercase',
     }}

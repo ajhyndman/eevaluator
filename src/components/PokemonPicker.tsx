@@ -167,7 +167,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
         <TextField
           size="small"
           variant="outlined"
-          SelectProps={{ autoWidth: true, style: { width: 175 } }}
+          SelectProps={{ style: { width: 175 } }}
           select
           label="Status"
           value={pokemon.status === 'Healthy' ? '' : pokemon.status}
@@ -179,6 +179,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
             </MenuItem>
           ))}
         </TextField>
+        <div style={{ flexGrow: 1 }} />
         <FormControlLabel
           control={
             <Switch
@@ -187,7 +188,6 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
               color="primary"
             />
           }
-          style={{ flexGrow: 1 }}
           label="Dynamax"
           labelPlacement="start"
         />
