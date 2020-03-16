@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
+import { Status } from '@smogon/calc/dist/pokemon';
 
 import { TRANSITION } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
@@ -29,6 +30,16 @@ type Props = {
   onChange: (pokemon: Pokemon) => void;
   onExportClick: () => void;
 };
+
+const STATUS: Status[] = [
+  'Healthy',
+  'Paralyzed',
+  'Poisoned',
+  'Badly Poisoned',
+  'Burned',
+  'Asleep',
+  'Frozen',
+];
 
 function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
   const [statTab, setStatTab] = useState(1);
@@ -88,6 +99,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
   const setCurrentHp = (nextHp: number) => onChange(clonePokemon(pokemon, { curHP: nextHp }));
   const currentHp = pokemon.curHP;
 
+  const setStatus = (status: Status) => onChange(clonePokemon(pokemon, { status }));
+
   const maxHp = pokemon.maxHP();
   const marks = [
     // {
@@ -144,7 +157,27 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
       <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
         <TypeIcon type={pokemon.type1} />
         <div style={{ width: 8 }} />
-        {pokemon.type2 && <TypeIcon type={pokemon.type2} />}
+        {pokemon.type2 && (
+          <>
+            <TypeIcon type={pokemon.type2} />
+            <div style={{ width: 8 }} />
+          </>
+        )}
+        <TextField
+          size="small"
+          variant="outlined"
+          SelectProps={{ autoWidth: true, style: { width: 175 } }}
+          select
+          label="Status"
+          value={pokemon.status === 'Healthy' ? '' : pokemon.status}
+          onChange={(event: any) => setStatus(event.target.value)}
+        >
+          {STATUS.map(status => (
+            <MenuItem key={status} value={status}>
+              {status}
+            </MenuItem>
+          ))}
+        </TextField>
         <FormControlLabel
           control={
             <Switch
