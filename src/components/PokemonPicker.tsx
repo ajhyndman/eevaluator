@@ -19,7 +19,7 @@ import { TRANSITION } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
-import StatusLabel from './StatusLabel';
+import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
 
 type ModernStat = Exclude<Stat, 'spc'>;
@@ -30,16 +30,6 @@ type Props = {
   onChange: (pokemon: Pokemon) => void;
   onExportClick: () => void;
 };
-
-const STATUS: Status[] = [
-  'Healthy',
-  'Paralyzed',
-  'Poisoned',
-  // 'Badly Poisoned',
-  'Burned',
-  'Asleep',
-  'Frozen',
-];
 
 function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
   const [statTab, setStatTab] = useState(1);

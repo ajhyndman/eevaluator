@@ -17,6 +17,16 @@ const STATUS_COLORS: { [key in Status]: string } = {
   'Badly Poisoned': 'black',
 };
 
+export const STATUS: Status[] = [
+  'Healthy',
+  'Paralyzed',
+  'Poisoned',
+  // 'Badly Poisoned',
+  'Burned',
+  'Asleep',
+  'Frozen',
+];
+
 const StatusLabel = ({ status }: Props) => (
   <Typography
     variant="body2"
