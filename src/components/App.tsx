@@ -101,6 +101,11 @@ function App() {
                 onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
                 onExportClick={handleOpenImportExport('pokemon-left')}
               />
+              {/* Create some spacing for the stacked mobile case.
+                  TODO: This shouldn't affect desktop. */}
+              <Grid item xs={12}>
+                <div style={{ height: 48 }} />
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -121,6 +126,7 @@ function App() {
                 onChange={savePokemon(setPokemonRight, 'pokemon-right')}
                 onExportClick={handleOpenImportExport('pokemon-right')}
               />
+              <Grid item />
             </Grid>
           </Grid>
         </Grid>
