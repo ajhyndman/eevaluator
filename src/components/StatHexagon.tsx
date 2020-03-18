@@ -147,6 +147,7 @@ const StatHexagon = ({
               style={{ maxWidth: INPUT_SIZE }}
               value={stats[key]}
               type="number"
+              inputProps={{ step: statKey === 'evs' ? 4 : 1 }}
             />
             <p
               style={{
