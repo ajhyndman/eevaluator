@@ -102,10 +102,6 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
 
   const maxHp = pokemon.maxHP();
   const marks = [
-    // {
-    //   value: 0,
-    //   label: 0,
-    // },
     {
       value: Math.floor(maxHp / 3),
       label: '33%',
@@ -114,10 +110,6 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
       value: Math.floor(maxHp * 0.5),
       label: '50%',
     },
-    // {
-    //   value: maxHp,
-    //   label: maxHp,
-    // },
   ];
 
   const setBoosts = (boosts: StatsTable) => onChange(clonePokemon(pokemon, { boosts }));
