@@ -24,7 +24,7 @@ type Props = {
   stats: Stats;
 };
 
-const SIZE = 150;
+const SIZE = 120;
 export const INPUT_SIZE = 55;
 export const RADIUS = SIZE / 2;
 
