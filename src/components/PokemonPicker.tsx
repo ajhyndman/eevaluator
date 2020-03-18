@@ -7,8 +7,6 @@ import {
   MenuItem,
   Slider,
   Switch,
-  Tab,
-  Tabs,
   TextField,
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -196,13 +194,6 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
         />
       </Grid>
 
-      {/* Stat spread inputs */}
-      <Grid item xs={12}>
-        <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
-          <Tab label="IV" />
-          <Tab label="EV" />
-        </Tabs>
-      </Grid>
       <Grid item xs={12}>
         <div
           style={{
@@ -241,6 +232,24 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
             statKey={statKey}
             stats={stats}
           />
+          <label
+            style={{
+              alignItems: 'center',
+              cursor: 'pointer',
+              display: 'flex',
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+            }}
+          >
+            <Typography>IV</Typography>
+            <Switch
+              checked={statTab === 1}
+              onChange={(e: any, value: any) => setStatTab(value ? 1 : 0)}
+              color="default"
+            />
+            <Typography>EV</Typography>
+          </label>
         </div>
       </Grid>
 
