@@ -196,6 +196,95 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
         />
       </Grid>
 
+      {/* Item Input */}
+      <Grid item xs={6}>
+        <Autocomplete
+          style={{ flexGrow: 1 }}
+          getOptionLabel={option => option}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setItem(value);
+          }}
+          options={ITEMS[GENERATION]}
+          renderInput={(params: any) => (
+            <TextField
+              {...{
+                ...params,
+                InputProps: {
+                  ...params.InputProps,
+                  startAdornment: params.inputProps.value && (
+                    <ItemIcon item={params.inputProps.value} />
+                  ),
+                },
+              }}
+              size="small"
+              label="Item"
+              variant="outlined"
+            />
+          )}
+          // pass empty string to ensure this input is always "controlled"
+          value={item || ''}
+        />
+      </Grid>
+
+      {/* Ability Input */}
+      <Grid item xs={6}>
+        <Autocomplete
+          style={{ flexGrow: 1 }}
+          getOptionLabel={option => option}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setAbility(value);
+          }}
+          options={ABILITIES[GENERATION]}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Ability" variant="outlined" />
+          )}
+          value={ability}
+        />
+      </Grid>
+
+      {/* Nature Inputs */}
+      <Grid item xs={2} />
+      <Grid item xs={2} style={{ display: 'flex', alignItems: 'center' }}>
+        <Typography align="right" style={{ flexGrow: 1 }}>
+          {nature}
+        </Typography>
+      </Grid>
+      <Grid item xs={3}>
+        <TextField
+          fullWidth
+          size="small"
+          variant="outlined"
+          select
+          label="↑"
+          value={plusStat}
+          onChange={(event: any) => setPlusStat(event.target.value)}
+        >
+          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+            <MenuItem key={stat} value={stat}>
+              {STAT_LABEL[stat]}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+      <Grid item xs={3}>
+        <TextField
+          fullWidth
+          size="small"
+          variant="outlined"
+          select
+          label="↓"
+          value={minusStat}
+          onChange={(event: any) => setMinusStat(event.target.value)}
+        >
+          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+            <MenuItem key={stat} value={stat}>
+              {STAT_LABEL[stat]}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+      <Grid item xs={2} />
+
       {/* Stat spread inputs */}
       <Grid item xs={12}>
         <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
@@ -242,95 +331,6 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
             stats={stats}
           />
         </div>
-      </Grid>
-
-      {/* Nature Inputs */}
-      <Grid item xs={2} />
-      <Grid item xs={2} style={{ display: 'flex', alignItems: 'center' }}>
-        <Typography align="right" style={{ flexGrow: 1 }}>
-          {nature}
-        </Typography>
-      </Grid>
-      <Grid item xs={3}>
-        <TextField
-          fullWidth
-          size="small"
-          variant="outlined"
-          select
-          label="↑"
-          value={plusStat}
-          onChange={(event: any) => setPlusStat(event.target.value)}
-        >
-          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
-            <MenuItem key={stat} value={stat}>
-              {STAT_LABEL[stat]}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Grid>
-      <Grid item xs={3}>
-        <TextField
-          fullWidth
-          size="small"
-          variant="outlined"
-          select
-          label="↓"
-          value={minusStat}
-          onChange={(event: any) => setMinusStat(event.target.value)}
-        >
-          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
-            <MenuItem key={stat} value={stat}>
-              {STAT_LABEL[stat]}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Grid>
-      <Grid item xs={2} />
-
-      {/* Item Input */}
-      <Grid item xs={6}>
-        <Autocomplete
-          style={{ flexGrow: 1 }}
-          getOptionLabel={option => option}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setItem(value);
-          }}
-          options={ITEMS[GENERATION]}
-          renderInput={(params: any) => (
-            <TextField
-              {...{
-                ...params,
-                InputProps: {
-                  ...params.InputProps,
-                  startAdornment: params.inputProps.value && (
-                    <ItemIcon item={params.inputProps.value} />
-                  ),
-                },
-              }}
-              size="small"
-              label="Item"
-              variant="outlined"
-            />
-          )}
-          // pass empty string to ensure this input is always "controlled"
-          value={item || ''}
-        />
-      </Grid>
-
-      {/* Ability Input */}
-      <Grid item xs={6}>
-        <Autocomplete
-          style={{ flexGrow: 1 }}
-          getOptionLabel={option => option}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setAbility(value);
-          }}
-          options={ABILITIES[GENERATION]}
-          renderInput={params => (
-            <TextField {...params} size="small" label="Ability" variant="outlined" />
-          )}
-          value={ability}
-        />
       </Grid>
 
       {/* Current HP slider */}
