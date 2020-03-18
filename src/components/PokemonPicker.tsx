@@ -127,6 +127,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
 
   return (
     <>
+      {/* Species Input */}
       <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row' }}>
         <Grid container alignItems="center" spacing={1}>
           <Grid item style={{ flexGrow: 1 }}>
@@ -155,6 +156,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           </Grid>
         </Grid>
       </Grid>
+
+      {/* Pokemon type, status and Dynamax toggle */}
       <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
         <TypeIcon type={pokemon.type1} />
         <div style={{ width: 8 }} />
@@ -193,13 +196,13 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
         />
       </Grid>
 
+      {/* Stat spread inputs */}
       <Grid item xs={12}>
         <Tabs centered value={statTab} onChange={(e: any, value) => setStatTab(value)}>
           <Tab label="IV" />
           <Tab label="EV" />
         </Tabs>
       </Grid>
-
       <Grid item xs={12}>
         <div
           style={{
@@ -240,6 +243,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           />
         </div>
       </Grid>
+
+      {/* Nature Inputs */}
       <Grid item xs={2} />
       <Grid item xs={2} style={{ display: 'flex', alignItems: 'center' }}>
         <Typography align="right" style={{ flexGrow: 1 }}>
@@ -281,6 +286,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
         </TextField>
       </Grid>
       <Grid item xs={2} />
+
+      {/* Item Input */}
       <Grid item xs={6}>
         <Autocomplete
           style={{ flexGrow: 1 }}
@@ -309,6 +316,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           value={item || ''}
         />
       </Grid>
+
+      {/* Ability Input */}
       <Grid item xs={6}>
         <Autocomplete
           style={{ flexGrow: 1 }}
@@ -323,6 +332,8 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           value={ability}
         />
       </Grid>
+
+      {/* Current HP slider */}
       <Grid item xs={12}>
         <Typography gutterBottom>Current HP</Typography>
         <Slider
