@@ -11,7 +11,9 @@ import { pageview } from './util/misc';
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // Set up logrocket: https://app.logrocket.com/
-LogRocket.init('ltma3j/eevaluator');
+if (process.env.NODE_ENV === 'production') {
+  LogRocket.init('ltma3j/eevaluator');
+}
 
 // Log pageview to Google Analytics
 pageview();
