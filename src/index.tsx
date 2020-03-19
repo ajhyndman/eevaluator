@@ -1,4 +1,5 @@
 import './index.css';
+import '@wisersolutions/heap-analytics/lib/heap';
 
 import LogRocket from 'logrocket';
 import React from 'react';
@@ -10,9 +11,13 @@ import { pageview } from './util/misc';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// Set up logrocket: https://app.logrocket.com/
 if (process.env.NODE_ENV === 'production') {
+  // Set up logrocket: https://app.logrocket.com/
   LogRocket.init('ltma3j/eevaluator');
+
+  // Set up Heap Analytivcs: https://heap.io/
+  // @ts-ignore: Don't try to follow the types on this global
+  window?.heap?.load('3355348701');
 }
 
 // Log pageview to Google Analytics

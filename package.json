@@ -58,6 +58,7 @@
     "@types/d3-path": "1.0.8",
     "@types/d3-scale": "2.1.1",
     "@types/ramda": "0.26.43",
+    "@wisersolutions/heap-analytics": "0.1.1",
     "logrocket": "1.0.6"
   }
 }
