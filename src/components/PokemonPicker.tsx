@@ -197,7 +197,7 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           <div
             style={{
               position: 'absolute',
-              top: 0,
+              top: -48,
               right: 0,
               bottom: 0,
               left: 0,
