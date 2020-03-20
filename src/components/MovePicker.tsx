@@ -1,3 +1,4 @@
+import { drop } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
@@ -57,7 +58,7 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
           onChange={(e: ChangeEvent<any>, value: any) => {
             onChangeMove(value);
           }}
-          options={Object.keys(MOVES[GENERATION])}
+          options={drop(1, Object.keys(MOVES[GENERATION]))}
           renderInput={params => (
             <TextField
               {...{
