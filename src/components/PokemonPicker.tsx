@@ -137,6 +137,7 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
                   variant="outlined"
                 />
               )}
+              selectOnFocus
               value={pokemonName}
             />
           </Grid>
@@ -311,6 +312,7 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
           renderInput={params => (
             <TextField {...params} size="small" label="Ability" variant="outlined" />
           )}
+          selectOnFocus
           value={ability}
         />
       </Grid>
@@ -324,6 +326,7 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
             setItem(value);
           }}
           options={ITEMS[GENERATION]}
+          selectOnFocus
           renderInput={(params: any) => (
             <TextField
               {...{

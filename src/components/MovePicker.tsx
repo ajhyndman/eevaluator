@@ -72,6 +72,7 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
               variant="outlined"
             />
           )}
+          selectOnFocus
           value={moveName || ''}
         />
       </Grid>
