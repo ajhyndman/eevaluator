@@ -288,6 +288,22 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
       </Grid>
       <Grid item xs={2} />
 
+      {/* Ability Input */}
+      <Grid item xs={6}>
+        <Autocomplete
+          style={{ flexGrow: 1 }}
+          getOptionLabel={option => option}
+          onChange={(e: ChangeEvent<any>, value: any) => {
+            setAbility(value);
+          }}
+          options={ABILITIES[GENERATION]}
+          renderInput={params => (
+            <TextField {...params} size="small" label="Ability" variant="outlined" />
+          )}
+          value={ability}
+        />
+      </Grid>
+
       {/* Item Input */}
       <Grid item xs={6}>
         <Autocomplete
@@ -315,22 +331,6 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
           )}
           // pass empty string to ensure this input is always "controlled"
           value={item || ''}
-        />
-      </Grid>
-
-      {/* Ability Input */}
-      <Grid item xs={6}>
-        <Autocomplete
-          style={{ flexGrow: 1 }}
-          getOptionLabel={option => option}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setAbility(value);
-          }}
-          options={ABILITIES[GENERATION]}
-          renderInput={params => (
-            <TextField {...params} size="small" label="Ability" variant="outlined" />
-          )}
-          value={ability}
         />
       </Grid>
 
