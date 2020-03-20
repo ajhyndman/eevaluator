@@ -96,6 +96,7 @@ function App() {
                 />
               ))}
               <PokemonPicker
+                index={0}
                 pokemon={pokemonLeft}
                 onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
                 onExportClick={handleOpenImportExport('pokemon-left')}
@@ -115,6 +116,7 @@ function App() {
                 />
               ))}
               <PokemonPicker
+                index={1}
                 pokemon={pokemonRight}
                 onChange={savePokemon(setPokemonRight, 'pokemon-right')}
                 onExportClick={handleOpenImportExport('pokemon-right')}

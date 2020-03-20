@@ -25,6 +25,7 @@ import TypeIcon from './TypeIcon';
 type ModernStat = Exclude<Stat, 'spc'>;
 
 type Props = {
+  index: number;
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
   onExportClick: () => void;
@@ -40,7 +41,7 @@ const STATUS: Status[] = [
   'Frozen',
 ];
 
-function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
+function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
   const [statTab, setStatTab] = useState(1);
   const statKey = statTab === 0 ? 'ivs' : 'evs';
 
@@ -209,7 +210,14 @@ function PokemonPicker({ pokemon, onChange, onExportClick }: Props) {
               backgroundPosition: 'center',
               filter: 'opacity(25%)',
               mixBlendMode: 'multiply',
-              transform: pokemon.isDynamaxed ? 'scale(2, 2)' : '',
+              transform:
+                index === 0
+                  ? pokemon.isDynamaxed
+                    ? 'scale(-2, 2)'
+                    : 'scale(-1, 1)'
+                  : pokemon.isDynamaxed
+                  ? 'scale(2, 2)'
+                  : 'scale(1, 1)',
               transition: `transform ${TRANSITION}`,
               zIndex: -1,
             }}
