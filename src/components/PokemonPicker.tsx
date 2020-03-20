@@ -204,7 +204,10 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
               left: 0,
               backgroundImage:
                 pokemon &&
-                `url(https://img.pokemondb.net/artwork/${pokemonName.toLocaleLowerCase()}.jpg)`,
+                `url(https://img.pokemondb.net/artwork/${pokemonName
+                  .toLocaleLowerCase()
+                  .replace(/ /g, '-')
+                  .replace(/[.:]/g, '')}.jpg)`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
               backgroundPosition: 'center',
