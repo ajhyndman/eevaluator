@@ -1,9 +1,10 @@
-import { drop } from 'ramda';
+import { drop, pickBy } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { calculate, Move, MOVES, Pokemon } from '@smogon/calc';
+import { getMaxMoveName, MoveData } from '@smogon/calc/dist/data/moves';
 
 import { GENERATION } from '../util/misc';
 import TypeIcon from './TypeIcon';
@@ -15,6 +16,8 @@ type Props = {
   attacker: Pokemon;
   defender: Pokemon;
 };
+
+export const USEFUL_MOVES: { string: MoveData } = pickBy(move => !move.isMax, MOVES[GENERATION]);
 
 const printPercent = (numerator: number, denominator: number) =>
   Math.round((numerator / denominator) * 100);
@@ -50,6 +53,13 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
     }
   }
 
+  const moveDisplayName =
+    move == null
+      ? ''
+      : attacker.isDynamaxed
+      ? getMaxMoveName(move.type, attacker.name, move.category === 'Status')
+      : moveName;
+
   return (
     <>
       <Grid item xs={6}>
@@ -58,7 +68,7 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
           onChange={(e: ChangeEvent<any>, value: any) => {
             onChangeMove(value);
           }}
-          options={drop(1, Object.keys(MOVES[GENERATION]))}
+          options={drop(1, Object.keys(USEFUL_MOVES))}
           renderInput={params => (
             <TextField
               {...{
@@ -74,7 +84,7 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
             />
           )}
           selectOnFocus
-          value={moveName || ''}
+          value={moveDisplayName}
         />
       </Grid>
       <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>
