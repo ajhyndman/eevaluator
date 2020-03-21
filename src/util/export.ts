@@ -53,9 +53,6 @@ export function exportPokemon(pokemon: Pokemon): string {
   // Print first line
   let firstLine = '';
   firstLine += pokemon.name;
-  if (pokemon.gender && GENDER_PRINT_TEXT.hasOwnProperty(pokemon.gender)) {
-    firstLine += GENDER_PRINT_TEXT[pokemon.gender];
-  }
   if (pokemon.item != null) {
     firstLine += ` @ ${pokemon.item}`;
   }
