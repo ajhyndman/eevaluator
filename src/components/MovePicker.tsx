@@ -17,7 +17,10 @@ type Props = {
   defender: Pokemon;
 };
 
-export const USEFUL_MOVES: { string: MoveData } = pickBy(move => !move.isMax, MOVES[GENERATION]);
+export const USEFUL_MOVES: { string: MoveData } = pickBy(
+  move => !(move.isMax || move.category === 'Status' || move.category == null),
+  MOVES[GENERATION],
+);
 
 const printPercent = (numerator: number, denominator: number) =>
   Math.round((numerator / denominator) * 100);
