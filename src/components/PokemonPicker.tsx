@@ -18,6 +18,7 @@ import { Status } from '@smogon/calc/dist/pokemon';
 import { TRANSITION } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
+import PokemonIcon from './PokemonIcon';
 import StatHexagon from './StatHexagon';
 import StatusLabel from './StatusLabel';
 import TypeIcon from './TypeIcon';
@@ -121,6 +122,9 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
       {/* Species Input */}
       <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row' }}>
         <Grid container alignItems="center" spacing={1}>
+          <Grid item>
+            <PokemonIcon species={pokemonName} />
+          </Grid>
           <Grid item style={{ flexGrow: 1 }}>
             <Autocomplete
               getOptionLabel={option => option}
@@ -203,12 +207,9 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
               right: 0,
               bottom: 0,
               left: 0,
-              backgroundImage:
-                pokemon &&
-                `url(https://img.pokemondb.net/artwork/${pokemonName
-                  .toLocaleLowerCase()
-                  .replace(/ /g, '-')
-                  .replace(/[.:]/g, '')}.jpg)`,
+              backgroundImage: `url(/pokemon/${
+                pokemon.isDynamaxed ? pokemonName : pokemonName.replace(/-Gmax$/, '')
+              }.jpg)`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
               backgroundPosition: 'center',
