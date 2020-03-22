@@ -12,7 +12,6 @@ const WIDTH = 40;
 
 const getPokemonIconIndex = (species: string): number => {
   const showdownDexId = species.toLocaleLowerCase().replace(/[^a-z0-9]/g, '');
-  console.log(showdownDexId);
   return (SHOWDOWN_DEX_ICONS as any)[showdownDexId] || 0;
 };
 
