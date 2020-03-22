@@ -21,7 +21,7 @@
       "./@types",
       "./node_modules/@types"
     ],
-    // "isolatedModules": true
+    "isolatedModules": true
   },
   "include": [
     "@types",
