@@ -27,7 +27,7 @@ const Favorites = ({ favorites, onClose, onDelete, onSelect }: Props) => {
   return (
     <>
       <DialogTitle>Saved Pokemon</DialogTitle>
-      <DialogContent>
+      <DialogContent style={{ padding: '8px 0' }}>
         {favorites.map((pokemon: Pokemon) => {
           const species = pokemon.name;
           const handleSelect = () => onSelect(pokemon);
@@ -38,21 +38,33 @@ const Favorites = ({ favorites, onClose, onDelete, onSelect }: Props) => {
           };
 
           return (
-            <MenuItem onClick={handleSelect}>
-              <Grid item xs={12}>
-                <Grid container spacing={1} alignItems="center">
-                  <Grid item>
-                    <PokemonIcon species={species} />
-                  </Grid>
-                  <Grid item style={{ flexGrow: 1 }}>
-                    <Typography>{species}</Typography>
-                    <Typography>{`EVs: ${printStats(0, pokemon.evs)}`}</Typography>
-                  </Grid>
-                  <Grid item>
-                    <IconButton size="small" title="Delete" onClick={handleDelete}>
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Grid>
+            <MenuItem key={JSON.stringify(pokemon)} onClick={handleSelect}>
+              <Grid container spacing={1} alignItems="center" wrap="nowrap">
+                <Grid item>
+                  <PokemonIcon species={species} />
+                </Grid>
+                <Grid
+                  item
+                  style={{
+                    flexGrow: 1,
+                    flexShrink: 1,
+                    minWidth: 0,
+                  }}
+                >
+                  <Typography>{species}</Typography>
+                  <Typography
+                    style={{
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {printStats(0, pokemon.evs)}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <IconButton size="small" title="Delete" onClick={handleDelete}>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
                 </Grid>
               </Grid>
             </MenuItem>
