@@ -68,7 +68,7 @@ function App() {
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     const favorites: Pokemon[] = readFromLocalStorage('favorites');
     if (favorites) {
-      return favorites;
+      return favorites.map(favorite => new Pokemon(GENERATION, favorite.name, favorite));
     }
     return [];
   });
