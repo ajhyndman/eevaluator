@@ -87,7 +87,7 @@ function App() {
   const handleCloseFavorites = () => setShowFavorites(null);
   const handleLoadFavorite = (pokemon: Pokemon) => {
     const setPokemon = showFavorites === 'pokemon-left' ? setPokemonLeft : setPokemonRight;
-    savePokemon(setPokemon, showImportExport!)(pokemon);
+    savePokemon(setPokemon, showFavorites!)(pokemon);
     handleCloseFavorites();
   };
 
