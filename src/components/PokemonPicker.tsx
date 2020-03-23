@@ -123,9 +123,6 @@ function PokemonPicker({
       {/* Species Input */}
       <Grid item xs={12} style={{ display: 'flex', flexDirection: 'row' }}>
         <Grid container alignItems="center" spacing={1}>
-          <Grid item>
-            <PokemonIcon species={pokemonName} />
-          </Grid>
           <Grid item style={{ flexGrow: 1 }}>
             <Autocomplete
               getOptionLabel={option => option}
