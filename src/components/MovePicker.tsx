@@ -3,7 +3,7 @@ import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { calculate, Move, MOVES, Pokemon } from '@smogon/calc';
+import { calculate, Field, Move, MOVES, Pokemon } from '@smogon/calc';
 import { getMaxMoveName, MoveData } from '@smogon/calc/dist/data/moves';
 
 import { GENERATION } from '../util/misc';
@@ -41,7 +41,13 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
   let move: Move | undefined;
   if (moveName) {
     move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
-    const result = calculate(GENERATION, attacker, defender, move);
+    const result = calculate(
+      GENERATION,
+      attacker,
+      defender,
+      move,
+      new Field({ gameType: 'Doubles' }),
+    );
     const damage = result.damage;
 
     if (damage.some(value => value !== 0)) {
