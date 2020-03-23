@@ -31,9 +31,18 @@ type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
   onExportClick: () => void;
+  onSaveFavorite: (pokemon: Pokemon) => void;
+  onOpenFavorites: () => void;
 };
 
-function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
+function PokemonPicker({
+  index,
+  pokemon,
+  onChange,
+  onExportClick,
+  onOpenFavorites,
+  onSaveFavorite,
+}: Props) {
   const [statTab, setStatTab] = useState(1);
   const statKey = statTab === 0 ? 'ivs' : 'evs';
 
@@ -134,13 +143,17 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
             />
           </Grid>
           <Grid item>
-            <IconButton size="small" onClick={onExportClick} title="save to favorites">
-              <SaveIcon />
+            <IconButton size="small" onClick={onOpenFavorites} title="favorites">
+              <FolderSpecialIcon />
             </IconButton>
           </Grid>
           <Grid item>
-            <IconButton size="small" onClick={onExportClick} title="favorites">
-              <FolderSpecialIcon />
+            <IconButton
+              size="small"
+              onClick={() => onSaveFavorite(pokemon)}
+              title="save to favorites"
+            >
+              <SaveIcon />
             </IconButton>
           </Grid>
           <Grid item>

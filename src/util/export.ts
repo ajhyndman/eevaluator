@@ -39,7 +39,7 @@ function statsAllDefault(defaultValue: number, stats: StatsTable): boolean {
   return Object.values(stats).every(value => value === defaultValue);
 }
 
-function printStats(defaultValue: number, stats: StatsTable): string {
+export function printStats(defaultValue: number, stats: StatsTable): string {
   const ivEntries = Object.entries(stats)
     .filter(([, value]) => value !== defaultValue)
     // @ts-ignore: TypeScript can't follow the type of key/value through map.
