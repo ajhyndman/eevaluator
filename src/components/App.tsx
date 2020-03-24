@@ -106,7 +106,7 @@ function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      <Container maxWidth="md" style={{ paddingTop: 16, overflow: 'hidden' }}>
+      <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
