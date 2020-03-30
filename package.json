@@ -70,8 +70,8 @@
     "@types/d3-scale": "2.1.1",
     "@types/ramda": "0.26.43",
     "@wisersolutions/heap-analytics": "0.1.1",
-    "isomorphic-fetch": "2.2.1",
     "logrocket": "1.0.6",
+    "node-fetch": "2.6.0",
     "ts-node": "8.8.1"
   }
 }

@@ -1,6 +1,6 @@
 const fs = require('fs');
 // @ts-ignore
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 const path = require('path');
 
 const { SPECIES } = require('@smogon/calc');
@@ -36,7 +36,7 @@ const collectImage = async (species: string) => {
   } catch (e) {
     console.warn('RETRYING FETCH FOR:', species);
     await new Promise((resolve, reject) =>
-      window.setTimeout(() => {
+      global.setTimeout(() => {
         collectImage(species)
           .then(resolve)
           .catch(reject);
