@@ -43,7 +43,7 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "scrape-images": "ts-node ./build/scrape-images.ts"
+    "scrape-images": "(cd scripts && ts-node scrape-images.ts)"
   },
   "eslintConfig": {
     "extends": "react-app"

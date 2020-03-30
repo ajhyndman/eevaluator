@@ -23,19 +23,23 @@ const collectImage = async (species: string) => {
   const filePath = path.join(__dirname, `../public/pokemon/${species}.jpg`);
 
   try {
+    console.log('FETCH:', species);
     const response = await fetch(url);
     if (!response.ok) {
       console.warn('IMAGE NOT FOUND:', species);
     } else {
+      console.log('SAVED:', species);
       const file = fs.createWriteStream(filePath);
       // @ts-ignore
       await response.body.pipe(file);
     }
   } catch (e) {
     console.warn('RETRYING FETCH FOR:', species);
-    await new Promise(resolve =>
+    await new Promise((resolve, reject) =>
       window.setTimeout(() => {
-        collectImage(species).then(resolve);
+        collectImage(species)
+          .then(resolve)
+          .catch(reject);
       }, 20000),
     );
   }
