@@ -60,9 +60,9 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
         printRange(minDamage, maxDamage, defenderMaxHp) +
         (n > 0 ? ` ${printHko(n)}` : '') +
         (chance != null && chance !== 1 && chance !== 0 ? ` (${Math.round(chance * 100)}%)` : '');
-    }
 
-    fullDescription = result.fullDesc();
+      fullDescription = result.fullDesc();
+    }
   }
 
   const moveDisplayName =
