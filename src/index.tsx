@@ -1,5 +1,6 @@
 import './index.css';
 import '@wisersolutions/heap-analytics/lib/heap';
+import 'focus-visible/dist/focus-visible.min';
 
 import LogRocket from 'logrocket';
 import React from 'react';
