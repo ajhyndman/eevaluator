@@ -29,11 +29,11 @@ const STAT_PRINT_NAMES: { [key in Stat]: string } = {
   spc: 'Spc',
 };
 
-const GENDER_PRINT_TEXT = {
-  female: ' (F)',
-  male: ' (M)',
-  genderless: '',
-};
+// const GENDER_PRINT_TEXT = {
+//   female: ' (F)',
+//   male: ' (M)',
+//   genderless: '',
+// };
 
 function statsAllDefault(defaultValue: number, stats: StatsTable): boolean {
   return Object.values(stats).every(value => value === defaultValue);

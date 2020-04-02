@@ -20,7 +20,6 @@ import { Status } from '@smogon/calc/dist/pokemon';
 import { TRANSITION } from '../styles';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
-import PokemonIcon from './PokemonIcon';
 import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
