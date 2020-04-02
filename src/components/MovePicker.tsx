@@ -38,6 +38,7 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
   const defenderMaxHp = defender.maxHP();
 
   let description;
+  let fullDescription: string;
   let move: Move | undefined;
   if (moveName) {
     move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
@@ -60,6 +61,8 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
         (n > 0 ? ` ${printHko(n)}` : '') +
         (chance != null && chance !== 1 && chance !== 0 ? ` (${Math.round(chance * 100)}%)` : '');
     }
+
+    fullDescription = result.fullDesc();
   }
 
   const moveDisplayName =
@@ -68,6 +71,12 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
       : attacker.isDynamaxed
       ? getMaxMoveName(move.type, attacker.name, move.category === 'Status')
       : moveName;
+
+  const copyDescription = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(fullDescription);
+    }
+  };
 
   return (
     <>
@@ -97,7 +106,12 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
         />
       </Grid>
       <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>
-        <Typography>{description}</Typography>
+        <button
+          onClick={copyDescription}
+          style={{ border: 'none', boxShadow: 'none', background: 'none', cursor: 'pointer' }}
+        >
+          <Typography>{description}</Typography>
+        </button>
       </Grid>
     </>
   );
