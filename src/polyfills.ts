@@ -32,10 +32,8 @@ function writeText(str: string) {
 
 // polyfill async clipboard API if it is not present.
 if (!window.navigator.clipboard) {
-  import('clipboard-polyfill/dist/clipboard-polyfill').then(clipboard => {
-    Object.defineProperty(window.navigator, 'clipboard', {
-      value: { writeText },
-      writable: false,
-    });
+  Object.defineProperty(window.navigator, 'clipboard', {
+    value: { writeText },
+    writable: false,
   });
 }
