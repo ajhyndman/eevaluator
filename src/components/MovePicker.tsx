@@ -73,9 +73,7 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
       : moveName;
 
   const copyDescription = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(fullDescription);
-    }
+    window.navigator.clipboard.writeText(fullDescription);
   };
 
   return (
