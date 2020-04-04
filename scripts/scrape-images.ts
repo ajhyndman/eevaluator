@@ -20,6 +20,7 @@ const collectImage = async (species: string) => {
     .toLowerCase()
     .replace(/ /g, '-')
     .replace(/-totem$/, '')
+    .replace(/^giratina$/, 'giratina-altered')
     .replace(/^eiscue$/, 'eiscue-ice')
     .replace(/^lycanroc$/, 'lycanroc-midday')
     .replace(/^morpeko$/, 'morpeko-full-belly')
@@ -27,16 +28,21 @@ const collectImage = async (species: string) => {
     .replace(/^indeedee$/, 'indeedee-male')
     .replace(/^meowstic$/, 'meowstic-male')
     .replace(/^arceus.*/, 'arceus')
+    .replace(/^cramorant.*/, 'cramorant')
     .replace(/^silvally.*/, 'silvally')
     .replace(/^pumpkaboo.*/, 'pumpkaboo')
     .replace(/^gourgeist.*/, 'gourgeist')
     .replace(/-alola$/, '-alolan')
-    .replace(/-galar$/, '-galarian')
-    .replace(/-f$/, '-female')
+    .replace(/-galar/, '-galarian')
+    .replace(/(?<!nidoran)-f$/, '-female')
     .replace(/gmax$/, 'gigantamax')
     .replace(/[^a-z0-9-]/g, '');
   const url = `https://img.pokemondb.net/artwork/large/${pokemonDbName}.jpg`;
   const filePath = path.join(__dirname, `../public/pokemon/${species}.jpg`);
+
+  if (fs.existsSync(filePath)) {
+    return;
+  }
   // const fileHandle = await fsPromises.open(filePath, 'w');
 
   try {
@@ -44,11 +50,12 @@ const collectImage = async (species: string) => {
     // @ts-ignore
     const response = await fetch(url, { timeout: FETCH_TIMEOUT });
     if (!response.ok) {
-      console.warn('IMAGE NOT FOUND:', species);
+      console.warn('IMAGE NOT FOUND:', species, pokemonDbName);
       // await fileHandle.close();
     } else {
       console.log('SAVING:', species);
       await pipeline(response.body, fs.createWriteStream(filePath));
+      console.log('SAVED', species);
       // // @ts-ignore
       // const buffer = await response.buffer();
       // await fileHandle.write(buffer);
