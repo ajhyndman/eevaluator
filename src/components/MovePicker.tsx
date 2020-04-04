@@ -3,7 +3,7 @@ import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
-import { calculate, Move, MOVES, Pokemon } from '@smogon/calc';
+import { calculate, Field, Move, MOVES, Pokemon } from '@smogon/calc';
 import { getMaxMoveName, MoveData } from '@smogon/calc/dist/data/moves';
 
 import { GENERATION } from '../util/misc';
@@ -38,10 +38,17 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
   const defenderMaxHp = defender.maxHP();
 
   let description;
+  let fullDescription: string;
   let move: Move | undefined;
   if (moveName) {
     move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
-    const result = calculate(GENERATION, attacker, defender, move);
+    const result = calculate(
+      GENERATION,
+      attacker,
+      defender,
+      move,
+      new Field({ gameType: 'Doubles' }),
+    );
     const damage = result.damage;
 
     if (damage.some(value => value !== 0)) {
@@ -53,6 +60,8 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
         printRange(minDamage, maxDamage, defenderMaxHp) +
         (n > 0 ? ` ${printHko(n)}` : '') +
         (chance != null && chance !== 1 && chance !== 0 ? ` (${Math.round(chance * 100)}%)` : '');
+
+      fullDescription = result.fullDesc();
     }
   }
 
@@ -62,6 +71,10 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
       : attacker.isDynamaxed
       ? getMaxMoveName(move.type, attacker.name, move.category === 'Status')
       : moveName;
+
+  const copyDescription = () => {
+    window.navigator.clipboard.writeText(fullDescription);
+  };
 
   return (
     <>
@@ -91,7 +104,12 @@ const MovePicker = ({ index, attacker, defender, move: moveName, onChangeMove }:
         />
       </Grid>
       <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>
-        <Typography>{description}</Typography>
+        <button
+          onClick={copyDescription}
+          style={{ border: 'none', boxShadow: 'none', background: 'none', cursor: 'pointer' }}
+        >
+          <Typography>{description}</Typography>
+        </button>
       </Grid>
     </>
   );

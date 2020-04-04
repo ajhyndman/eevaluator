@@ -15,6 +15,7 @@ import {
   readFromLocalStorage,
   writeToLocalStorage,
 } from '../util/misc';
+import Favorites from './Favorites';
 import ImportExport from './ImportExport';
 import MovePicker from './MovePicker';
 import PokemonPicker from './PokemonPicker';
@@ -36,16 +37,16 @@ function App() {
   const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
-    const pokemon = readFromLocalStorage('pokemon-left');
-    if (pokemon) {
-      return pokemon;
+    const json = readFromLocalStorage('pokemon-left');
+    if (json) {
+      return new Pokemon(GENERATION, json.name, json);
     }
     return eevee;
   });
   const [pokemonRight, setPokemonRight] = useState(() => {
-    const pokemon = readFromLocalStorage('pokemon-right');
-    if (pokemon) {
-      return pokemon;
+    const json = readFromLocalStorage('pokemon-right');
+    if (json) {
+      return new Pokemon(GENERATION, json.name, json);
     }
     return eevee;
   });
@@ -55,15 +56,39 @@ function App() {
     setState(pokemon);
   };
 
-  const [showImportExport, setShowImportExport] = useState<'pokemon-left' | 'pokemon-right' | null>(
-    null,
-  );
+  const [showImportExport, setShowImportExport] = useState<PokemonKey | null>(null);
   const handleOpenImportExport = (key: PokemonKey) => () => setShowImportExport(key);
   const handleCloseImportExport = () => setShowImportExport(null);
   const handleImportPokemon = (pokemon: Pokemon) => {
     const setPokemon = showImportExport === 'pokemon-left' ? setPokemonLeft : setPokemonRight;
     savePokemon(setPokemon, showImportExport!)(pokemon);
     handleCloseImportExport();
+  };
+
+  const [favorites, setFavorites] = useState<Pokemon[]>(() => {
+    const favorites: Pokemon[] = readFromLocalStorage('favorites');
+    if (favorites) {
+      return favorites.map(favorite => new Pokemon(GENERATION, favorite.name, favorite));
+    }
+    return [];
+  });
+  const [showFavorites, setShowFavorites] = useState<PokemonKey | null>(null);
+  const handleSaveFavorite = (key: PokemonKey) => (pokemon: Pokemon) => {
+    const nextFavorites = [...favorites, pokemon];
+    writeToLocalStorage('favorites', nextFavorites);
+    setFavorites(nextFavorites);
+  };
+  const handleRemoveFavorite = (pokemon: Pokemon) => {
+    const nextFavorites = favorites.filter((favorite: Pokemon) => favorite !== pokemon);
+    writeToLocalStorage('favorites', nextFavorites);
+    setFavorites(nextFavorites);
+  };
+  const handleOpenFavorites = (key: PokemonKey) => () => setShowFavorites(key);
+  const handleCloseFavorites = () => setShowFavorites(null);
+  const handleLoadFavorite = (pokemon: Pokemon) => {
+    const setPokemon = showFavorites === 'pokemon-left' ? setPokemonLeft : setPokemonRight;
+    savePokemon(setPokemon, showFavorites!)(pokemon);
+    handleCloseFavorites();
   };
 
   const handleMoveChange = (
@@ -81,7 +106,7 @@ function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      <Container maxWidth="md" style={{ paddingTop: 16, overflow: 'hidden' }}>
+      <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
@@ -100,7 +125,14 @@ function App() {
                 pokemon={pokemonLeft}
                 onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
                 onExportClick={handleOpenImportExport('pokemon-left')}
+                onOpenFavorites={handleOpenFavorites('pokemon-left')}
+                onSaveFavorite={handleSaveFavorite('pokemon-left')}
               />
+              {/* Create some spacing for the stacked mobile case.
+                  TODO: This shouldn't affect desktop. */}
+              <Grid item xs={12}>
+                <div style={{ height: 48 }} />
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -120,7 +152,10 @@ function App() {
                 pokemon={pokemonRight}
                 onChange={savePokemon(setPokemonRight, 'pokemon-right')}
                 onExportClick={handleOpenImportExport('pokemon-right')}
+                onOpenFavorites={handleOpenFavorites('pokemon-right')}
+                onSaveFavorite={handleSaveFavorite('pokemon-right')}
               />
+              <Grid item />
             </Grid>
           </Grid>
         </Grid>
@@ -132,6 +167,15 @@ function App() {
               onImport={handleImportPokemon}
             />
           )}
+        </Dialog>
+
+        <Dialog open={showFavorites != null} onClose={handleCloseFavorites} fullWidth maxWidth="xs">
+          <Favorites
+            favorites={favorites}
+            onClose={handleCloseFavorites}
+            onSelect={handleLoadFavorite}
+            onDelete={handleRemoveFavorite}
+          />
         </Dialog>
       </Container>
 

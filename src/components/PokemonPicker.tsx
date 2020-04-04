@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
+import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
+import SaveIcon from '@material-ui/icons/Save';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
 import { Status } from '@smogon/calc/dist/pokemon';
@@ -29,9 +31,18 @@ type Props = {
   pokemon: Pokemon;
   onChange: (pokemon: Pokemon) => void;
   onExportClick: () => void;
+  onSaveFavorite: (pokemon: Pokemon) => void;
+  onOpenFavorites: () => void;
 };
 
-function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
+function PokemonPicker({
+  index,
+  pokemon,
+  onChange,
+  onExportClick,
+  onOpenFavorites,
+  onSaveFavorite,
+}: Props) {
   const [statTab, setStatTab] = useState(1);
   const statKey = statTab === 0 ? 'ivs' : 'evs';
 
@@ -132,6 +143,20 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
             />
           </Grid>
           <Grid item>
+            <IconButton size="small" onClick={onOpenFavorites} title="favorites">
+              <FolderSpecialIcon />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton
+              size="small"
+              onClick={() => onSaveFavorite(pokemon)}
+              title="save to favorites"
+            >
+              <SaveIcon />
+            </IconButton>
+          </Grid>
+          <Grid item>
             <IconButton size="small" onClick={onExportClick} title="import">
               <EditIcon />
             </IconButton>
@@ -193,12 +218,9 @@ function PokemonPicker({ index, pokemon, onChange, onExportClick }: Props) {
               right: 0,
               bottom: 0,
               left: 0,
-              backgroundImage:
-                pokemon &&
-                `url(https://img.pokemondb.net/artwork/${pokemonName
-                  .toLocaleLowerCase()
-                  .replace(/ /g, '-')
-                  .replace(/[.:]/g, '')}.jpg)`,
+              backgroundImage: `url(/pokemon/${
+                pokemon.isDynamaxed ? pokemonName : pokemonName.replace(/-Gmax$/, '')
+              }.jpg)`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
               backgroundPosition: 'center',

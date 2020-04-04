@@ -32,22 +32,21 @@ export const getNature = (plusStat?: Stat, minusStat?: Stat) => {
   })!;
 };
 
-export const writeToLocalStorage = (key: string, pokemon: Pokemon) => {
-  const jsonString = JSON.stringify(pokemon);
+export const writeToLocalStorage = (key: string, payload: any) => {
+  const jsonString = JSON.stringify(payload);
 
   if (window.localStorage) {
     window.localStorage.setItem(key, jsonString);
   }
 };
 
-export const readFromLocalStorage = (key: string) => {
+export const readFromLocalStorage = (key: string): any => {
   if (window.localStorage) {
     const jsonString = window.localStorage.getItem(key);
     if (jsonString == null) {
       return;
     }
-    const json = JSON.parse(jsonString);
-    return new Pokemon(GENERATION, json.name, json);
+    return JSON.parse(jsonString);
   }
 };
 
