@@ -219,7 +219,9 @@ function PokemonPicker({
               bottom: 0,
               left: 0,
               backgroundImage: `url(/pokemon/${
-                pokemon.isDynamaxed ? pokemonName : pokemonName.replace(/-Gmax$/, '')
+                pokemon.isDynamaxed
+                  ? encodeURIComponent(pokemonName)
+                  : encodeURIComponent(pokemonName.replace(/-Gmax$/, ''))
               }.jpg)`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
