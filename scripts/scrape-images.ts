@@ -34,6 +34,7 @@ const collectImage = async (species: string) => {
     .replace(/^gourgeist.*/, 'gourgeist')
     .replace(/-alola$/, '-alolan')
     .replace(/-galar/, '-galarian')
+    .replace(/^(zacian|zamazenta)$/, '$1-hero')
     .replace(/(?<!nidoran)-f$/, '-female')
     .replace(/gmax$/, 'gigantamax')
     .replace(/[^a-z0-9-]/g, '');
@@ -66,7 +67,7 @@ const collectImage = async (species: string) => {
     console.debug(e);
     console.warn('RETRYING FETCH FOR:', species);
     // await fileHandle.close();
-    await new Promise(resolve => global.setTimeout(resolve, 20000));
+    await new Promise((resolve) => global.setTimeout(resolve, 20000));
     await collectImage(species);
   }
 };
