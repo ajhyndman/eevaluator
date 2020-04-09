@@ -1,11 +1,22 @@
 import { range } from 'ramda';
 import React, { useState } from 'react';
 
-import { Button, Container, Dialog, Grid, Link, ThemeProvider, Toolbar } from '@material-ui/core';
+import {
+  Button,
+  Container,
+  Dialog,
+  Grid,
+  Link,
+  MenuItem,
+  Select,
+  ThemeProvider,
+  Toolbar,
+} from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { Pokemon } from '@smogon/calc';
+import { Field, Pokemon } from '@smogon/calc';
+import { Terrain, Weather } from '@smogon/calc/dist/field';
 
 import { BLUE, RED } from '../styles';
 import {
@@ -32,6 +43,41 @@ const THEME = createMuiTheme({
     },
   }),
 });
+
+const WEATHER: Partial<{ [key in Weather]: string }> = {
+  Sun: '/images/Robin/weather/sunnocast.png',
+  Rain: '/images/Robin/weather/rainnocast.png',
+  Sand: '/images/Robin/weather/Sandstorm-nocast.png',
+  Hail: '/images/Robin/weather/snownocast.png',
+};
+const TERRAIN: { [key in Terrain]: string } = {
+  Electric: '/images/Robin/Terrain/electerrainnochu.png',
+  Grassy: '/images/Robin/Terrain/grassyterrainnobulb.png',
+  Misty: '/images/Robin/Terrain/misty1.png',
+  Psychic: '/images/Robin/Terrain/psychicterrain.png',
+};
+
+const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain }) => {
+  const weatherImg = weather ? WEATHER[weather] : '';
+  const terrainImg = terrain ? TERRAIN[terrain] : '';
+  return (
+    <div
+      style={{
+        backgroundImage: `url(${terrainImg}), url(${weatherImg})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'noRepeat',
+        // mixBlendMode: 'multiply',
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        zIndex: -1,
+        opacity: 0.25,
+      }}
+    />
+  );
+};
 
 function App() {
   const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
@@ -65,10 +111,18 @@ function App() {
     handleCloseImportExport();
   };
 
+  const [field, setField] = useState(new Field({ gameType: 'Doubles' }));
+  const setWeather = (event: any) => {
+    setField((field) => new Field({ ...field, weather: event.target.value }));
+  };
+  const setTerrain = (event: any) => {
+    setField((field) => new Field({ ...field, terrain: event.target.value }));
+  };
+
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     const favorites: Pokemon[] = readFromLocalStorage('favorites');
     if (favorites) {
-      return favorites.map(favorite => new Pokemon(GENERATION, favorite.name, favorite));
+      return favorites.map((favorite) => new Pokemon(GENERATION, favorite.name, favorite));
     }
     return [];
   });
@@ -106,11 +160,28 @@ function App() {
 
   return (
     <ThemeProvider theme={THEME}>
+      <Background weather={field.weather} terrain={field.terrain} />
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Select value={field.weather} onChange={setWeather}>
+              {[undefined, ...Object.keys(WEATHER)].map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option || 'None'}
+                </MenuItem>
+              ))}
+            </Select>
+            <Select value={field.terrain} onChange={setTerrain}>
+              {[undefined, ...Object.keys(TERRAIN)].map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option || 'None'}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
-              {range(0, 4).map(n => (
+              {range(0, 4).map((n) => (
                 <MovePicker
                   key={n}
                   index={n}
@@ -118,6 +189,7 @@ function App() {
                   onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', n)}
                   attacker={pokemonLeft}
                   defender={pokemonRight}
+                  field={field}
                 />
               ))}
               <PokemonPicker
@@ -137,7 +209,7 @@ function App() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
-              {range(0, 4).map(n => (
+              {range(0, 4).map((n) => (
                 <MovePicker
                   key={n}
                   index={n}
@@ -145,6 +217,7 @@ function App() {
                   onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', n)}
                   attacker={pokemonRight}
                   defender={pokemonLeft}
+                  field={field}
                 />
               ))}
               <PokemonPicker
