@@ -5,16 +5,17 @@ import {
   Button,
   Container,
   Dialog,
+  Drawer,
+  Fab,
   Grid,
   Link,
-  MenuItem,
-  Select,
   ThemeProvider,
   Toolbar,
 } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import TerrainIcon from '@material-ui/icons/Terrain';
 import { Field, Pokemon } from '@smogon/calc';
 import { Terrain, Weather } from '@smogon/calc/dist/field';
 
@@ -27,6 +28,7 @@ import {
   writeToLocalStorage,
 } from '../util/misc';
 import Favorites from './Favorites';
+import FieldPicker from './FieldPicker';
 import ImportExport from './ImportExport';
 import MovePicker from './MovePicker';
 import PokemonPicker from './PokemonPicker';
@@ -112,12 +114,7 @@ function App() {
   };
 
   const [field, setField] = useState(new Field({ gameType: 'Doubles' }));
-  const setWeather = (event: any) => {
-    setField((field) => new Field({ ...field, weather: event.target.value }));
-  };
-  const setTerrain = (event: any) => {
-    setField((field) => new Field({ ...field, terrain: event.target.value }));
-  };
+  const [showFieldDrawer, setShowFieldDrawer] = useState(false);
 
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     const favorites: Pokemon[] = readFromLocalStorage('favorites');
@@ -163,22 +160,6 @@ function App() {
       <Background weather={field.weather} terrain={field.terrain} />
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Select value={field.weather} onChange={setWeather}>
-              {[undefined, ...Object.keys(WEATHER)].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option || 'None'}
-                </MenuItem>
-              ))}
-            </Select>
-            <Select value={field.terrain} onChange={setTerrain}>
-              {[undefined, ...Object.keys(TERRAIN)].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option || 'None'}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
               {range(0, 4).map((n) => (
@@ -232,24 +213,6 @@ function App() {
             </Grid>
           </Grid>
         </Grid>
-
-        <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
-          {showImportExport != null && (
-            <ImportExport
-              pokemon={showImportExport === 'pokemon-left' ? pokemonLeft : pokemonRight}
-              onImport={handleImportPokemon}
-            />
-          )}
-        </Dialog>
-
-        <Dialog open={showFavorites != null} onClose={handleCloseFavorites} fullWidth maxWidth="xs">
-          <Favorites
-            favorites={favorites}
-            onClose={handleCloseFavorites}
-            onSelect={handleLoadFavorite}
-            onDelete={handleRemoveFavorite}
-          />
-        </Dialog>
       </Container>
 
       <Toolbar variant="dense">
@@ -260,6 +223,36 @@ function App() {
           </Button>
         </Link>
       </Toolbar>
+
+      <div style={{ position: 'fixed', left: 16, bottom: 16 }}>
+        <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
+          <TerrainIcon />
+        </Fab>
+      </div>
+
+      <Drawer open={showFieldDrawer} anchor="left" onClose={() => setShowFieldDrawer(false)}>
+        <div style={{ width: 368 }}>
+          <FieldPicker field={field} onChange={setField} />
+        </div>
+      </Drawer>
+
+      <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
+        {showImportExport != null && (
+          <ImportExport
+            pokemon={showImportExport === 'pokemon-left' ? pokemonLeft : pokemonRight}
+            onImport={handleImportPokemon}
+          />
+        )}
+      </Dialog>
+
+      <Dialog open={showFavorites != null} onClose={handleCloseFavorites} fullWidth maxWidth="xs">
+        <Favorites
+          favorites={favorites}
+          onClose={handleCloseFavorites}
+          onSelect={handleLoadFavorite}
+          onDelete={handleRemoveFavorite}
+        />
+      </Dialog>
     </ThemeProvider>
   );
 }
