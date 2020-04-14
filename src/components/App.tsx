@@ -9,6 +9,7 @@ import {
   Fab,
   Grid,
   Link,
+  SwipeableDrawer,
   ThemeProvider,
   Toolbar,
 } from '@material-ui/core';
@@ -230,11 +231,16 @@ function App() {
         </Fab>
       </div>
 
-      <Drawer open={showFieldDrawer} anchor="left" onClose={() => setShowFieldDrawer(false)}>
+      <SwipeableDrawer
+        open={showFieldDrawer}
+        anchor="left"
+        onClose={() => setShowFieldDrawer(false)}
+        onOpen={() => setShowFieldDrawer(true)}
+      >
         <div style={{ width: 368 }}>
           <FieldPicker field={field} onChange={setField} />
         </div>
-      </Drawer>
+      </SwipeableDrawer>
 
       <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
         {showImportExport != null && (
