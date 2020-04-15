@@ -48,16 +48,16 @@ const THEME = createMuiTheme({
 });
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
-  Sun: '/images/Robin/weather/sunnocast.png',
-  Rain: '/images/Robin/weather/rainnocast.png',
-  Sand: '/images/Robin/weather/Sandstorm-nocast.png',
-  Hail: '/images/Robin/weather/snownocast.png',
+  Sun: '/images/weather/Sunnobglight.png',
+  Rain: '/images/weather/rainnobg.png',
+  Sand: '/images/weather/Sandstorm-nobg.png',
+  Hail: '/images/weather/snownobg.png',
 };
 const TERRAIN: { [key in Terrain]: string } = {
-  Electric: '/images/Robin/Terrain/electerrainnochu.png',
-  Grassy: '/images/Robin/Terrain/grassyterrainnobulb.png',
-  Misty: '/images/Robin/Terrain/misty1.png',
-  Psychic: '/images/Robin/Terrain/psychicterrain.png',
+  Electric: '/images/terrain/electerrainopacityhigh.png',
+  Grassy: '/images/terrain/grassyterrainopacityhigh.png',
+  Misty: '/images/terrain/mistyOpacityhigh.png',
+  Psychic: '/images/terrain/psychicterrainNEWopacityhigh.png',
 };
 
 const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain }) => {
@@ -69,14 +69,13 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
         backgroundImage: `url(${terrainImg}), url(${weatherImg})`,
         backgroundSize: 'cover',
         backgroundRepeat: 'noRepeat',
-        // mixBlendMode: 'multiply',
         position: 'fixed',
         top: 0,
         right: 0,
         bottom: 0,
         left: 0,
         zIndex: -1,
-        opacity: 0.25,
+        opacity: 0.5,
       }}
     />
   );
