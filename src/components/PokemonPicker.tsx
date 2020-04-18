@@ -18,6 +18,7 @@ import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@
 import { Status } from '@smogon/calc/dist/pokemon';
 
 import { TRANSITION } from '../styles';
+import { escapeFilename } from '../util/escapeFilename';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemIcon from './ItemIcon';
 import StatHexagon from './StatHexagon';
@@ -124,12 +125,12 @@ function PokemonPicker({
         <Grid container alignItems="center" spacing={1}>
           <Grid item style={{ flexGrow: 1 }}>
             <Autocomplete
-              getOptionLabel={option => option}
+              getOptionLabel={(option) => option}
               onChange={(e: ChangeEvent<any>, value: any) => {
                 setSpecies(value);
               }}
               options={Object.keys(SPECIES[GENERATION])}
-              renderInput={params => (
+              renderInput={(params) => (
                 <TextField
                   {...params}
                   size="small"
@@ -183,7 +184,7 @@ function PokemonPicker({
           value={pokemon.status === 'Healthy' ? '' : pokemon.status}
           onChange={(event: any) => setStatus(event.target.value)}
         >
-          {STATUS.map(status => (
+          {STATUS.map((status) => (
             <MenuItem key={status} value={status}>
               <StatusLabel status={status} />
             </MenuItem>
@@ -218,10 +219,10 @@ function PokemonPicker({
               right: 0,
               bottom: 0,
               left: 0,
-              backgroundImage: `url(/pokemon/${
+              backgroundImage: `url(/images/pokemon/${
                 pokemon.isDynamaxed
-                  ? encodeURIComponent(pokemonName)
-                  : encodeURIComponent(pokemonName.replace(/-Gmax$/, ''))
+                  ? escapeFilename(pokemonName)
+                  : escapeFilename(pokemonName.replace(/-Gmax$/, ''))
               }.jpg)`,
               backgroundRepeat: 'no-repeat',
               backgroundSize: 'contain',
@@ -288,7 +289,7 @@ function PokemonPicker({
           value={plusStat}
           onChange={(event: any) => setPlusStat(event.target.value)}
         >
-          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map((stat) => (
             <MenuItem key={stat} value={stat}>
               {STAT_LABEL[stat]}
             </MenuItem>
@@ -305,7 +306,7 @@ function PokemonPicker({
           value={minusStat}
           onChange={(event: any) => setMinusStat(event.target.value)}
         >
-          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map(stat => (
+          {(['atk', 'def', 'spa', 'spd', 'spe'] as ModernStat[]).map((stat) => (
             <MenuItem key={stat} value={stat}>
               {STAT_LABEL[stat]}
             </MenuItem>
@@ -318,12 +319,12 @@ function PokemonPicker({
       <Grid item xs={6}>
         <Autocomplete
           style={{ flexGrow: 1 }}
-          getOptionLabel={option => option}
+          getOptionLabel={(option) => option}
           onChange={(e: ChangeEvent<any>, value: any) => {
             setAbility(value);
           }}
           options={ABILITIES[GENERATION]}
-          renderInput={params => (
+          renderInput={(params) => (
             <TextField {...params} size="small" label="Ability" variant="outlined" />
           )}
           selectOnFocus
@@ -335,7 +336,7 @@ function PokemonPicker({
       <Grid item xs={6}>
         <Autocomplete
           style={{ flexGrow: 1 }}
-          getOptionLabel={option => option}
+          getOptionLabel={(option) => option}
           onChange={(e: ChangeEvent<any>, value: any) => {
             setItem(value);
           }}

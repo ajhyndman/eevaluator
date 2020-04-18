@@ -6,6 +6,7 @@ const path = require('path');
 const fetch = require('node-fetch');
 
 const { SPECIES } = require('@smogon/calc');
+const { escapeFilename } = require('../src/util/escapeFilename');
 
 // Without a timeout, TCP connection failures can cause a request to hang
 // forever.
@@ -39,7 +40,8 @@ const collectImage = async (species: string) => {
     .replace(/gmax$/, 'gigantamax')
     .replace(/[^a-z0-9-]/g, '');
   const url = `https://img.pokemondb.net/artwork/large/${pokemonDbName}.jpg`;
-  const filePath = path.join(__dirname, `../public/pokemon/${species}.jpg`);
+  const fsSafeName = escapeFilename(species);
+  const filePath = path.join(__dirname, `../public/images/pokemon/${fsSafeName}.jpg`);
 
   if (fs.existsSync(filePath)) {
     return;
