@@ -46,7 +46,6 @@ const collectImage = async (species: string) => {
   if (fs.existsSync(filePath)) {
     return;
   }
-  // const fileHandle = await fsPromises.open(filePath, 'w');
 
   try {
     console.log('FETCH:', species);
@@ -54,21 +53,20 @@ const collectImage = async (species: string) => {
     const response = await fetch(url, { timeout: FETCH_TIMEOUT });
     if (!response.ok) {
       console.warn('IMAGE NOT FOUND:', species, pokemonDbName);
-      // await fileHandle.close();
     } else {
       console.log('SAVING:', species);
       await pipeline(response.body, fs.createWriteStream(filePath));
-      console.log('SAVED', species);
-      // // @ts-ignore
-      // const buffer = await response.buffer();
-      // await fileHandle.write(buffer);
-      // await fileHandle.close();
-      // console.log('SAVED:', species);
+      console.log('SAVED:', species);
     }
   } catch (e) {
     console.debug(e);
+
+    if (fs.existsSync(filePath)) {
+      console.log('CLEANING UP FILE:', species);
+      fs.unlinkSync(filePath);
+    }
+
     console.warn('RETRYING FETCH FOR:', species);
-    // await fileHandle.close();
     await new Promise((resolve) => global.setTimeout(resolve, 20000));
     await collectImage(species);
   }
