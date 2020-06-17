@@ -47,9 +47,9 @@ const THEME = createMuiTheme({
 });
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
-  Sun: '/images/weather/Sunnobglight.png',
+  Sun: '/images/weather/Sun_Nobg_orange.png',
   Rain: '/images/weather/rainnobg.png',
-  Sand: '/images/weather/Sandstorm-nobg.png',
+  Sand: '/images/weather/Sandstorm-nobg_darker.png',
   Hail: '/images/weather/snownobg.png',
 };
 const TERRAIN: { [key in Terrain]: string } = {
