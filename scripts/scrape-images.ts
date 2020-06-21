@@ -28,6 +28,8 @@ const collectImage = async (species: string) => {
     .replace(/^wishiwashi$/, 'wishiwashi-solo')
     .replace(/^indeedee$/, 'indeedee-male')
     .replace(/^meowstic$/, 'meowstic-male')
+    .replace(/^urshifu$/, 'urshifu-single-strike')
+    .replace(/^urshifu-gmax$/, 'urshifu-single-strike-gmax')
     .replace(/^arceus.*/, 'arceus')
     .replace(/^cramorant.*/, 'cramorant')
     .replace(/^silvally.*/, 'silvally')
