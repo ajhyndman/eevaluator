@@ -66,11 +66,15 @@ function PokemonPicker({
     let curHP = pokemon.curHP();
     const isFullHp = curHP === pokemon.maxHP();
 
+    // Workaround: In @smogon/calc@0.3.0 curHP needs to be specified as if
+    // pokemon is not dynamaxed.
+    const nextHP = pokemon.isDynamaxed ? Math.floor(curHP / 2) : curHP;
+
     const nextPokemon = clonePokemon(pokemon, {
       [statKey]: stats,
       // for convenience, if pokemon was at full health, ensure it's still at
       // full health.
-      originalCurHP: isFullHp ? undefined : curHP,
+      originalCurHP: isFullHp ? undefined : nextHP,
     });
 
     onChange(nextPokemon);
@@ -97,7 +101,10 @@ function PokemonPicker({
   const setItem = (nextItem: ItemName) => onChange(clonePokemon(pokemon, { item: nextItem }));
   const item = pokemon.item;
 
-  const setCurrentHp = (nextHp: number) => onChange(clonePokemon(pokemon, { curHP: nextHp }));
+  const setCurrentHp = (curHP: number) => {
+    const nextHp = pokemon.isDynamaxed ? Math.floor(curHP / 2) : curHP;
+    onChange(clonePokemon(pokemon, { curHP: nextHp }));
+  };
   const currentHp = pokemon.curHP();
 
   const setStatus = (status: StatusName) => onChange(clonePokemon(pokemon, { status }));

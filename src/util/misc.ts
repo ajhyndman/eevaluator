@@ -25,12 +25,7 @@ export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issu
 export const clonePokemon = (
   pokemon: Pokemon,
   options: Partial<Omit<Pokemon, 'curHP'> & { curHP: number }>,
-) => {
-  const computedOptions = {
-    ...options,
-  };
-  return new Pokemon(GENERATION, pokemon.name, { ...pokemon, ...computedOptions });
-};
+) => new Pokemon(GENERATION, pokemon.name, { ...pokemon, ...options });
 
 export const getNature = (plusStat?: StatName, minusStat?: StatName): NatureName => {
   return Object.keys(NATURES).find((name: string) => {
