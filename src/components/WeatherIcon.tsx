@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Weather } from '@smogon/calc/dist/field';
+import { Weather } from '@smogon/calc/dist/data/interface';
 
 import sunIcon from '../assets/Harsh_sunlight_icon_SwSh.png';
 import rainIcon from '../assets/Rain_icon_SwSh.png';

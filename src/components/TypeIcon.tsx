@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Type } from '@smogon/calc/dist/data/types';
+import { TypeName } from '@smogon/calc/dist/data/interface';
 
 import iconBug from '../assets/Bug_icon_SwSh.png';
 import iconDark from '../assets/Dark_icon_SwSh.png';
@@ -23,7 +23,7 @@ import iconWater from '../assets/Water_icon_SwSh.png';
 
 type Props = {
   size?: 'small' | 'medium';
-  type: Type;
+  type: TypeName;
 };
 
 const TYPE_ICONS = {
@@ -53,6 +53,6 @@ const SIZES = {
 };
 
 const TypeIcon = ({ size = 'medium', type }: Props) =>
-  type !== 'None' ? <img style={{ width: SIZES[size] }} alt={type} src={TYPE_ICONS[type]} /> : null;
+  type !== '???' ? <img style={{ width: SIZES[size] }} alt={type} src={TYPE_ICONS[type]} /> : null;
 
 export default TypeIcon;

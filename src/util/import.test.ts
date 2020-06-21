@@ -20,7 +20,7 @@ describe('importPokemon', () => {
     it('handles nickname, species, gender and item', () => {
       const pokemon = importPokemon('Pika (Pikachu) (M) @ Life Orb');
       expect(pokemon.name).toBe('Pikachu');
-      expect(pokemon.gender).toBe('male');
+      expect(pokemon.gender).toBe('M');
       expect(pokemon.item).toBe('Life Orb');
     });
 
@@ -32,7 +32,7 @@ describe('importPokemon', () => {
     it('handles species and gender', () => {
       const pokemon = importPokemon('Pikachu (M)');
       expect(pokemon.name).toBe('Pikachu');
-      expect(pokemon.gender).toBe('male');
+      expect(pokemon.gender).toBe('M');
     });
 
     it('handles species and item', () => {

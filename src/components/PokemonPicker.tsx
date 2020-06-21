@@ -14,8 +14,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
 import SaveIcon from '@material-ui/icons/Save';
 import { Autocomplete } from '@material-ui/lab';
-import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, Stat, StatsTable } from '@smogon/calc';
-import { Status } from '@smogon/calc/dist/pokemon';
+import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon/calc';
+import { AbilityName, ItemName, StatName, StatusName } from '@smogon/calc/dist/data/interface';
 
 import { TRANSITION } from '../styles';
 import { escapeFilename } from '../util/escapeFilename';
@@ -25,7 +25,7 @@ import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
 
-type ModernStat = Exclude<Stat, 'spc'>;
+type ModernStat = Exclude<StatName, 'spc'>;
 
 type Props = {
   index: number;
@@ -63,24 +63,23 @@ function PokemonPicker({
   };
 
   const handleStatsChange = (stats: StatsTable<number>) => {
-    const nextPokemon = clonePokemon(pokemon, { [statKey]: stats });
+    let curHP = pokemon.curHP();
+    const isFullHp = curHP === pokemon.maxHP();
 
-    // for convenience, if pokemon was at full health, ensure it's still at
-    // full health.
-    const isFullHp = pokemon.curHP === pokemon.maxHP();
-    if (isFullHp) {
-      nextPokemon.curHP = nextPokemon.maxHP();
-    }
+    const nextPokemon = clonePokemon(pokemon, {
+      [statKey]: stats,
+      // for convenience, if pokemon was at full health, ensure it's still at
+      // full health.
+      originalCurHP: isFullHp ? undefined : curHP,
+    });
+
     onChange(nextPokemon);
   };
   const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
   const setIsMax = (nextIsMax: boolean) => {
-    const curHpFraction = pokemon.curHP / pokemon.maxHP();
-
     const nextPokemon = clonePokemon(pokemon, { isDynamaxed: nextIsMax });
-    nextPokemon.curHP = Math.floor(curHpFraction * nextPokemon.maxHP());
     onChange(nextPokemon);
   };
   const isMax = pokemon.isDynamaxed || false;
@@ -91,17 +90,17 @@ function PokemonPicker({
     }
   };
 
-  const setAbility = (nextAbility: string) =>
+  const setAbility = (nextAbility: AbilityName) =>
     onChange(clonePokemon(pokemon, { ability: nextAbility }));
   const ability = pokemon.ability;
 
-  const setItem = (nextItem: string) => onChange(clonePokemon(pokemon, { item: nextItem }));
+  const setItem = (nextItem: ItemName) => onChange(clonePokemon(pokemon, { item: nextItem }));
   const item = pokemon.item;
 
   const setCurrentHp = (nextHp: number) => onChange(clonePokemon(pokemon, { curHP: nextHp }));
-  const currentHp = pokemon.curHP;
+  const currentHp = pokemon.curHP();
 
-  const setStatus = (status: Status) => onChange(clonePokemon(pokemon, { status }));
+  const setStatus = (status: StatusName) => onChange(clonePokemon(pokemon, { status }));
 
   const maxHp = pokemon.maxHP();
   const marks = [
@@ -167,11 +166,11 @@ function PokemonPicker({
 
       {/* Pokemon type, status and Dynamax toggle */}
       <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
-        <TypeIcon type={pokemon.type1} />
+        <TypeIcon type={pokemon.types[0]} />
         <div style={{ width: 8 }} />
-        {pokemon.type2 && (
+        {pokemon.types[1] && (
           <>
-            <TypeIcon type={pokemon.type2} />
+            <TypeIcon type={pokemon.types[1]} />
             <div style={{ width: 8 }} />
           </>
         )}
@@ -181,7 +180,7 @@ function PokemonPicker({
           SelectProps={{ style: { width: 175 } }}
           select
           label="Status"
-          value={pokemon.status === 'Healthy' ? '' : pokemon.status}
+          value={pokemon.status === '' ? '' : pokemon.status}
           onChange={(event: any) => setStatus(event.target.value)}
         >
           {STATUS.map((status) => (

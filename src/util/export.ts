@@ -14,19 +14,27 @@
  * https://pokepast.es/syntax.html
  *
  */
-import { Pokemon, Stat, StatsTable } from '@smogon/calc';
+import { Pokemon, StatName, StatsTable } from '@smogon/calc';
 
 const DEFAULT_IV = 31;
 const DEFAULT_EV = 0;
 
-const STAT_PRINT_NAMES: { [key in Stat]: string } = {
+const STAT_PRINT_NAMES: { [key in StatName]: string } = {
   hp: 'HP',
   atk: 'Atk',
   def: 'Def',
   spa: 'SpA',
   spd: 'SpD',
   spe: 'Spe',
-  spc: 'Spc',
+};
+
+const STAT_PRINT_ORDER: { [key in StatName]: number } = {
+  hp: 1,
+  atk: 2,
+  def: 3,
+  spe: 4,
+  spa: 5,
+  spd: 6,
 };
 
 // const GENDER_PRINT_TEXT = {
@@ -36,14 +44,14 @@ const STAT_PRINT_NAMES: { [key in Stat]: string } = {
 // };
 
 function statsAllDefault(defaultValue: number, stats: StatsTable): boolean {
-  return Object.values(stats).every(value => value === defaultValue);
+  return Object.values(stats).every((value) => value === defaultValue);
 }
 
 export function printStats(defaultValue: number, stats: StatsTable): string {
-  const ivEntries = Object.entries(stats)
+  const ivEntries = (Object.entries(stats) as [StatName, number][])
+    .sort(([a], [b]) => STAT_PRINT_ORDER[a] - STAT_PRINT_ORDER[b])
     .filter(([, value]) => value !== defaultValue)
-    // @ts-ignore: TypeScript can't follow the type of key/value through map.
-    .map(([key, value]: [Stat, number]) => `${value} ${STAT_PRINT_NAMES[key]}`, '');
+    .map(([key, value]) => `${value} ${STAT_PRINT_NAMES[key]}`, '');
   return ivEntries.join(' / ');
 }
 
@@ -89,7 +97,7 @@ export function exportPokemon(pokemon: Pokemon): string {
   }
 
   // Print all learned moves
-  pokemon.moves.forEach(move => {
+  pokemon.moves.forEach((move) => {
     if (move == null) {
       return;
     }

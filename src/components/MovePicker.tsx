@@ -4,7 +4,8 @@ import React, { ChangeEvent } from 'react';
 import { Grid, TextField, Typography } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
 import { calculate, Field, Move, MOVES, Pokemon } from '@smogon/calc';
-import { getMaxMoveName, MoveData } from '@smogon/calc/dist/data/moves';
+import { MoveData } from '@smogon/calc/dist/data/moves';
+import { getMaxMoveName } from '@smogon/calc/dist/move';
 
 import { GENERATION } from '../util/misc';
 import TypeIcon from './TypeIcon';
@@ -44,7 +45,7 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
   if (moveName) {
     move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
     const result = calculate(GENERATION, attacker, defender, move, field);
-    const damage = result.damage;
+    const damage = [result.damage].flat();
 
     if (damage.some((value) => value !== 0)) {
       const minDamage = damage[0] * move.hits;

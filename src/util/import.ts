@@ -16,13 +16,13 @@
  */
 import { clamp } from 'ramda';
 
-import { Pokemon, Stat, StatsTable } from '@smogon/calc';
+import { Pokemon, StatName, StatsTable } from '@smogon/calc';
 
 import { GENERATION } from './misc';
 
 type PokemonConfiguration = {
   firstLine?: {
-    gender?: 'female' | 'male';
+    gender?: 'M' | 'F';
     item?: string;
     nickname?: string;
     species: string;
@@ -35,11 +35,6 @@ type PokemonConfiguration = {
   happiness?: number;
   shiny?: boolean;
   moves: string[];
-};
-
-const GENDER_NAMES = {
-  M: 'male' as 'male',
-  F: 'female' as 'female',
 };
 
 // To debug or experiment with regex in this file, I recommend using a railroad
@@ -76,7 +71,7 @@ function parseStatText(statsText: string): Partial<StatsTable> {
   // reduce list into object map
   return statEntries.reduce((acc, statEntry) => {
     const [value, key] = statEntry.trim().split(/\s+/);
-    const normalizedKey = key.toLocaleLowerCase() as Stat;
+    const normalizedKey = key.toLocaleLowerCase() as StatName;
     return { ...acc, [normalizedKey]: clamp(0, 255, parseInt(value)) };
   }, {});
 }
@@ -106,7 +101,7 @@ export function importPokemon(text: string): Pokemon {
       config.firstLine = {
         species: name2 || name1,
         nickname: name2 ? name1 : undefined,
-        gender: gender != null ? GENDER_NAMES[gender.toLocaleUpperCase() as 'M' | 'F'] : undefined,
+        gender: gender == null ? gender : (gender.toUpperCase() as 'M' | 'F'),
         item: item,
       };
       continue;

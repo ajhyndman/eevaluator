@@ -1,30 +1,40 @@
 import React from 'react';
 
 import { Typography } from '@material-ui/core';
-import { Status } from '@smogon/calc/dist/pokemon';
+import { StatusName } from '@smogon/calc/dist/data/interface';
 
 type Props = {
-  status: Status;
+  status: StatusName | '';
 };
 
-const STATUS_COLORS: { [key in Status]: string } = {
-  Burned: '#F08030',
-  Healthy: '',
-  Paralyzed: '#F8D030',
-  Frozen: '#98D8D8',
-  Asleep: '#8C888C',
-  Poisoned: '#A040A0',
-  'Badly Poisoned': 'black',
+const STATUS_COLORS: { [key in StatusName | '']: string } = {
+  brn: '#F08030',
+  par: '#F8D030',
+  frz: '#98D8D8',
+  slp: '#8C888C',
+  psn: '#A040A0',
+  tox: 'black',
+  '': '',
 };
 
-export const STATUS: Status[] = [
-  'Healthy',
-  'Paralyzed',
-  'Poisoned',
+const STATUS_NAMES: { [key in StatusName | '']: string } = {
+  brn: 'Burned',
+  par: 'Paralyzed',
+  frz: 'Frozen',
+  slp: 'Asleep',
+  psn: 'Poisoned',
+  tox: 'Badly Poisoned',
+  '': 'Healthy',
+};
+
+export const STATUS: (StatusName | '')[] = [
+  '',
+  'par',
+  'psn',
   // 'Badly Poisoned',
-  'Burned',
-  'Asleep',
-  'Frozen',
+  'brn',
+  'slp',
+  'frz',
 ];
 
 const StatusLabel = ({ status }: Props) => (
@@ -32,7 +42,7 @@ const StatusLabel = ({ status }: Props) => (
     variant="body2"
     style={{
       backgroundColor: STATUS_COLORS[status],
-      color: status !== 'Healthy' ? 'white' : 'inherit',
+      color: status !== '' ? 'white' : 'inherit',
       display: 'inline-block',
       padding: '0 4px',
       margin: '-1px 0',
@@ -40,7 +50,7 @@ const StatusLabel = ({ status }: Props) => (
       textTransform: 'uppercase',
     }}
   >
-    {status}
+    {STATUS_NAMES[status]}
   </Typography>
 );
 

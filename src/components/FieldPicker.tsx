@@ -7,7 +7,7 @@ import FlashOnIcon from '@material-ui/icons/FlashOn';
 import WavesIcon from '@material-ui/icons/Waves';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { Field } from '@smogon/calc';
-import { Terrain, Weather } from '@smogon/calc/dist/field';
+import { Terrain, Weather } from '@smogon/calc/dist/data/interface';
 
 import WeatherIcon from './WeatherIcon';
 

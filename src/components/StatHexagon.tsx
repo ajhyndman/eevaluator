@@ -4,20 +4,19 @@ import { clamp, sum } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { TextField } from '@material-ui/core';
-import { Stat } from '@smogon/calc';
+import { StatName } from '@smogon/calc';
 
 import { BLUE, RED } from '../styles';
 import { polarToCartesian, STAT_LABEL } from '../util/misc';
 import TriangleSlider from './TriangleSlider';
 
-type ModernStat = Exclude<Stat, 'spc'>;
-export type Stats = { [stat in ModernStat]: number };
+export type Stats = { [stat in StatName]: number };
 
 type Props = {
   boosts: Stats;
   onBoostsChange: (boosts: Stats) => void;
-  natureFavoredStat: Stat;
-  natureUnfavoredStat: Stat;
+  natureFavoredStat: StatName;
+  natureUnfavoredStat: StatName;
   onStatsChange: (stats: Stats) => void;
   realStats: Stats;
   statKey: 'ivs' | 'evs';
@@ -61,19 +60,17 @@ const StatHexagon = ({
 }: Props) => {
   const statMax = statKey === 'ivs' ? MAX_IV : MAX_EV;
 
-  const handleStatChange = (key: Stat) => (event: ChangeEvent<HTMLInputElement>) => {
+  const handleStatChange = (key: StatName) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, statMax, numericValue);
 
     onStatsChange({ ...stats, [key]: newValue });
   };
 
-  const handleBoostChange = (key: ModernStat) => (value: number) =>
+  const handleBoostChange = (key: StatName) => (value: number) =>
     onBoostsChange({ ...boosts, [key]: value });
 
-  const statScale = scaleLinear()
-    .domain([0, statMax])
-    .range([10, RADIUS]);
+  const statScale = scaleLinear().domain([0, statMax]).range([10, RADIUS]);
 
   return (
     <div
@@ -106,7 +103,7 @@ const StatHexagon = ({
         </g>
       </svg>
 
-      {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as ModernStat[]).map((key, i) => {
+      {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as StatName[]).map((key, i) => {
         const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (4 / 5), 2 * Math.PI * (i / 6)]);
 
         const boostStage = boosts[key];

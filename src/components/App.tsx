@@ -17,7 +17,7 @@ import createPalette from '@material-ui/core/styles/createPalette';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TerrainIcon from '@material-ui/icons/Terrain';
 import { Field, Pokemon } from '@smogon/calc';
-import { Terrain, Weather } from '@smogon/calc/dist/field';
+import { Terrain, Weather } from '@smogon/calc/dist/data/interface';
 
 import { BLUE, RED } from '../styles';
 import {
@@ -118,7 +118,9 @@ function App() {
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     const favorites: Pokemon[] = readFromLocalStorage('favorites');
     if (favorites) {
-      return favorites.map((favorite) => new Pokemon(GENERATION, favorite.name, favorite));
+      return favorites.map(
+        (favorite) => new Pokemon(GENERATION, favorite.name, { ...favorite, curHP: undefined }),
+      );
     }
     return [];
   });
