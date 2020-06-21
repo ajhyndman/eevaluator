@@ -1509,12 +1509,12 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
 
-"@smogon/calc@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.0.7.tgz#32430041b9f898fae916d915ac4b216d86c27406"
-  integrity sha512-BA4dVi7V1F2sIM51QMJehG6uN4ZpxrPqBYv+C4ArwKpjxztDHwyEwO7iNzlmG6iHReokYKG9uSZr5uksp4JZlw==
+"@smogon/calc@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.3.0.tgz#64201c5a8536141a09146236f1e6ac38f608b121"
+  integrity sha512-tSIsfMLJABG7L3HaTOyUf9/CXWHjKxXIu4ZAP9tNNf6zozYzJbGXV1f8fFzJkTR5lsSaf3D4gjqXrbwm4jfHjA==
   dependencies:
-    "@types/node" "^13.9.1"
+    "@types/node" "^13.13.4"
 
 "@storybook/addon-actions@^5.3.17":
   version "5.3.17"
@@ -2173,10 +2173,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.30.tgz#3501e6f09b954de9c404671cefdbcc5d9d7c45f6"
   integrity sha512-sz9MF/zk6qVr3pAnM0BSQvYIBK44tS75QC5N+VbWSE4DjCV/pJ+UzCW/F+vVnl7TkOPcuwQureKNtSSwjBTaMg==
 
-"@types/node@^13.9.1":
-  version "13.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.0.tgz#390ea202539c61c8fa6ba4428b57e05bc36dc47b"
-  integrity sha512-uM4mnmsIIPK/yeO+42F2RQhGUIs39K2RFmugcJANppXe6J1nvH87PvzPZYpza7Xhhs8Yn9yIAVdLZ84z61+0xQ==
+"@types/node@^13.13.4":
+  version "13.13.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.12.tgz#9c72e865380a7dc99999ea0ef20fc9635b503d20"
+  integrity sha512-zWz/8NEPxoXNT9YyF2osqyA9WjssZukYpgI4UYZpOjcyqwIUqWGkcCionaEb9Ki+FULyPyvNFpg/329Kd2/pbw==
 
 "@types/npmlog@^4.1.2":
   version "4.1.2"
