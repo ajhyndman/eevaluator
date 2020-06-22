@@ -17,7 +17,7 @@
     "@material-ui/core": "4.9.5",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.45",
-    "@smogon/calc": "0.3.0",
+    "@smogon/calc": "0.4.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -43,7 +43,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-storybook": "build-storybook -s public",
-    "postinstall": "patch-package",
     "scrape-images": "(cd scripts && ts-node scrape-images.ts)",
     "storybook": "start-storybook -p 9009 -s public"
   },
@@ -75,8 +74,6 @@
     "@wisersolutions/heap-analytics": "0.1.1",
     "logrocket": "1.0.6",
     "node-fetch": "3.0.0-beta.5",
-    "patch-package": "6.2.2",
-    "postinstall-postinstall": "2.1.0",
     "ts-node": "8.8.1"
   }
 }
