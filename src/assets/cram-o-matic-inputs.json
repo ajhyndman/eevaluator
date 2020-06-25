@@ -1,0 +1,1452 @@
+[
+  [
+    "Ability Capsule",
+    "Normal",
+    "40"
+  ],
+  [
+    "Absorb Bulb",
+    "Grass",
+    "8"
+  ],
+  [
+    "Adamant Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Adrenaline Orb",
+    "Ghost",
+    "12"
+  ],
+  [
+    "Aguav Berry",
+    "Dragon",
+    "4"
+  ],
+  [
+    "Air Balloon",
+    "Flying",
+    "20"
+  ],
+  [
+    "Amulet Coin",
+    "Normal",
+    "32"
+  ],
+  [
+    "Apicot Berry",
+    "Ground",
+    "12"
+  ],
+  [
+    "Armorite Ore",
+    "Fighting",
+    "28"
+  ],
+  [
+    "Aspear Berry",
+    "Ice",
+    "2"
+  ],
+  [
+    "Assault Vest",
+    "Steel",
+    "20"
+  ],
+  [
+    "Babiri Berry",
+    "Steel",
+    "4"
+  ],
+  [
+    "Balm Mushroom",
+    "Grass",
+    "24"
+  ],
+  [
+    "Berry Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Big Mushroom",
+    "Grass",
+    "14"
+  ],
+  [
+    "Big Nugget",
+    "Ground",
+    "38"
+  ],
+  [
+    "Big Pearl",
+    "Water",
+    "12"
+  ],
+  [
+    "Big Root",
+    "Grass",
+    "8"
+  ],
+  [
+    "Binding Band",
+    "Dark",
+    "8"
+  ],
+  [
+    "Black Apricorn",
+    "Dark",
+    "0"
+  ],
+  [
+    "Black Belt",
+    "Fighting",
+    "14"
+  ],
+  [
+    "Black Glasses",
+    "Dark",
+    "14"
+  ],
+  [
+    "Black Sludge",
+    "Poison",
+    "10"
+  ],
+  [
+    "Blue Apricorn",
+    "Water",
+    "0"
+  ],
+  [
+    "Blunder Policy",
+    "Dark",
+    "24"
+  ],
+  [
+    "Bold Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Bottle Cap",
+    "Steel",
+    "40"
+  ],
+  [
+    "Brave Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Bright Powder",
+    "Fairy",
+    "14"
+  ],
+  [
+    "Bug Memory",
+    "Bug",
+    "40"
+  ],
+  [
+    "Calcium",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Calm Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Carbos",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Careful Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Cell Battery",
+    "Electric",
+    "14"
+  ],
+  [
+    "Charcoal",
+    "Fire",
+    "32"
+  ],
+  [
+    "Charti Berry",
+    "Rock",
+    "4"
+  ],
+  [
+    "Cheri Berry",
+    "Fire",
+    "2"
+  ],
+  [
+    "Chesto Berry",
+    "Water",
+    "2"
+  ],
+  [
+    "Chilan Berry",
+    "Normal",
+    "4"
+  ],
+  [
+    "Chipped Pot",
+    "Ground",
+    "36"
+  ],
+  [
+    "Choice Band",
+    "Fighting",
+    "20"
+  ],
+  [
+    "Choice Scarf",
+    "Normal",
+    "20"
+  ],
+  [
+    "Choice Specs",
+    "Psychic",
+    "20"
+  ],
+  [
+    "Chople Berry",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Cleanse Tag",
+    "Ghost",
+    "24"
+  ],
+  [
+    "Clever Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Clover Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Coba Berry",
+    "Flying",
+    "4"
+  ],
+  [
+    "Colbur Berry",
+    "Dark",
+    "4"
+  ],
+  [
+    "Comet Shard",
+    "Ice",
+    "34"
+  ],
+  [
+    "Cracked Pot",
+    "Ground",
+    "30"
+  ],
+  [
+    "Custap Berry",
+    "Ghost",
+    "10"
+  ],
+  [
+    "Damp Rock",
+    "Water",
+    "12"
+  ],
+  [
+    "Dark Memory",
+    "Dark",
+    "40"
+  ],
+  [
+    "Dawn Stone",
+    "Psychic",
+    "6"
+  ],
+  [
+    "Destiny Knot",
+    "Psychic",
+    "28"
+  ],
+  [
+    "Dragon Fang",
+    "Dragon",
+    "18"
+  ],
+  [
+    "Dragon Memory",
+    "Dragon",
+    "40"
+  ],
+  [
+    "Dragon Scale",
+    "Dragon",
+    "18"
+  ],
+  [
+    "Dubious Disc",
+    "Dark",
+    "32"
+  ],
+  [
+    "Dusk Stone",
+    "Ghost",
+    "6"
+  ],
+  [
+    "Dynamax Candy",
+    "Dragon",
+    "6"
+  ],
+  [
+    "Eject Button",
+    "Steel",
+    "16"
+  ],
+  [
+    "Eject Pack",
+    "Steel",
+    "16"
+  ],
+  [
+    "Electric Memory",
+    "Electric",
+    "40"
+  ],
+  [
+    "Electric Seed",
+    "Electric",
+    "8"
+  ],
+  [
+    "Enigma Berry",
+    "",
+    "8 to 12"
+  ],
+  [
+    "Everstone",
+    "Rock",
+    "20"
+  ],
+  [
+    "Eviolite",
+    "Dragon",
+    "32"
+  ],
+  [
+    "Exp. Candy L",
+    "Psychic",
+    "8"
+  ],
+  [
+    "Exp. Candy M",
+    "Psychic",
+    "6"
+  ],
+  [
+    "Exp. Candy S",
+    "Psychic",
+    "4"
+  ],
+  [
+    "Exp. Candy XL",
+    "Psychic",
+    "10"
+  ],
+  [
+    "Exp. Candy XS",
+    "Psychic",
+    "2"
+  ],
+  [
+    "Expert Belt",
+    "Fighting",
+    "32"
+  ],
+  [
+    "Fairy Memory",
+    "Fairy",
+    "40"
+  ],
+  [
+    "Fighting Memory",
+    "Fighting",
+    "40"
+  ],
+  [
+    "Figy Berry",
+    "Fire",
+    "4"
+  ],
+  [
+    "Fire Memory",
+    "Fire",
+    "40"
+  ],
+  [
+    "Fire Stone",
+    "Fire",
+    "6"
+  ],
+  [
+    "Flame Orb",
+    "Fire",
+    "14"
+  ],
+  [
+    "Float Stone",
+    "Rock",
+    "8"
+  ],
+  [
+    "Flower Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Flying Memory",
+    "Flying",
+    "40"
+  ],
+  [
+    "Focus Band",
+    "Fighting",
+    "12"
+  ],
+  [
+    "Focus Sash",
+    "Fighting",
+    "12"
+  ],
+  [
+    "Fossilized Bird",
+    "Electric",
+    "10"
+  ],
+  [
+    "Fossilized Dino",
+    "Ice",
+    "10"
+  ],
+  [
+    "Fossilized Drake",
+    "Dragon",
+    "10"
+  ],
+  [
+    "Fossilized Fish",
+    "Water",
+    "10"
+  ],
+  [
+    "Full Incense",
+    "Normal",
+    "2"
+  ],
+  [
+    "Galarica Cuff",
+    "Poison",
+    "18"
+  ],
+  [
+    "Galarica Twig",
+    "Grass",
+    "4"
+  ],
+  [
+    "Ganlon Berry",
+    "Ice",
+    "12"
+  ],
+  [
+    "Genius Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Gentle Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Ghost Memory",
+    "Ghost",
+    "40"
+  ],
+  [
+    "Gold Bottle Cap",
+    "Steel",
+    "40"
+  ],
+  [
+    "Grass Memory",
+    "Grass",
+    "40"
+  ],
+  [
+    "Grassy Seed",
+    "Grass",
+    "8"
+  ],
+  [
+    "Green Apricorn",
+    "Grass",
+    "0"
+  ],
+  [
+    "Grepa Berry",
+    "Flying",
+    "6"
+  ],
+  [
+    "Grip Claw",
+    "Bug",
+    "26"
+  ],
+  [
+    "Ground Memory",
+    "Ground",
+    "40"
+  ],
+  [
+    "Haban Berry",
+    "Dragon",
+    "4"
+  ],
+  [
+    "Hard Stone",
+    "Rock",
+    "14"
+  ],
+  [
+    "Hasty Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Health Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Heat Rock",
+    "Fire",
+    "12"
+  ],
+  [
+    "Heavy-Duty Boots",
+    "Ground",
+    "16"
+  ],
+  [
+    "Hondew Berry",
+    "Ground",
+    "6"
+  ],
+  [
+    "Honey",
+    "Bug",
+    "2"
+  ],
+  [
+    "HP Up",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Iapapa Berry",
+    "Dark",
+    "4"
+  ],
+  [
+    "Ice Memory",
+    "Ice",
+    "40"
+  ],
+  [
+    "Ice Stone",
+    "Ice",
+    "6"
+  ],
+  [
+    "Icy Rock",
+    "Ice",
+    "12"
+  ],
+  [
+    "Impish Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Iron",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Iron Ball",
+    "Steel",
+    "16"
+  ],
+  [
+    "Jaboca Berry",
+    "Dragon",
+    "6"
+  ],
+  [
+    "Jolly Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Kasib Berry",
+    "Ghost",
+    "4"
+  ],
+  [
+    "Kebia Berry",
+    "Poison",
+    "4"
+  ],
+  [
+    "Kee Berry",
+    "Fairy",
+    "6"
+  ],
+  [
+    "Kelpsy Berry",
+    "Fighting",
+    "6"
+  ],
+  [
+    "King's Rock",
+    "Steel",
+    "32"
+  ],
+  [
+    "Lagging Tail",
+    "Rock",
+    "10"
+  ],
+  [
+    "Lansat Berry",
+    "Flying",
+    "10"
+  ],
+  [
+    "Lax Incense",
+    "Psychic",
+    "2"
+  ],
+  [
+    "Lax Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Leaf Stone",
+    "Grass",
+    "6"
+  ],
+  [
+    "Leek",
+    "Grass",
+    "18"
+  ],
+  [
+    "Leftovers",
+    "Grass",
+    "20"
+  ],
+  [
+    "Leppa Berry",
+    "Fighting",
+    "2"
+  ],
+  [
+    "Liechi Berry",
+    "Grass",
+    "12"
+  ],
+  [
+    "Life Orb",
+    "Dragon",
+    "20"
+  ],
+  [
+    "Light Ball",
+    "Electric",
+    "20"
+  ],
+  [
+    "Light Clay",
+    "Psychic",
+    "20"
+  ],
+  [
+    "Lonely Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Love Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Luck Incense",
+    "Normal",
+    "2"
+  ],
+  [
+    "Lucky Egg",
+    "Normal",
+    "20"
+  ],
+  [
+    "Lum Berry",
+    "Flying",
+    "2"
+  ],
+  [
+    "Luminous Moss",
+    "Grass",
+    "8"
+  ],
+  [
+    "Macho Brace",
+    "Fighting",
+    "26"
+  ],
+  [
+    "Magnet",
+    "Electric",
+    "20"
+  ],
+  [
+    "Mago Berry",
+    "Ghost",
+    "4"
+  ],
+  [
+    "Maranga Berry",
+    "Dark",
+    "6"
+  ],
+  [
+    "Max Repel",
+    "Poison",
+    "2"
+  ],
+  [
+    "Mental Herb",
+    "Grass",
+    "14"
+  ],
+  [
+    "Metal Coat",
+    "Steel",
+    "24"
+  ],
+  [
+    "Metal Powder",
+    "Steel",
+    "14"
+  ],
+  [
+    "Metronome",
+    "Steel",
+    "22"
+  ],
+  [
+    "Micle Berry",
+    "Rock",
+    "10"
+  ],
+  [
+    "Mild Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Miracle Seed",
+    "Grass",
+    "14"
+  ],
+  [
+    "Misty Seed",
+    "Fairy",
+    "8"
+  ],
+  [
+    "Modest Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Moon Stone",
+    "Fairy",
+    "6"
+  ],
+  [
+    "Muscle Band",
+    "Fighting",
+    "14"
+  ],
+  [
+    "Muscle Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Mystic Water",
+    "Water",
+    "10"
+  ],
+  [
+    "Naive Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Naughty Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Never-Melt Ice",
+    "Ice",
+    "14"
+  ],
+  [
+    "Normal Gem",
+    "Normal",
+    "8"
+  ],
+  [
+    "Nugget",
+    "Ground",
+    "16"
+  ],
+  [
+    "Occa Berry",
+    "Fire",
+    "4"
+  ],
+  [
+    "Odd Incense",
+    "Ghost",
+    "2"
+  ],
+  [
+    "Oran Berry",
+    "Poison",
+    "2"
+  ],
+  [
+    "Oval Stone",
+    "Rock",
+    "12"
+  ],
+  [
+    "Passho Berry",
+    "Water",
+    "4"
+  ],
+  [
+    "Payapa Berry",
+    "Psychic",
+    "4"
+  ],
+  [
+    "Pearl",
+    "Water",
+    "6"
+  ],
+  [
+    "Pearl String",
+    "Water",
+    "30"
+  ],
+  [
+    "Pecha Berry",
+    "Electric",
+    "2"
+  ],
+  [
+    "Persim Berry",
+    "Ground",
+    "2"
+  ],
+  [
+    "Petaya Berry",
+    "Poison",
+    "12"
+  ],
+  [
+    "Pink Apricorn",
+    "Fairy",
+    "0"
+  ],
+  [
+    "Pixie Plate",
+    "Fairy",
+    "2"
+  ],
+  [
+    "Poison Barb",
+    "Poison",
+    "32"
+  ],
+  [
+    "Poison Memory",
+    "Poison",
+    "40"
+  ],
+  [
+    "Pomeg Berry",
+    "Ice",
+    "6"
+  ],
+  [
+    "Power Anklet",
+    "Fighting",
+    "20"
+  ],
+  [
+    "Power Band",
+    "Fighting",
+    "20"
+  ],
+  [
+    "Power Belt",
+    "Fighting",
+    "20"
+  ],
+  [
+    "Power Bracer",
+    "Fighting",
+    "20"
+  ],
+  [
+    "Power Herb",
+    "Grass",
+    "10"
+  ],
+  [
+    "Power Lens",
+    "Psychic",
+    "20"
+  ],
+  [
+    "Power Weight",
+    "Fighting",
+    "20"
+  ],
+  [
+    "PP Max",
+    "Normal",
+    "40"
+  ],
+  [
+    "PP Up",
+    "Normal",
+    "38"
+  ],
+  [
+    "Pretty Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Prism Scale",
+    "Water",
+    "26"
+  ],
+  [
+    "Protective Pads",
+    "Fighting",
+    "12"
+  ],
+  [
+    "Protector",
+    "Rock",
+    "24"
+  ],
+  [
+    "Protein",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Psychic Memory",
+    "Psychic",
+    "40"
+  ],
+  [
+    "Psychic Seed",
+    "Psychic",
+    "8"
+  ],
+  [
+    "Pure Incense",
+    "Psychic",
+    "2"
+  ],
+  [
+    "Qualot Berry",
+    "Poison",
+    "6"
+  ],
+  [
+    "Quick Claw",
+    "Normal",
+    "26"
+  ],
+  [
+    "Quick Powder",
+    "Normal",
+    "28"
+  ],
+  [
+    "Quiet Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Rare Bone",
+    "Ground",
+    "12"
+  ],
+  [
+    "Rare Candy",
+    "Psychic",
+    "40"
+  ],
+  [
+    "Rash Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Rawst Berry",
+    "Grass",
+    "2"
+  ],
+  [
+    "Razor Claw",
+    "Dark",
+    "26"
+  ],
+  [
+    "Reaper Cloth",
+    "Ghost",
+    "32"
+  ],
+  [
+    "Red Apricorn",
+    "Fire",
+    "0"
+  ],
+  [
+    "Red Card",
+    "Fire",
+    "16"
+  ],
+  [
+    "Relaxed Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Repel",
+    "Poison",
+    "2"
+  ],
+  [
+    "Resist Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Ribbon Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Rindo Berry",
+    "Grass",
+    "4"
+  ],
+  [
+    "Ring Target",
+    "Dark",
+    "14"
+  ],
+  [
+    "Rock Incense",
+    "Rock",
+    "2"
+  ],
+  [
+    "Rock Memory",
+    "Rock",
+    "40"
+  ],
+  [
+    "Rocky Helmet",
+    "Rock",
+    "26"
+  ],
+  [
+    "Room Service",
+    "Psychic",
+    "24"
+  ],
+  [
+    "Rose Incense",
+    "Grass",
+    "2"
+  ],
+  [
+    "Roseli Berry",
+    "Fairy",
+    "4"
+  ],
+  [
+    "Rowap Berry",
+    "Dark",
+    "6"
+  ],
+  [
+    "Rusted Shield",
+    "Steel",
+    "2"
+  ],
+  [
+    "Rusted Sword",
+    "Steel",
+    "2"
+  ],
+  [
+    "Sachet",
+    "Fairy",
+    "20"
+  ],
+  [
+    "Safety Goggles",
+    "Normal",
+    "10"
+  ],
+  [
+    "Salac Berry",
+    "Fighting",
+    "12"
+  ],
+  [
+    "Sassy Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Scope Lens",
+    "Dark",
+    "12"
+  ],
+  [
+    "Sea Incense",
+    "Water",
+    "2"
+  ],
+  [
+    "Serious Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Sharp Beak",
+    "Flying",
+    "10"
+  ],
+  [
+    "Shed Shell",
+    "Bug",
+    "10"
+  ],
+  [
+    "Shell Bell",
+    "Water",
+    "14"
+  ],
+  [
+    "Shiny Stone",
+    "Fairy",
+    "6"
+  ],
+  [
+    "Shuca Berry",
+    "Ground",
+    "4"
+  ],
+  [
+    "Silk Scarf",
+    "Normal",
+    "22"
+  ],
+  [
+    "Silver Powder",
+    "Bug",
+    "10"
+  ],
+  [
+    "Sitrus Berry",
+    "Psychic",
+    "2"
+  ],
+  [
+    "Smoke Ball",
+    "Poison",
+    "22"
+  ],
+  [
+    "Smooth Rock",
+    "Rock",
+    "12"
+  ],
+  [
+    "Snowball",
+    "Ice",
+    "8"
+  ],
+  [
+    "Soft Sand",
+    "Ground",
+    "20"
+  ],
+  [
+    "Soothe Bell",
+    "Steel",
+    "14"
+  ],
+  [
+    "Spell Tag",
+    "Ghost",
+    "26"
+  ],
+  [
+    "Star Piece",
+    "Rock",
+    "20"
+  ],
+  [
+    "Star Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Stardust",
+    "Ground",
+    "8"
+  ],
+  [
+    "Starf Berry",
+    "Psychic",
+    "10"
+  ],
+  [
+    "Steel Memory",
+    "Steel",
+    "40"
+  ],
+  [
+    "Sticky Barb",
+    "Grass",
+    "10"
+  ],
+  [
+    "Strawberry Sweet",
+    "Fairy",
+    "30"
+  ],
+  [
+    "Sun Stone",
+    "Fire",
+    "6"
+  ],
+  [
+    "Super Repel",
+    "Poison",
+    "2"
+  ],
+  [
+    "Sweet Apple",
+    "Grass",
+    "30"
+  ],
+  [
+    "Swift Feather",
+    "Flying",
+    "6"
+  ],
+  [
+    "Tamato Berry",
+    "Psychic",
+    "6"
+  ],
+  [
+    "Tanga Berry",
+    "Bug",
+    "4"
+  ],
+  [
+    "Tart Apple",
+    "Grass",
+    "30"
+  ],
+  [
+    "Terrain Extender",
+    "Ground",
+    "12"
+  ],
+  [
+    "Thick Club",
+    "Ground",
+    "18"
+  ],
+  [
+    "Throat Spray",
+    "Water",
+    "12"
+  ],
+  [
+    "Thunder Stone",
+    "Electric",
+    "6"
+  ],
+  [
+    "Timid Mint",
+    "Grass",
+    "16"
+  ],
+  [
+    "Tiny Mushroom",
+    "Grass",
+    "2"
+  ],
+  [
+    "Toxic Orb",
+    "Poison",
+    "14"
+  ],
+  [
+    "Twisted Spoon",
+    "Psychic",
+    "18"
+  ],
+  [
+    "Upgrade",
+    "Normal",
+    "30"
+  ],
+  [
+    "Utility Umbrella",
+    "Flying",
+    "20"
+  ],
+  [
+    "Wacan Berry",
+    "Electric",
+    "4"
+  ],
+  [
+    "Water Memory",
+    "Water",
+    "40"
+  ],
+  [
+    "Water Stone",
+    "Water",
+    "6"
+  ],
+  [
+    "Wave Incense",
+    "Water",
+    "2"
+  ],
+  [
+    "Weakness Policy",
+    "Dark",
+    "30"
+  ],
+  [
+    "Whipped Dream",
+    "Fairy",
+    "26"
+  ],
+  [
+    "White Apricorn",
+    "Normal",
+    "0"
+  ],
+  [
+    "White Herb",
+    "Grass",
+    "14"
+  ],
+  [
+    "Wide Lens",
+    "Dark",
+    "22"
+  ],
+  [
+    "Wiki Berry",
+    "Rock",
+    "4"
+  ],
+  [
+    "Wise Glasses",
+    "Psychic",
+    "10"
+  ],
+  [
+    "Wishing Piece",
+    "Poison",
+    "28"
+  ],
+  [
+    "Yache Berry",
+    "Ice",
+    "4"
+  ],
+  [
+    "Yellow Apricorn",
+    "Electric",
+    "0"
+  ],
+  [
+    "Zinc",
+    "Fighting",
+    "4"
+  ],
+  [
+    "Zoom Lens",
+    "Dark",
+    "22"
+  ]
+]
