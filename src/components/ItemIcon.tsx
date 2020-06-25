@@ -18,7 +18,9 @@ const computeOffset = (showdownItem: NonNullable<ReturnType<typeof getShowdownIt
 };
 
 const getShowdownItem = (item: string) => {
-  return Object.values(SHOWDOWN_ITEMS).find(({ name }) => name === item);
+  // Strip parentheses after TR numbers.
+  const parsedName = item.replace(/\(.+\)$/, '').trim();
+  return Object.values(SHOWDOWN_ITEMS).find(({ name }) => name === parsedName);
 };
 
 const ItemIcon = ({ item }: Props) => {

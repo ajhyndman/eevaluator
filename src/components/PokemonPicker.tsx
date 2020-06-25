@@ -21,7 +21,7 @@ import { AbilityName, ItemName, StatName, StatusName } from '@smogon/calc/dist/d
 import { TRANSITION } from '../styles';
 import { escapeFilename } from '../util/escapeFilename';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
-import ItemIcon from './ItemIcon';
+import ItemPicker from './ItemPicker';
 import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
@@ -346,33 +346,7 @@ function PokemonPicker({
 
       {/* Item Input */}
       <Grid item xs={6}>
-        <Autocomplete
-          style={{ flexGrow: 1 }}
-          getOptionLabel={(option) => option}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            setItem(value);
-          }}
-          options={itemOptions}
-          selectOnFocus
-          renderInput={(params: any) => (
-            <TextField
-              {...{
-                ...params,
-                InputProps: {
-                  ...params.InputProps,
-                  startAdornment: params.inputProps.value && (
-                    <ItemIcon item={params.inputProps.value} />
-                  ),
-                },
-              }}
-              size="small"
-              label="Item"
-              variant="outlined"
-            />
-          )}
-          // pass empty string to ensure this input is always "controlled"
-          value={item || ''}
-        />
+        <ItemPicker items={itemOptions} item={item} onChange={setItem} />
       </Grid>
 
       {/* Current HP slider */}

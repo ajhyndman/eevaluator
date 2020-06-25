@@ -6,11 +6,12 @@ import LogRocket from 'logrocket';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './components/App';
+// import App from './components/App';
+import CramOMatic from './components/CramOMatic';
 import * as serviceWorker from './serviceWorker';
 import { pageview } from './util/misc';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<CramOMatic />, document.getElementById('root'));
 
 if (process.env.NODE_ENV === 'production') {
   // Set up logrocket: https://app.logrocket.com/
