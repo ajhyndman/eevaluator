@@ -1,4 +1,4 @@
-import { computeGeneralRecipe, computeGuaranteedRecipe } from './cram-o-matic';
+import { computeGeneralRecipe, computeGuaranteedRecipe, computeRecipe } from './cram-o-matic';
 
 describe('cram-o-matic', () => {
   describe('computeGuaranteedRecipe', () => {
@@ -54,6 +54,20 @@ describe('cram-o-matic', () => {
       // TODO: This shouldn't return only one sweet?
       expect(computeGeneralRecipe('Moon Stone', 'Moon Stone', 'Fairy Memory', 'Fairy Memory')).toBe(
         'Strawberry Sweet',
+      );
+    });
+  });
+
+  describe('computeRecipe', () => {
+    it('prioritizes Guaranteed recipes', () => {
+      expect(computeRecipe('Tiny Mushroom', "King's Rock", 'Tiny Mushroom', 'Tiny Mushroom')).toBe(
+        'Big Mushroom',
+      );
+    });
+
+    it('falls back to General recipes', () => {
+      expect(computeRecipe('Hard Stone', 'Hard Stone', 'Big Nugget', 'Big Nugget')).toBe(
+        'Eviolite',
       );
     });
   });

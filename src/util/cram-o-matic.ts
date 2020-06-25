@@ -102,3 +102,12 @@ export const computeGeneralRecipe = (...items: Recipe) => {
   // get result
   return getResult(type, score);
 };
+
+export const computeRecipe = (...items: Recipe) => {
+  try {
+    return computeGuaranteedRecipe(...items);
+  } catch (e) {
+    console.debug('recipe didn\'t match "special" recipe — falling back to general recipes');
+  }
+  return computeGeneralRecipe(...items);
+};
