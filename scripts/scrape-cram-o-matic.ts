@@ -18,23 +18,31 @@ const printInputs = (document: Document) => {
   fs.writeFileSync(filePath, inputJson);
 };
 
+const printOutputs = (document: Document) => {
+  const outputTable = document.querySelector('table:nth-of-type(3)');
+  const rows = [...outputTable.querySelectorAll('tbody > tr + tr + tr')];
+  const outputs = rows
+    // drop headers and footer
+    .filter((row) => row.childNodes.length > 2)
+    .map((row) => {
+      const [first, ...rest] = row.querySelectorAll('td');
+      const type = first.textContent.trim();
+      const items = rest.map((td) => td.querySelector('a').title);
+      return [type, items];
+    });
+
+  const outputJson = JSON.stringify(outputs, undefined, 2);
+  const filePath = path.join(__dirname, `../src/assets/cram-o-matic-outputs.json`);
+  fs.writeFileSync(filePath, outputJson);
+};
+
 const main = async () => {
   const response = await fetch(BULBAPEDIA_PAGE);
   const html = await response.text();
   const { document } = new JSDOM(html).window;
 
-  // const resultTable = [...document.querySelectorAll('table')][13];
-
-  // const rows = [...resultTable.querySelectorAll('tr')]
-  //   .map((tr: HTMLTableRowElement) => {
-  //     const tds = [...tr.querySelectorAll('td')];
-  //     return tds.map((td) => td.innerText);
-  //   })
-  //   .filter((row: any[]) => row.length > 1);
-
-  // rows.forEach((row) => console.log(row));
-
   printInputs(document);
+  printOutputs(document);
 };
 
 main();
