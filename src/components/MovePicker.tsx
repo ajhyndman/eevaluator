@@ -72,6 +72,9 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
     window.navigator.clipboard.writeText(fullDescription);
   };
 
+  const options = drop(1, Object.keys(USEFUL_MOVES));
+  options.sort();
+
   return (
     <>
       <Grid item xs={6}>
@@ -80,7 +83,7 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
           onChange={(e: ChangeEvent<any>, value: any) => {
             onChangeMove(value);
           }}
-          options={drop(1, Object.keys(USEFUL_MOVES))}
+          options={options}
           renderInput={(params) => (
             <TextField
               {...{
