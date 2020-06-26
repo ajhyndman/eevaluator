@@ -1,4 +1,4 @@
-import { drop, pickBy } from 'ramda';
+import { compose, drop, pickBy, sortBy, toLower } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
@@ -72,8 +72,7 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
     window.navigator.clipboard.writeText(fullDescription);
   };
 
-  const options = drop(1, Object.keys(USEFUL_MOVES));
-  options.sort();
+  const options = sortBy(toLower)(drop(1, Object.keys(USEFUL_MOVES)));
 
   return (
     <>

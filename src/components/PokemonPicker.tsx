@@ -1,3 +1,4 @@
+import { sortBy, toLower } from 'ramda';
 import React, { ChangeEvent, useState } from 'react';
 
 import {
@@ -124,6 +125,11 @@ function PokemonPicker({
   const setBoosts = (boosts: StatsTable) => onChange(clonePokemon(pokemon, { boosts }));
   const boosts = pokemon.boosts;
 
+  const sortCaseInsensitive = sortBy(toLower);
+  const abilityOptions = sortCaseInsensitive(ABILITIES[GENERATION]);
+  const speciesOptions = sortCaseInsensitive(Object.keys(SPECIES[GENERATION]));
+  const itemOptions = sortCaseInsensitive(ITEMS[GENERATION]);
+
   return (
     <>
       {/* Species Input */}
@@ -135,7 +141,7 @@ function PokemonPicker({
               onChange={(e: ChangeEvent<any>, value: any) => {
                 setSpecies(value);
               }}
-              options={Object.keys(SPECIES[GENERATION])}
+              options={speciesOptions}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -329,7 +335,7 @@ function PokemonPicker({
           onChange={(e: ChangeEvent<any>, value: any) => {
             setAbility(value);
           }}
-          options={ABILITIES[GENERATION]}
+          options={abilityOptions}
           renderInput={(params) => (
             <TextField {...params} size="small" label="Ability" variant="outlined" />
           )}
@@ -346,7 +352,7 @@ function PokemonPicker({
           onChange={(e: ChangeEvent<any>, value: any) => {
             setItem(value);
           }}
-          options={ITEMS[GENERATION]}
+          options={itemOptions}
           selectOnFocus
           renderInput={(params: any) => (
             <TextField
