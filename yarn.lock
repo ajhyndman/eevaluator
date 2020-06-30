@@ -1509,10 +1509,10 @@
   resolved "https://registry.yarnpkg.com/@sheerun/mutationobserver-shim/-/mutationobserver-shim-0.3.3.tgz#5405ee8e444ed212db44e79351f0c70a582aae25"
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
 
-"@smogon/calc@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.4.1.tgz#29634a9c0de31dfe3f9df3447ccd2cb331c556a1"
-  integrity sha512-MOxHryXziq2AKA2l97g4kuthS19kq1AZT3tTNBaUSgbgTTAtTLTEgHZOwG32nAdRt2xc2kQlJZuIYitLXCO5ag==
+"@smogon/calc@0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.4.2.tgz#1b59b07d4be92f4b2dfd0cd42088e3772a193e69"
+  integrity sha512-/9cfvuqIOXdufoRTEBXPl4IIY8LkE09Q5l2tj1Zxhh7k4oKYE91vnpWhgPAnYtps39Tb2X1OLTT1PuBN/gsPlw==
   dependencies:
     "@types/node" "^14.0.13"
 
