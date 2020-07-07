@@ -102,8 +102,8 @@ const CramOMatic = () => {
           <Grid item xs={12}>
             <ItemPicker
               items={getValidOptions(output, inputs, i)}
-              item={inputs[i]}
-              label="Item 1"
+              item={item}
+              label={`Item ${i + 1}`}
               onChange={handleChangeInput(i)}
             />
           </Grid>
