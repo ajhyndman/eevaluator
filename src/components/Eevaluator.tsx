@@ -80,7 +80,7 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
   );
 };
 
-function App() {
+function Eevaluator() {
   const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
@@ -263,4 +263,4 @@ function App() {
   );
 }
 
-export default App;
+export default Eevaluator;
