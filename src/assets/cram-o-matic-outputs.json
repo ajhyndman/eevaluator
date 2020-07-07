@@ -1,0 +1,362 @@
+[
+  [
+    "Normal",
+    [
+      "TR85 (Work Up)",
+      "TR14 (Metronome)",
+      "TR26 (Endure)",
+      "TR13 (Focus Energy)",
+      "TR27 (Sleep Talk)",
+      "TR35 (Uproar)",
+      "TR01 (Body Slam)",
+      "TR19 (Tri Attack)",
+      "TR29 (Baton Pass)",
+      "TR30 (Encore)",
+      "TR20 (Substitute)",
+      "TR00 (Swords Dance)",
+      "TR42 (Hyper Voice)",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Fighting",
+    [
+      "TR07 (Low Kick)",
+      "TR56 (Aura Sphere)",
+      "Muscle Band",
+      "Wishing Piece",
+      "TR48 (Bulk Up)",
+      "TR21 (Reversal)",
+      "Macho Brace",
+      "TR99 (Body Press)",
+      "Expert Belt",
+      "TR64 (Focus Blast)",
+      "TR39 (Superpower)",
+      "TR53 (Close Combat)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Flying",
+    [
+      "Pretty Feather",
+      "Sharp Beak",
+      "Big Mushroom",
+      "Wishing Piece",
+      "Air Balloon",
+      "Blunder Policy",
+      "Grip Claw",
+      "Air Balloon",
+      "Weakness Policy",
+      "TR89 (Hurricane)",
+      "Comet Shard",
+      "TR66 (Brave Bird)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Poison",
+    [
+      "Black Sludge",
+      "Toxic Orb",
+      "TR91 (Venom Drench)",
+      "Wishing Piece",
+      "TR54 (Toxic Spikes)",
+      "Smoke Ball",
+      "TR57 (Poison Jab)",
+      "Quick Powder",
+      "Poison Barb",
+      "TR22 (Sludge Bomb)",
+      "TR78 (Sludge Wave)",
+      "TR73 (Gunk Shot)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Ground",
+    [
+      "Stardust",
+      "TR23 (Spikes)",
+      "Big Mushroom",
+      "Wishing Piece",
+      "Light Clay",
+      "TR87 (Drill Run)",
+      "TR67 (Earth Power)",
+      "Terrain Extender",
+      "Pearl String",
+      "TR94 (High Horsepower)",
+      "Comet Shard",
+      "TR10 (Earthquake)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Rock",
+    [
+      "Float Stone",
+      "Oval Stone",
+      "Hard Stone",
+      "Wishing Piece",
+      "Everstone",
+      "Protector",
+      "Rocky Helmet",
+      "TR63 (Power Gem)",
+      "Wishing Piece",
+      "Eviolite",
+      "TR76 (Stealth Rock)",
+      "TR75 (Stone Edge)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Bug",
+    [
+      "TR60 (X-Scissor)",
+      "TR18 (Leech Life)",
+      "Bright Powder",
+      "Wishing Piece",
+      "Silver Powder",
+      "Balm Mushroom",
+      "TR61 (Bug Buzz)",
+      "Shed Shell",
+      "Pearl String",
+      "TR96 (Pollen Puff)",
+      "Comet Shard",
+      "TR28 (Megahorn)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Ghost",
+    [
+      "Odd Incense",
+      "Adrenaline Orb",
+      "Ring Target",
+      "Wishing Piece",
+      "Star Piece",
+      "Balm Mushroom",
+      "Cleanse Tag",
+      "Spell Tag",
+      "Cracked Pot",
+      "Reaper Cloth",
+      "Comet Shard",
+      "TR33 (Shadow Ball)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Steel",
+    [
+      "TR31 (Iron Tail)",
+      "TR46 (Iron Defense)",
+      "Metal Powder",
+      "Wishing Piece",
+      "Utility Umbrella",
+      "Metal Coat",
+      "TR52 (Gyro Ball)",
+      "Assault Vest",
+      "TR79 (Heavy Slam)",
+      "Amulet Coin",
+      "TR70 (Flash Cannon)",
+      "TR74 (Iron Head)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Fire",
+    [
+      "TR88 (Heat Crash)",
+      "Flame Orb",
+      "TR41 (Blaze Kick)",
+      "Wishing Piece",
+      "TR02 (Flamethrower)",
+      "Balm Mushroom",
+      "TR36 (Heat Wave)",
+      "Red Card",
+      "TR15 (Fire Blast)",
+      "Charcoal",
+      "TR55 (Flare Blitz)",
+      "TR43 (Overheat)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Water",
+    [
+      "Sea Incense",
+      "TR04 (Surf)",
+      "Shell Bell",
+      "Wishing Piece",
+      "TR16 (Waterfall)",
+      "TR98 (Liquidation)",
+      "Prism Scale",
+      "Mystic Water",
+      "Pearl String",
+      "TR45 (Muddy Water)",
+      "TR84 (Scald)",
+      "TR03 (Hydro Pump)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Grass",
+    [
+      "Grassy Seed",
+      "TR59 (Seed Bomb)",
+      "White Herb",
+      "Wishing Piece",
+      "TR77 (Grass Knot)",
+      "TR50 (Leaf Blade)",
+      "TR65 (Energy Ball)",
+      "Absorb Bulb",
+      "Pearl String",
+      "TR72 (Power Whip)",
+      "Comet Shard",
+      "TR71 (Leaf Storm)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Electric",
+    [
+      "Electric Seed",
+      "TR80 (Electro Ball)",
+      "Cell Battery",
+      "Wishing Piece",
+      "Magnet",
+      "TR86 (Wild Charge)",
+      "Upgrade",
+      "Light Ball",
+      "Pearl String",
+      "Dubious Disc",
+      "TR08 (Thunderbolt)",
+      "TR09 (Thunder)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Psychic",
+    [
+      "TR12 (Agility)",
+      "TR34 (Future Sight)",
+      "TR40 (Skill Swap)",
+      "TR82 (Stored Power)",
+      "TR44 (Cosmic Power)",
+      "TR83 (Ally Switch)",
+      "TR25 (Psyshock)",
+      "TR69 (Zen Headbutt)",
+      "TR17 (Amnesia)",
+      "TR38 (Trick)",
+      "TR49 (Calm Mind)",
+      "TR97 (Psychic Fangs)",
+      "TR11 (Psychic)",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Ice",
+    [
+      "Snowball",
+      "Icy Rock",
+      "Never-Melt Ice",
+      "Wishing Piece",
+      "Star Piece",
+      "Balm Mushroom",
+      "Razor Claw",
+      "Snowball",
+      "Pearl String",
+      "TR05 (Ice Beam)",
+      "Comet Shard",
+      "TR06 (Blizzard)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Dragon",
+    [
+      "TR47 (Dragon Claw)",
+      "Dragon Fang",
+      "Big Mushroom",
+      "Wishing Piece",
+      "Star Piece",
+      "Balm Mushroom",
+      "Dragon Scale",
+      "Life Orb",
+      "TR62 (Dragon Pulse)",
+      "King's Rock",
+      "TR51 (Dragon Dance)",
+      "TR24 (Outrage)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Dark",
+    [
+      "TR37 (Taunt)",
+      "Wide Lens",
+      "TR68 (Nasty Plot)",
+      "Wishing Piece",
+      "Star Piece",
+      "Balm Mushroom",
+      "TR81 (Foul Play)",
+      "Scope Lens",
+      "TR95 (Throat Chop)",
+      "TR58 (Dark Pulse)",
+      "TR32 (Crunch)",
+      "TR93 (Darkest Lariat)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ],
+  [
+    "Fairy",
+    [
+      "Stardust",
+      "Misty Seed",
+      "Big Mushroom",
+      "Wishing Piece",
+      "Sachet",
+      "Room Service",
+      "Whipped Dream",
+      "Destiny Knot",
+      "Strawberry Sweet",
+      "TR92 (Dazzling Gleam)",
+      "Strawberry Sweet",
+      "TR90 (Play Rough)",
+      "Rare Candy",
+      "Bottle Cap",
+      "PP Up"
+    ]
+  ]
+]

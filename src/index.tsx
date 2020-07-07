@@ -6,9 +6,12 @@ import LogRocket from 'logrocket';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import App from './components/App';
+import Eevaluator from './components/App';
+import CramOMatic from './components/CramOMatic';
 import * as serviceWorker from './serviceWorker';
 import { pageview } from './util/misc';
+
+const App = process.env.REACT_APP_ENTRY === 'cram-o-matic' ? CramOMatic : Eevaluator;
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
