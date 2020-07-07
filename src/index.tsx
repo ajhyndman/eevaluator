@@ -6,8 +6,8 @@ import LogRocket from 'logrocket';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Eevaluator from './components/App';
 import CramOMatic from './components/CramOMatic';
+import Eevaluator from './components/Eevaluator';
 import * as serviceWorker from './serviceWorker';
 import { pageview } from './util/misc';
 
