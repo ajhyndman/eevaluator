@@ -10,9 +10,10 @@ type Props = {
   items: string[];
   item?: ItemName;
   onChange: (item: ItemName) => void;
+  label?: string;
 };
 
-const ItemPicker = ({ items, item, onChange }: Props) => (
+const ItemPicker = ({ items, item, onChange, label }: Props) => (
   <Autocomplete
     style={{ flexGrow: 1 }}
     getOptionLabel={(option) => option}
@@ -31,7 +32,7 @@ const ItemPicker = ({ items, item, onChange }: Props) => (
           },
         }}
         size="small"
-        label="Item"
+        label={label ?? 'Item'}
         variant="outlined"
       />
     )}

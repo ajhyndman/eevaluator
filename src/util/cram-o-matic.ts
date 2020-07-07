@@ -3,10 +3,10 @@ import { zip } from 'ramda';
 import INPUTS from '../assets/cram-o-matic-inputs.json';
 import OUTPUTS from '../assets/cram-o-matic-outputs.json';
 
-type Recipe = [string, string, string, string];
-type Range = [number, number];
+export type Recipe = [string, string, string, string];
+export type Range = [number, number];
 
-const ANY_ITEM = '__any';
+export const ANY_ITEM = '__any';
 const OUTPUT_RANGES = [
   [2, 20],
   [22, 30],
@@ -33,17 +33,30 @@ const OUTPUTS_WITH_RANGES: [string, Array<[Range, string]>][] = (OUTPUTS as [
 
 const compareIngredient = (a: string, b: string) => a === ANY_ITEM || b === ANY_ITEM || a === b;
 
-const compareRecipe = (recipeA: Recipe, recipeB: Recipe) => {
+export const compareRecipe = (recipeA: Recipe, recipeB: Recipe) => {
   return zip(recipeA, recipeB).every(([a, b]) => compareIngredient(a, b));
 };
 
-const getResult = (type: string, score: number) => {
+export const getScore = (...items: string[]): number => {
+  return items.reduce((acc, item) => {
+    const input = getInput(item);
+    const score = input[2];
+    return acc + parseInt(score);
+  }, 0);
+};
+
+export const getOutputsForType = (type: string) => {
   const outputsForType = OUTPUTS_WITH_RANGES.find(([rowType]) => rowType === type);
   if (outputsForType == null) {
     throw new Error(`No outputs found for type: ${type}`);
   }
+  return outputsForType[1];
+};
 
-  const outputRow = outputsForType[1].find(
+const getResult = (type: string, score: number) => {
+  const outputsForType = getOutputsForType(type);
+
+  const outputRow = outputsForType.find(
     ([[lowerBound, upperBound]]) => lowerBound <= score && score <= upperBound,
   );
   if (outputRow == null) {
@@ -75,7 +88,7 @@ export const computeGuaranteedRecipe = (...items: Recipe) => {
   throw new Error('unknown recipe');
 };
 
-const getInput = (item: string) => {
+export const getInput = (item: string) => {
   const input = INPUTS.find(([name]) => name === item);
   if (input == null) {
     throw new Error(`Didn't recognize item: ${item}`);
@@ -83,21 +96,18 @@ const getInput = (item: string) => {
   return input as [string, string, string];
 };
 
+export const getInputType = (ingredient: string) => {
+  const input = getInput(ingredient);
+  return input[1];
+};
+
 export const computeGeneralRecipe = (...items: Recipe) => {
   // get type
   const typeItem = items[0];
-  const type = getInput(typeItem)[1];
-
-  if (type == null) {
-    throw new Error(`did not recognize type of ${typeItem}`);
-  }
+  const type = getInputType(typeItem);
 
   // get score
-  const score = items.reduce((acc, item) => {
-    const input = getInput(item);
-    const score = input[2];
-    return acc + parseInt(score);
-  }, 0);
+  const score = getScore(...items);
 
   // get result
   return getResult(type, score);
@@ -107,7 +117,7 @@ export const computeRecipe = (...items: Recipe) => {
   try {
     return computeGuaranteedRecipe(...items);
   } catch (e) {
-    console.debug('recipe didn\'t match "special" recipe — falling back to general recipes');
+    // console.debug('recipe didn\'t match "special" recipe — falling back to general recipes');
   }
   return computeGeneralRecipe(...items);
 };
