@@ -8,7 +8,7 @@ import Eevaluator from './Eevaluator';
 const App = () => (
   <Router>
     <Eevaluator path="/" />
-    <CramOMatic path="cram-o-matic" />
+    <CramOMatic path="cram-o-matic/" />
   </Router>
 );
 
