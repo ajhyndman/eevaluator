@@ -6,7 +6,7 @@ import { ItemName } from '@smogon/calc/dist/data/interface';
 import INPUTS from '../assets/cram-o-matic-inputs.json';
 import OUTPUTS from '../assets/cram-o-matic-outputs.json';
 import { computeRecipe } from '../util/cram-o-matic';
-import { validateIngredients } from '../util/cram-o-matic-reverse';
+import { GUARANTEED_RECIPE_OUTPUTS, validateIngredients } from '../util/cram-o-matic-reverse';
 import ItemIcon from './ItemIcon';
 import ItemPicker from './ItemPicker';
 
@@ -39,9 +39,10 @@ const TYPE_NAMES = [
   'Fairy',
 ];
 
-const outputSet = new Set(
-  (OUTPUTS.flat(2) as string[]).filter((item) => !TYPE_NAMES.includes(item)),
-);
+const outputSet = new Set([
+  ...(OUTPUTS.flat(2) as string[]).filter((item) => !TYPE_NAMES.includes(item)),
+  ...GUARANTEED_RECIPE_OUTPUTS,
+]);
 const outputOptions = [...outputSet];
 outputOptions.sort();
 

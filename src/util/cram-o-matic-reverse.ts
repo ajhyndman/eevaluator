@@ -19,7 +19,7 @@ const GUARANTEED_RECIPES: { [key: string]: Recipe } = {
   'Ability Capsule': ['Rare Candy', ANY_ITEM, 'Rare Candy', 'Rare Candy'],
   'Gold Bottle Cap': ['Bottle Cap', ANY_ITEM, 'Bottle Cap', 'Bottle Cap'],
 };
-const GUARANTEED_RECIPE_OUTPUTS = Object.keys(GUARANTEED_RECIPES);
+export const GUARANTEED_RECIPE_OUTPUTS = Object.keys(GUARANTEED_RECIPES);
 
 export const getOutputType = (output: string) => {
   const [type] = OUTPUTS.find(([type, outputs]) => outputs.includes(output));
@@ -45,10 +45,14 @@ export const validateIngredients = (
 
   // If output belongs a "Fixed recipe", accept or .
   if (GUARANTEED_RECIPE_OUTPUTS.includes(output)) {
-    return compareRecipe(
+    const matchesFixedRecipe = compareRecipe(
       recipe.map((item) => (item == null ? ANY_ITEM : item)) as Recipe,
       GUARANTEED_RECIPES[output],
     );
+
+    if (matchesFixedRecipe) {
+      return true;
+    }
   }
 
   // If first ingredient is the wrong type, reject.
