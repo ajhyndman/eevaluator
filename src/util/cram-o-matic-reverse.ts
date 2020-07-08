@@ -23,8 +23,11 @@ const SPECIAL_RECIPES: { [key: string]: Recipe } = {
 export const SPECIAL_RECIPE_OUTPUTS = Object.keys(SPECIAL_RECIPES);
 
 export const getOutputType = (output: string) => {
-  const [type] = OUTPUTS.find(([type, outputs]) => outputs.includes(output));
-  return type as string;
+  const outputRow = OUTPUTS.find(([type, outputs]) => outputs.includes(output));
+  if (outputRow == null) {
+    throw new Error(`Output not recognized: ${output}`);
+  }
+  return outputRow[0] as string;
 };
 
 const getOutputRange = (output: string) => {
@@ -44,33 +47,38 @@ export const validateIngredients = (
   // take exactly four values from ingredients
   const recipe = [ingredients[0], ingredients[1], ingredients[2], ingredients[3]] as const;
 
-  // If output belongs a "Fixed recipe", accept or .
-  if (SPECIAL_RECIPE_OUTPUTS.includes(output)) {
-    const matchesFixedRecipe = compareRecipe(
-      recipe.map((item) => (item == null ? ANY_ITEM : item)) as Recipe,
-      SPECIAL_RECIPES[output],
-    );
+  try {
+    // If output belongs a "Fixed recipe", accept or .
+    if (SPECIAL_RECIPE_OUTPUTS.includes(output)) {
+      const matchesFixedRecipe = compareRecipe(
+        recipe.map((item) => (item == null ? ANY_ITEM : item)) as Recipe,
+        SPECIAL_RECIPES[output],
+      );
 
-    if (matchesFixedRecipe) {
-      return true;
+      if (matchesFixedRecipe) {
+        return true;
+      }
     }
-  }
 
-  // If first ingredient is the wrong type, reject.
-  const outputType = getOutputType(output);
-  if (recipe[0] != null && outputType !== getInputType(recipe[0])) {
-    return false;
-  }
+    // If first ingredient is the wrong type, reject.
+    const outputType = getOutputType(output);
+    if (recipe[0] != null && outputType !== getInputType(recipe[0])) {
+      return false;
+    }
 
-  // If score is unattainable, reject.
-  const nonEmptyIngredients = recipe.filter((item) => item != null) as string[];
-  const numMissingIngredients = 4 - nonEmptyIngredients.length;
-  const currentScore = getScore(...nonEmptyIngredients);
-  const [min, max] = getOutputRange(output);
-  if (currentScore > max) {
-    return false;
-  }
-  if (currentScore + numMissingIngredients * 40 < min) {
+    // If score is unattainable, reject.
+    const nonEmptyIngredients = recipe.filter((item) => item != null) as string[];
+    const numMissingIngredients = 4 - nonEmptyIngredients.length;
+    const currentScore = getScore(...nonEmptyIngredients);
+    const [min, max] = getOutputRange(output);
+    if (currentScore > max) {
+      return false;
+    }
+    if (currentScore + numMissingIngredients * 40 < min) {
+      return false;
+    }
+  } catch (e) {
+    console.debug(e);
     return false;
   }
 
