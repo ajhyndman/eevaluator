@@ -1,5 +1,5 @@
 import { range } from 'ramda';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 
 import {
   Button,
@@ -16,6 +16,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TerrainIcon from '@material-ui/icons/Terrain';
+import { RouteComponentProps } from '@reach/router';
 import { Field, Pokemon } from '@smogon/calc';
 import { Terrain, Weather } from '@smogon/calc/dist/data/interface';
 
@@ -80,7 +81,7 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
   );
 };
 
-function Eevaluator() {
+const Eevaluator: FC<RouteComponentProps> = () => {
   const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
 
   const [pokemonLeft, setPokemonLeft] = useState(() => {
@@ -261,6 +262,6 @@ function Eevaluator() {
       </Dialog>
     </ThemeProvider>
   );
-}
+};
 
 export default Eevaluator;
