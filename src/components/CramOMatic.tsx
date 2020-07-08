@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import { Container, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
@@ -89,56 +90,79 @@ const CramOMatic: FC<RouteComponentProps> = () => {
   };
 
   return (
-    <Container maxWidth="md" style={{ paddingTop: 16 }}>
-      <Grid container alignItems="stretch" spacing={2}>
-        <Grid item xs={12} md={4} container direction="column" spacing={1}>
-          <Grid item>
-            <Typography variant="h6" gutterBottom>
-              What would you like to get?
-            </Typography>
-          </Grid>
-          <Grid item style={{ flexGrow: 1 }} container alignItems="center">
-            <ItemPicker
-              items={outputOptions}
-              item={output}
-              label="Filter by Goal"
-              onChange={handleChangeOutput}
-            />
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={4} container spacing={1}>
-          <Grid item xs={12}>
-            <Typography variant="h6" gutterBottom>
-              Pick some ingredients
-            </Typography>
-          </Grid>
-          {inputs.map((item, i) => (
-            <Grid item xs={12}>
-              <ItemPicker
-                items={getValidOptions(output, inputs, i)}
-                item={item}
-                label={`Item ${i + 1}`}
-                onChange={handleChangeInput(i)}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <Grid item xs={12} md={4} container direction="column" justify="flex-start" spacing={1}>
-          <Grid item>
-            <Typography variant="h6">You got:</Typography>
-          </Grid>
-          <Grid item container alignItems="center" spacing={1} style={{ flexGrow: 1 }}>
-            <Grid item>{outcome && <ItemIcon item={outcome} />}</Grid>
+    <>
+      <Helmet>
+        <title>Cram-O-Matic :: Eevaluator</title>
+        <meta
+          name="description"
+          content="Learn how to get every item you need from the Pokemon Sword &amp; Shield: Isle of Armor expansion's Cram-O-Matic.  Computes all possible recipes for each available output."
+        />
+        <meta property="og:title" content="Cram-O-Matic :: Eevaluator" />
+        <meta
+          property="og:description"
+          content="Learn how to get every item you need from the Pokemon Sword &amp; Shield: Isle of Armor expansion's Cram-O-Matic.  Computes all possible recipes for each available output."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${process.env.PUBLIC_URL}/cram-o-matic/`} />
+        <meta property="og:image" content={`${process.env.PUBLIC_URL}/cram-o-matic-preview.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta
+          property="og:image:alt"
+          content="Four select fields have three Bottlecaps and one Aguav berry selected. Text below reads: You got a Gold Bottlecap."
+        />
+      </Helmet>
+      <Container maxWidth="md" style={{ paddingTop: 16 }}>
+        <Grid container alignItems="stretch" spacing={2}>
+          <Grid item xs={12} md={4} container direction="column" spacing={1}>
             <Grid item>
-              {/* <div style={{ width: 8 }} /> */}
-              <Typography component="strong" style={{ fontSize: '1.25em' }}>
-                {outcome}
+              <Typography variant="h6" gutterBottom>
+                What would you like to get?
               </Typography>
             </Grid>
+            <Grid item style={{ flexGrow: 1 }} container alignItems="center">
+              <ItemPicker
+                items={outputOptions}
+                item={output}
+                label="Filter by Goal"
+                onChange={handleChangeOutput}
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4} container spacing={1}>
+            <Grid item xs={12}>
+              <Typography variant="h6" gutterBottom>
+                Pick some ingredients
+              </Typography>
+            </Grid>
+            {inputs.map((item, i) => (
+              <Grid item xs={12}>
+                <ItemPicker
+                  items={getValidOptions(output, inputs, i)}
+                  item={item}
+                  label={`Item ${i + 1}`}
+                  onChange={handleChangeInput(i)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Grid item xs={12} md={4} container direction="column" justify="flex-start" spacing={1}>
+            <Grid item>
+              <Typography variant="h6">You got:</Typography>
+            </Grid>
+            <Grid item container alignItems="center" spacing={1} style={{ flexGrow: 1 }}>
+              <Grid item>{outcome && <ItemIcon item={outcome} />}</Grid>
+              <Grid item>
+                {/* <div style={{ width: 8 }} /> */}
+                <Typography component="strong" style={{ fontSize: '1.25em' }}>
+                  {outcome}
+                </Typography>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </>
   );
 };
 

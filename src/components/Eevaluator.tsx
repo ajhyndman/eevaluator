@@ -1,5 +1,6 @@
 import { range } from 'ramda';
 import React, { FC, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 import {
   Button,
@@ -158,109 +159,137 @@ const Eevaluator: FC<RouteComponentProps> = () => {
   };
 
   return (
-    <ThemeProvider theme={THEME}>
-      <Background weather={field.weather} terrain={field.terrain} />
-      <Container maxWidth="md" style={{ paddingTop: 16 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={1}>
-              {range(0, 4).map((n) => (
-                <MovePicker
-                  key={n}
-                  index={n}
-                  move={pokemonLeft.moves[n]}
-                  onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', n)}
-                  attacker={pokemonLeft}
-                  defender={pokemonRight}
-                  field={field}
+    <>
+      <Helmet>
+        <title>Eevaluator</title>
+        <meta
+          name="description"
+          content="A Pokemon Sword and Shield damage calculator. Evaluate the strengths and weaknesses of your favourite pokemon with a human-friendly interface!"
+        />
+        <meta property="og:title" content="Eevaluator" />
+        <meta
+          property="og:description"
+          content="A Pokemon damage calculator optimized for usability. Evaluate the strengths and weaknesses of your favourite pokemon!"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={process.env.PUBLIC_URL} />
+        <meta property="og:image" content={`${process.env.PUBLIC_URL}/preview.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta
+          property="og:image:alt"
+          content="Gigantamax Eevee deals 121–144% damage to its opponent for a gauaranteed knockout. Eevee is currently poisoned."
+        />
+      </Helmet>
+      <ThemeProvider theme={THEME}>
+        <Background weather={field.weather} terrain={field.terrain} />
+        <Container maxWidth="md" style={{ paddingTop: 16 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Grid container spacing={1}>
+                {range(0, 4).map((n) => (
+                  <MovePicker
+                    key={n}
+                    index={n}
+                    move={pokemonLeft.moves[n]}
+                    onChangeMove={handleMoveChange(pokemonLeft, setPokemonLeft, 'pokemon-left', n)}
+                    attacker={pokemonLeft}
+                    defender={pokemonRight}
+                    field={field}
+                  />
+                ))}
+                <PokemonPicker
+                  index={0}
+                  pokemon={pokemonLeft}
+                  onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
+                  onExportClick={handleOpenImportExport('pokemon-left')}
+                  onOpenFavorites={handleOpenFavorites('pokemon-left')}
+                  onSaveFavorite={handleSaveFavorite('pokemon-left')}
                 />
-              ))}
-              <PokemonPicker
-                index={0}
-                pokemon={pokemonLeft}
-                onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
-                onExportClick={handleOpenImportExport('pokemon-left')}
-                onOpenFavorites={handleOpenFavorites('pokemon-left')}
-                onSaveFavorite={handleSaveFavorite('pokemon-left')}
-              />
-              {/* Create some spacing for the stacked mobile case.
+                {/* Create some spacing for the stacked mobile case.
                   TODO: This shouldn't affect desktop. */}
-              <Grid item xs={12}>
-                <div style={{ height: 48 }} />
+                <Grid item xs={12}>
+                  <div style={{ height: 48 }} />
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Grid container spacing={1}>
+                {range(0, 4).map((n) => (
+                  <MovePicker
+                    key={n}
+                    index={n}
+                    move={pokemonRight.moves[n]}
+                    onChangeMove={handleMoveChange(
+                      pokemonRight,
+                      setPokemonRight,
+                      'pokemon-right',
+                      n,
+                    )}
+                    attacker={pokemonRight}
+                    defender={pokemonLeft}
+                    field={field}
+                  />
+                ))}
+                <PokemonPicker
+                  index={1}
+                  pokemon={pokemonRight}
+                  onChange={savePokemon(setPokemonRight, 'pokemon-right')}
+                  onExportClick={handleOpenImportExport('pokemon-right')}
+                  onOpenFavorites={handleOpenFavorites('pokemon-right')}
+                  onSaveFavorite={handleSaveFavorite('pokemon-right')}
+                />
+                <Grid item />
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={1}>
-              {range(0, 4).map((n) => (
-                <MovePicker
-                  key={n}
-                  index={n}
-                  move={pokemonRight.moves[n]}
-                  onChangeMove={handleMoveChange(pokemonRight, setPokemonRight, 'pokemon-right', n)}
-                  attacker={pokemonRight}
-                  defender={pokemonLeft}
-                  field={field}
-                />
-              ))}
-              <PokemonPicker
-                index={1}
-                pokemon={pokemonRight}
-                onChange={savePokemon(setPokemonRight, 'pokemon-right')}
-                onExportClick={handleOpenImportExport('pokemon-right')}
-                onOpenFavorites={handleOpenFavorites('pokemon-right')}
-                onSaveFavorite={handleSaveFavorite('pokemon-right')}
-              />
-              <Grid item />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
 
-      <Toolbar variant="dense">
-        <div style={{ flexGrow: 1 }} />
-        <Link href={GITHUB_URL}>
-          <Button startIcon={<GitHubIcon />} size="small">
-            GitHub
-          </Button>
-        </Link>
-      </Toolbar>
+        <Toolbar variant="dense">
+          <div style={{ flexGrow: 1 }} />
+          <Link href={GITHUB_URL}>
+            <Button startIcon={<GitHubIcon />} size="small">
+              GitHub
+            </Button>
+          </Link>
+        </Toolbar>
 
-      <div style={{ position: 'fixed', left: 16, bottom: 16 }}>
-        <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
-          <TerrainIcon />
-        </Fab>
-      </div>
-
-      <SwipeableDrawer
-        open={showFieldDrawer}
-        anchor="left"
-        onClose={() => setShowFieldDrawer(false)}
-        onOpen={() => setShowFieldDrawer(true)}
-      >
-        <div style={{ width: 368 }}>
-          <FieldPicker field={field} onChange={setField} />
+        <div style={{ position: 'fixed', left: 16, bottom: 16 }}>
+          <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
+            <TerrainIcon />
+          </Fab>
         </div>
-      </SwipeableDrawer>
 
-      <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
-        {showImportExport != null && (
-          <ImportExport
-            pokemon={showImportExport === 'pokemon-left' ? pokemonLeft : pokemonRight}
-            onImport={handleImportPokemon}
+        <SwipeableDrawer
+          open={showFieldDrawer}
+          anchor="left"
+          onClose={() => setShowFieldDrawer(false)}
+          onOpen={() => setShowFieldDrawer(true)}
+        >
+          <div style={{ width: 368 }}>
+            <FieldPicker field={field} onChange={setField} />
+          </div>
+        </SwipeableDrawer>
+
+        <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
+          {showImportExport != null && (
+            <ImportExport
+              pokemon={showImportExport === 'pokemon-left' ? pokemonLeft : pokemonRight}
+              onImport={handleImportPokemon}
+            />
+          )}
+        </Dialog>
+
+        <Dialog open={showFavorites != null} onClose={handleCloseFavorites} fullWidth maxWidth="xs">
+          <Favorites
+            favorites={favorites}
+            onClose={handleCloseFavorites}
+            onSelect={handleLoadFavorite}
+            onDelete={handleRemoveFavorite}
           />
-        )}
-      </Dialog>
-
-      <Dialog open={showFavorites != null} onClose={handleCloseFavorites} fullWidth maxWidth="xs">
-        <Favorites
-          favorites={favorites}
-          onClose={handleCloseFavorites}
-          onSelect={handleLoadFavorite}
-          onDelete={handleRemoveFavorite}
-        />
-      </Dialog>
-    </ThemeProvider>
+        </Dialog>
+      </ThemeProvider>
+    </>
   );
 };
 
