@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Container, Grid } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { ItemName } from '@smogon/calc/dist/data/interface';
 
 import INPUTS from '../assets/cram-o-matic-inputs.json';
@@ -88,30 +89,52 @@ const CramOMatic = () => {
 
   return (
     <Container maxWidth="md" style={{ paddingTop: 16 }}>
-      <Grid container alignItems="center" spacing={1}>
-        <Grid item xs={12}>
-          <ItemPicker
-            items={outputOptions}
-            item={output}
-            label="Goal"
-            onChange={handleChangeOutput}
-          />
-        </Grid>
-        <hr />
-
-        {inputs.map((item, i) => (
-          <Grid item xs={12}>
+      <Grid container alignItems="stretch" spacing={2}>
+        <Grid item xs={12} md={4} container direction="column" spacing={1}>
+          <Grid item>
+            <Typography variant="h6" gutterBottom>
+              What would you like to get?
+            </Typography>
+          </Grid>
+          <Grid item style={{ flexGrow: 1 }} container alignItems="center">
             <ItemPicker
-              items={getValidOptions(output, inputs, i)}
-              item={item}
-              label={`Item ${i + 1}`}
-              onChange={handleChangeInput(i)}
+              items={outputOptions}
+              item={output}
+              label="Filter by Goal"
+              onChange={handleChangeOutput}
             />
           </Grid>
-        ))}
-        <Grid item container xs={12} direction="row" alignItems="center" spacing={1}>
-          <Grid item>{outcome && <ItemIcon item={outcome} />}</Grid>
-          <Grid item> {outcome}</Grid>
+        </Grid>
+        <Grid item xs={12} md={4} container spacing={1}>
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>
+              Pick some ingredients
+            </Typography>
+          </Grid>
+          {inputs.map((item, i) => (
+            <Grid item xs={12}>
+              <ItemPicker
+                items={getValidOptions(output, inputs, i)}
+                item={item}
+                label={`Item ${i + 1}`}
+                onChange={handleChangeInput(i)}
+              />
+            </Grid>
+          ))}
+        </Grid>
+        <Grid item xs={12} md={4} container direction="column" justify="flex-start" spacing={1}>
+          <Grid item>
+            <Typography variant="h6">You got:</Typography>
+          </Grid>
+          <Grid item container alignItems="center" spacing={1} style={{ flexGrow: 1 }}>
+            <Grid item>{outcome && <ItemIcon item={outcome} />}</Grid>
+            <Grid item>
+              {/* <div style={{ width: 8 }} /> */}
+              <Typography component="strong" style={{ fontSize: '1.25em' }}>
+                {outcome}
+              </Typography>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Container>
