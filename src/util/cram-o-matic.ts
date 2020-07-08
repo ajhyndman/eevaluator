@@ -67,15 +67,16 @@ const getResult = (type: string, score: number) => {
 };
 
 const GUARANTEED_RECIPES = new Map<Recipe, string>([
-  [['Tiny Mushroom', ANY_ITEM, 'Tiny Mushroom', 'Tiny Mushroom'], 'Big Mushroom'],
-  [['Pearl', ANY_ITEM, 'Pearl', 'Pearl'], 'Big Pearl'],
-  [['Stardust', ANY_ITEM, 'Stardust', 'Stardust'], 'Star Piece'],
-  [['Big Mushroom', ANY_ITEM, 'Big Mushroom', 'Big Mushroom'], 'Balm Mushroom'],
-  [['Nugget', ANY_ITEM, 'Nugget', 'Nugget'], 'Big Bugget'],
-  [['Big Pearl', ANY_ITEM, 'Big Pearl', 'Big Pearl'], 'Pearl String'],
-  [['Star Piece', ANY_ITEM, 'Star Piece', 'Star Piece'], 'Comet Shard'],
   [['Rare Candy', ANY_ITEM, 'Rare Candy', 'Rare Candy'], 'Ability Capsule'],
+  [['Big Mushroom', ANY_ITEM, 'Big Mushroom', 'Big Mushroom'], 'Balm Mushroom'],
+  [['Tiny Mushroom', ANY_ITEM, 'Tiny Mushroom', 'Tiny Mushroom'], 'Big Mushroom'],
+  [['Nugget', ANY_ITEM, 'Nugget', 'Nugget'], 'Big Nugget'],
+  [['Pearl', ANY_ITEM, 'Pearl', 'Pearl'], 'Big Pearl'],
+  [['Star Piece', ANY_ITEM, 'Star Piece', 'Star Piece'], 'Comet Shard'],
   [['Bottle Cap', ANY_ITEM, 'Bottle Cap', 'Bottle Cap'], 'Gold Bottle Cap'],
+  [['Big Pearl', ANY_ITEM, 'Big Pearl', 'Big Pearl'], 'Pearl String'],
+  [['Armorite Ore', ANY_ITEM, 'Armorite Ore', 'Armorite Ore'], 'PP Up'],
+  [['Stardust', ANY_ITEM, 'Stardust', 'Stardust'], 'Star Piece'],
 ]);
 
 export const computeGuaranteedRecipe = (...items: Recipe) => {

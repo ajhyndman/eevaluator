@@ -9,15 +9,16 @@ import {
 } from './cram-o-matic';
 
 const GUARANTEED_RECIPES: { [key: string]: Recipe } = {
+  'Ability Capsule': ['Rare Candy', ANY_ITEM, 'Rare Candy', 'Rare Candy'],
+  'Balm Mushroom': ['Big Mushroom', ANY_ITEM, 'Big Mushroom', 'Big Mushroom'],
+  'Big Nugget': ['Nugget', ANY_ITEM, 'Nugget', 'Nugget'],
   'Big Mushroom': ['Tiny Mushroom', ANY_ITEM, 'Tiny Mushroom', 'Tiny Mushroom'],
   'Big Pearl': ['Pearl', ANY_ITEM, 'Pearl', 'Pearl'],
-  'Star Piece': ['Stardust', ANY_ITEM, 'Stardust', 'Stardust'],
-  'Balm Mushroom': ['Big Mushroom', ANY_ITEM, 'Big Mushroom', 'Big Mushroom'],
-  'Big Bugget': ['Nugget', ANY_ITEM, 'Nugget', 'Nugget'],
-  'Pearl String': ['Big Pearl', ANY_ITEM, 'Big Pearl', 'Big Pearl'],
   'Comet Shard': ['Star Piece', ANY_ITEM, 'Star Piece', 'Star Piece'],
-  'Ability Capsule': ['Rare Candy', ANY_ITEM, 'Rare Candy', 'Rare Candy'],
   'Gold Bottle Cap': ['Bottle Cap', ANY_ITEM, 'Bottle Cap', 'Bottle Cap'],
+  'Pearl String': ['Big Pearl', ANY_ITEM, 'Big Pearl', 'Big Pearl'],
+  'PP Up': ['Armorite Ore', ANY_ITEM, 'Armorite Ore', 'Armorite Ore'],
+  'Star Piece': ['Stardust', ANY_ITEM, 'Stardust', 'Stardust'],
 };
 export const GUARANTEED_RECIPE_OUTPUTS = Object.keys(GUARANTEED_RECIPES);
 
