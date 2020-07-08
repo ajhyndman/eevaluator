@@ -8,7 +8,7 @@ import {
   Recipe,
 } from './cram-o-matic';
 
-const GUARANTEED_RECIPES: { [key: string]: Recipe } = {
+const SPECIAL_RECIPES: { [key: string]: Recipe } = {
   'Ability Capsule': ['Rare Candy', ANY_ITEM, 'Rare Candy', 'Rare Candy'],
   'Balm Mushroom': ['Big Mushroom', ANY_ITEM, 'Big Mushroom', 'Big Mushroom'],
   'Big Nugget': ['Nugget', ANY_ITEM, 'Nugget', 'Nugget'],
@@ -20,7 +20,7 @@ const GUARANTEED_RECIPES: { [key: string]: Recipe } = {
   'PP Up': ['Armorite Ore', ANY_ITEM, 'Armorite Ore', 'Armorite Ore'],
   'Star Piece': ['Stardust', ANY_ITEM, 'Stardust', 'Stardust'],
 };
-export const GUARANTEED_RECIPE_OUTPUTS = Object.keys(GUARANTEED_RECIPES);
+export const SPECIAL_RECIPE_OUTPUTS = Object.keys(SPECIAL_RECIPES);
 
 export const getOutputType = (output: string) => {
   const [type] = OUTPUTS.find(([type, outputs]) => outputs.includes(output));
@@ -45,10 +45,10 @@ export const validateIngredients = (
   const recipe = [ingredients[0], ingredients[1], ingredients[2], ingredients[3]] as const;
 
   // If output belongs a "Fixed recipe", accept or .
-  if (GUARANTEED_RECIPE_OUTPUTS.includes(output)) {
+  if (SPECIAL_RECIPE_OUTPUTS.includes(output)) {
     const matchesFixedRecipe = compareRecipe(
       recipe.map((item) => (item == null ? ANY_ITEM : item)) as Recipe,
-      GUARANTEED_RECIPES[output],
+      SPECIAL_RECIPES[output],
     );
 
     if (matchesFixedRecipe) {

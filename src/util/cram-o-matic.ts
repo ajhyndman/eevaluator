@@ -66,7 +66,7 @@ const getResult = (type: string, score: number) => {
   return outputRow[1];
 };
 
-const GUARANTEED_RECIPES = new Map<Recipe, string>([
+const SPECIAL_RECIPES = new Map<Recipe, string>([
   [['Rare Candy', ANY_ITEM, 'Rare Candy', 'Rare Candy'], 'Ability Capsule'],
   [['Big Mushroom', ANY_ITEM, 'Big Mushroom', 'Big Mushroom'], 'Balm Mushroom'],
   [['Tiny Mushroom', ANY_ITEM, 'Tiny Mushroom', 'Tiny Mushroom'], 'Big Mushroom'],
@@ -79,9 +79,9 @@ const GUARANTEED_RECIPES = new Map<Recipe, string>([
   [['Stardust', ANY_ITEM, 'Stardust', 'Stardust'], 'Star Piece'],
 ]);
 
-export const computeGuaranteedRecipe = (...items: Recipe) => {
-  for (const [guaranteedRecipe, result] of GUARANTEED_RECIPES) {
-    if (compareRecipe(items, guaranteedRecipe)) {
+export const computeSpecialRecipe = (...items: Recipe) => {
+  for (const [specialRecipe, result] of SPECIAL_RECIPES) {
+    if (compareRecipe(items, specialRecipe)) {
       return result;
     }
   }
@@ -116,7 +116,7 @@ export const computeGeneralRecipe = (...items: Recipe) => {
 
 export const computeRecipe = (...items: Recipe) => {
   try {
-    return computeGuaranteedRecipe(...items);
+    return computeSpecialRecipe(...items);
   } catch (e) {
     // console.debug('recipe didn\'t match "special" recipe — falling back to general recipes');
   }

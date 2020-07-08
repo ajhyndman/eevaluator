@@ -50,7 +50,7 @@ describe('cram-o-matic-reverse', () => {
       expect(validateIngredients('Strawberry Sweet', ['Fighting Memory'])).toBe(false);
     });
 
-    it('validates a valid "guaranteed recipe"', () => {
+    it('validates a valid "special recipe"', () => {
       expect(
         validateIngredients('Big Mushroom', [
           'Tiny Mushroom',
