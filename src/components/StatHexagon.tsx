@@ -142,7 +142,7 @@ const StatHexagon = ({
               label={STAT_LABEL[key]}
               onChange={handleStatChange(key)}
               style={{ maxWidth: INPUT_SIZE }}
-              value={stats[key]}
+              value={stats[key].toString()}
               type="number"
               inputProps={{ step: statKey === 'evs' ? 4 : 1 }}
             />
