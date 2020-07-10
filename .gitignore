@@ -2,6 +2,7 @@
 
 # compiled output
 /build
+.next
 
 # dependencies
 /node_modules
