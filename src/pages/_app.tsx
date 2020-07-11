@@ -2,13 +2,13 @@ import '../index.css';
 
 import LogRocket from 'logrocket';
 import Head from 'next/head';
-import Link from 'next/link';
 import React, { useEffect } from 'react';
 
-import { AppBar, Button, ThemeProvider, Toolbar, Typography } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
+import Header from '../components/Header';
 import { RED, STEEL_GRAY } from '../styles';
 import { pageview } from '../util/misc';
 
@@ -59,18 +59,7 @@ export default function App({ Component, pageProps }: any) {
         <link rel="manifest" href={`${process.env.NEXT_PUBLIC_URL}/manifest.json`} />
       </Head>
       <ThemeProvider theme={THEME}>
-        <AppBar color="secondary" position="static">
-          <Toolbar variant="dense">
-            <Typography variant="h6">Eevaluator</Typography>
-            <div style={{ flexGrow: 1 }} />
-            <Link href="/">
-              <Button color="inherit">Damage Calculator</Button>
-            </Link>
-            <Link href="/cram-o-matic">
-              <Button color="inherit">Cram-O-Matic</Button>
-            </Link>
-          </Toolbar>
-        </AppBar>
+        <Header />
         <Component {...pageProps} />
       </ThemeProvider>
     </>
