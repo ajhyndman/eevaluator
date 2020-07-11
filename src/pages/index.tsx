@@ -1,6 +1,6 @@
+import Head from 'next/head';
 import { range } from 'ramda';
-import React, { FC, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect, useState } from 'react';
 
 import {
   Button,
@@ -10,18 +10,18 @@ import {
   Grid,
   Link,
   SwipeableDrawer,
-  ThemeProvider,
   Toolbar,
 } from '@material-ui/core';
-import { createMuiTheme } from '@material-ui/core/styles';
-import createPalette from '@material-ui/core/styles/createPalette';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TerrainIcon from '@material-ui/icons/Terrain';
-import { RouteComponentProps } from '@reach/router';
 import { Field, Pokemon } from '@smogon/calc';
 import { Terrain, Weather } from '@smogon/calc/dist/data/interface';
 
-import { BLUE, RED } from '../styles';
+import Favorites from '../components/Favorites';
+import FieldPicker from '../components/FieldPicker';
+import ImportExport from '../components/ImportExport';
+import MovePicker from '../components/MovePicker';
+import PokemonPicker from '../components/PokemonPicker';
 import {
   clonePokemon,
   GENERATION,
@@ -29,24 +29,8 @@ import {
   readFromLocalStorage,
   writeToLocalStorage,
 } from '../util/misc';
-import Favorites from './Favorites';
-import FieldPicker from './FieldPicker';
-import ImportExport from './ImportExport';
-import MovePicker from './MovePicker';
-import PokemonPicker from './PokemonPicker';
 
 type PokemonKey = 'pokemon-left' | 'pokemon-right';
-
-const THEME = createMuiTheme({
-  palette: createPalette({
-    primary: { main: RED },
-    secondary: { main: BLUE },
-    text: {
-      primary: '#222233',
-      secondary: 'rgba(0, 0, 10, 0.8)',
-    },
-  }),
-});
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
   Sun: '/images/weather/Sun_Nobg_orange.png',
@@ -82,23 +66,30 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
   );
 };
 
-const Eevaluator: FC<RouteComponentProps> = () => {
+const Eevaluator = () => {
   const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
 
-  const [pokemonLeft, setPokemonLeft] = useState(() => {
-    const json = readFromLocalStorage('pokemon-left');
-    if (json) {
-      return new Pokemon(GENERATION, json.name, json);
+  const [pokemonLeft, setPokemonLeft] = useState(eevee);
+  const [pokemonRight, setPokemonRight] = useState(eevee);
+
+  // Attempt to load state from LocalStorage on mount.
+  useEffect(() => {
+    // selected pokemon
+    const left = readFromLocalStorage('pokemon-left');
+    const right = readFromLocalStorage('pokemon-right');
+    if (left) setPokemonLeft(new Pokemon(GENERATION, left.name, left));
+    if (right) setPokemonRight(new Pokemon(GENERATION, right.name, right));
+
+    // favorites
+    const favorites: Pokemon[] = readFromLocalStorage('favorites');
+    if (favorites) {
+      setFavorites(
+        favorites.map(
+          (favorite) => new Pokemon(GENERATION, favorite.name, { ...favorite, curHP: undefined }),
+        ),
+      );
     }
-    return eevee;
-  });
-  const [pokemonRight, setPokemonRight] = useState(() => {
-    const json = readFromLocalStorage('pokemon-right');
-    if (json) {
-      return new Pokemon(GENERATION, json.name, json);
-    }
-    return eevee;
-  });
+  }, []);
 
   const savePokemon = (setState: any, key: PokemonKey) => (pokemon: Pokemon) => {
     writeToLocalStorage(key, pokemon);
@@ -118,12 +109,6 @@ const Eevaluator: FC<RouteComponentProps> = () => {
   const [showFieldDrawer, setShowFieldDrawer] = useState(false);
 
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
-    const favorites: Pokemon[] = readFromLocalStorage('favorites');
-    if (favorites) {
-      return favorites.map(
-        (favorite) => new Pokemon(GENERATION, favorite.name, { ...favorite, curHP: undefined }),
-      );
-    }
     return [];
   });
   const [showFavorites, setShowFavorites] = useState<PokemonKey | null>(null);
@@ -159,7 +144,28 @@ const Eevaluator: FC<RouteComponentProps> = () => {
   };
 
   return (
-    <ThemeProvider theme={THEME}>
+    <>
+      <Head>
+        <title>Eevaluator</title>
+        <meta
+          name="description"
+          content="A Pokemon Sword and Shield damage calculator. Evaluate the strengths and weaknesses of your favourite pokemon with a human-friendly interface!"
+        />
+        <meta property="og:title" content="Eevaluator" />
+        <meta
+          property="og:description"
+          content="A Pokemon damage calculator optimized for usability. Evaluate the strengths and weaknesses of your favourite pokemon!"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}`} />
+        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_URL}/preview.png`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta
+          property="og:image:alt"
+          content="Gigantamax Eevee deals 121–144% damage to its opponent for a gauaranteed knockout. Eevee is currently poisoned."
+        />
+      </Head>
       <Background weather={field.weather} terrain={field.terrain} />
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container spacing={2}>
@@ -261,7 +267,7 @@ const Eevaluator: FC<RouteComponentProps> = () => {
           onDelete={handleRemoveFavorite}
         />
       </Dialog>
-    </ThemeProvider>
+    </>
   );
 };
 
