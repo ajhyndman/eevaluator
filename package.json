@@ -9,7 +9,7 @@
     "url": "https://github.com/ajhyndman/visual-pokemon-calc"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=12"
   },
   "private": true,
   "license": "GPL-3.0",
