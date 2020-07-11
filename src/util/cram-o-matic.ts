@@ -7,6 +7,7 @@ export type Recipe = [string, string, string, string];
 export type Range = [number, number];
 
 export const ANY_ITEM = '__any';
+export const POKE_BALL = 'Random Poké Ball';
 const OUTPUT_RANGES = [
   [2, 20],
   [22, 30],
@@ -54,6 +55,10 @@ export const getOutputsForType = (type: string) => {
 };
 
 const getResult = (type: string, score: number) => {
+  if (score === 0) {
+    return POKE_BALL;
+  }
+
   const outputsForType = getOutputsForType(type);
 
   const outputRow = outputsForType.find(

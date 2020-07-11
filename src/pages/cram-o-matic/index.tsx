@@ -10,7 +10,7 @@ import INPUTS from '../../assets/cram-o-matic-inputs.json';
 import OUTPUTS from '../../assets/cram-o-matic-outputs.json';
 import ItemIcon from '../../components/ItemIcon';
 import ItemPicker from '../../components/ItemPicker';
-import { computeRecipe } from '../../util/cram-o-matic';
+import { computeRecipe, POKE_BALL } from '../../util/cram-o-matic';
 import { SPECIAL_RECIPE_OUTPUTS, validateIngredients } from '../../util/cram-o-matic-reverse';
 
 type Recipe = [ItemName, ItemName, ItemName, ItemName];
@@ -154,7 +154,9 @@ const CramOMatic = () => {
               <Typography variant="h6">You got:</Typography>
             </Grid>
             <Grid item container alignItems="center" spacing={1} style={{ flexGrow: 1 }}>
-              <Grid item>{outcome && <ItemIcon item={outcome} />}</Grid>
+              <Grid item>
+                {outcome && <ItemIcon item={outcome === POKE_BALL ? 'Poke Ball' : outcome} />}
+              </Grid>
               <Grid item>
                 {/* <div style={{ width: 8 }} /> */}
                 <Typography component="strong" style={{ fontSize: '1.25em' }}>
