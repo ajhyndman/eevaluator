@@ -1,17 +1,17 @@
+import Head from 'next/head';
 import React, { FC, useState } from 'react';
-import { Helmet } from 'react-helmet';
 
 import { Container, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { RouteComponentProps } from '@reach/router';
 import { ItemName } from '@smogon/calc/dist/data/interface';
 
-import INPUTS from '../assets/cram-o-matic-inputs.json';
-import OUTPUTS from '../assets/cram-o-matic-outputs.json';
-import { computeRecipe } from '../util/cram-o-matic';
-import { SPECIAL_RECIPE_OUTPUTS, validateIngredients } from '../util/cram-o-matic-reverse';
-import ItemIcon from './ItemIcon';
-import ItemPicker from './ItemPicker';
+import INPUTS from '../../assets/cram-o-matic-inputs.json';
+import OUTPUTS from '../../assets/cram-o-matic-outputs.json';
+import ItemIcon from '../../components/ItemIcon';
+import ItemPicker from '../../components/ItemPicker';
+import { computeRecipe } from '../../util/cram-o-matic';
+import { SPECIAL_RECIPE_OUTPUTS, validateIngredients } from '../../util/cram-o-matic-reverse';
 
 type Recipe = [ItemName, ItemName, ItemName, ItemName];
 type PartialRecipe = [
@@ -68,7 +68,7 @@ const getValidOptions = (
   });
 };
 
-const CramOMatic: FC<RouteComponentProps> = () => {
+const CramOMatic = () => {
   const [output, setOutput] = useState<ItemName>();
   const [inputs, setInputs] = useState<PartialRecipe>([undefined, undefined, undefined, undefined]);
 
@@ -91,7 +91,7 @@ const CramOMatic: FC<RouteComponentProps> = () => {
 
   return (
     <>
-      <Helmet>
+      <Head>
         <title>Cram-O-Matic :: Eevaluator</title>
         <meta
           name="description"
@@ -103,15 +103,18 @@ const CramOMatic: FC<RouteComponentProps> = () => {
           content="Learn how to get every item you need from the Pokemon Sword &amp; Shield: Isle of Armor expansion's Cram-O-Matic.  Computes all possible recipes for each available output."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${process.env.PUBLIC_URL}/cram-o-matic/`} />
-        <meta property="og:image" content={`${process.env.PUBLIC_URL}/cram-o-matic-preview.png`} />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}/cram-o-matic/`} />
+        <meta
+          property="og:image"
+          content={`${process.env.NEXT_PUBLIC_URL}/cram-o-matic-preview.png`}
+        />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="1200" />
         <meta
           property="og:image:alt"
           content="Four select fields have three Bottlecaps and one Aguav berry selected. Text below reads: You got a Gold Bottlecap."
         />
-      </Helmet>
+      </Head>
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container alignItems="stretch" spacing={2}>
           <Grid item xs={12} md={4} container direction="column" spacing={1}>
@@ -136,7 +139,7 @@ const CramOMatic: FC<RouteComponentProps> = () => {
               </Typography>
             </Grid>
             {inputs.map((item, i) => (
-              <Grid item xs={12}>
+              <Grid key={i} item xs={12}>
                 <ItemPicker
                   items={getValidOptions(output, inputs, i)}
                   item={item}

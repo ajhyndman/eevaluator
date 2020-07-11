@@ -141,8 +141,9 @@ const StatHexagon = ({
               size="small"
               label={STAT_LABEL[key]}
               onChange={handleStatChange(key)}
+              onFocus={(e) => e.currentTarget.select()}
               style={{ maxWidth: INPUT_SIZE }}
-              value={stats[key]}
+              value={stats[key].toString()}
               type="number"
               inputProps={{ step: statKey === 'evs' ? 4 : 1 }}
             />
