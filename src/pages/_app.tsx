@@ -9,6 +9,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
 import Header from '../components/Header';
+import { unregister } from '../serviceWorker';
 import { RED, STEEL_GRAY } from '../styles';
 import { pageview } from '../util/misc';
 
@@ -26,6 +27,9 @@ const THEME = createMuiTheme({
 export default function App({ Component, pageProps }: any) {
   useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
+      // clean up service worker, from CRA version
+      unregister();
+
       // Log pageview to Google Analytics
       pageview();
 
