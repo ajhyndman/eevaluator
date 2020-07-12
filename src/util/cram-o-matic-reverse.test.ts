@@ -76,5 +76,13 @@ describe('cram-o-matic-reverse', () => {
     it('expects an upgrade to require electric type inputs', () => {
       expect(validateIngredients('Upgrade', ['Electric Memory'])).toBe(true);
     });
+
+    it('recognizes the first recipe of an output with multiple recipes', () => {
+      expect(validateIngredients('Pearl String', ['Ground Memory'])).toBe(true);
+    });
+
+    it('recognizes the second recipe of an output with multiple recipes', () => {
+      expect(validateIngredients('Pearl String', ['Bug Memory'])).toBe(true);
+    });
   });
 });
