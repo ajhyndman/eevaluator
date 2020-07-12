@@ -53,7 +53,7 @@ describe('cram-o-matic', () => {
     it('can make a sweet', () => {
       // TODO: This shouldn't return only one sweet?
       expect(computeGeneralRecipe('Moon Stone', 'Moon Stone', 'Fairy Memory', 'Fairy Memory')).toBe(
-        'Strawberry Sweet',
+        'Strawberry, Love, Berry, Clover or Flower Sweet',
       );
     });
   });

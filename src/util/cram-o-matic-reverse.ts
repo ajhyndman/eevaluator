@@ -22,16 +22,15 @@ const SPECIAL_RECIPES: { [key: string]: Recipe } = {
 };
 export const SPECIAL_RECIPE_OUTPUTS = Object.keys(SPECIAL_RECIPES);
 
-export const getOutputType = (output: string) => {
-  const outputRow = OUTPUTS.find(([type, outputs]) => outputs.includes(output));
-  if (outputRow == null) {
+export const getOutputTypes = (output: string) => {
+  const outputRows = OUTPUTS.filter(([type, outputs]) => outputs.includes(output));
+  if (outputRows.length === 0) {
     throw new Error(`Output not recognized: ${output}`);
   }
-  return outputRow[0] as string;
+  return outputRows.map((outputRow) => outputRow[0] as string);
 };
 
-const getOutputRange = (output: string) => {
-  const type = getOutputType(output);
+const getOutputRange = (output: string, type: string) => {
   const outputsForType = getOutputsForType(type);
   const outputRow = outputsForType.find(([, name]) => name === output);
   if (outputRow == null) {
@@ -60,21 +59,28 @@ export const validateIngredients = (
       }
     }
 
-    // If first ingredient is the wrong type, reject.
-    const outputType = getOutputType(output);
-    if (recipe[0] != null && outputType !== getInputType(recipe[0])) {
-      return false;
-    }
+    const outputTypes = getOutputTypes(output);
 
-    // If score is unattainable, reject.
     const nonEmptyIngredients = recipe.filter((item) => item != null) as string[];
     const numMissingIngredients = 4 - nonEmptyIngredients.length;
     const currentScore = getScore(...nonEmptyIngredients);
-    const [min, max] = getOutputRange(output);
-    if (currentScore > max) {
-      return false;
-    }
-    if (currentScore + numMissingIngredients * 40 < min) {
+    const matchesAtLeastOneRecipe = outputTypes.some((type) => {
+      // If first ingredient is the wrong type, reject.
+      if (recipe[0] != null && type !== getInputType(recipe[0])) {
+        return false;
+      }
+
+      // If score is unattainable, reject.
+      const [min, max] = getOutputRange(output, type);
+      if (currentScore > max) {
+        return false;
+      }
+      if (currentScore + numMissingIngredients * 40 < min) {
+        return false;
+      }
+      return true;
+    });
+    if (!matchesAtLeastOneRecipe) {
       return false;
     }
   } catch (e) {

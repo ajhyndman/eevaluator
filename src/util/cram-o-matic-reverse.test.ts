@@ -1,8 +1,8 @@
-import { getOutputType, validateIngredients } from './cram-o-matic-reverse';
+import { getOutputTypes, validateIngredients } from './cram-o-matic-reverse';
 
 describe('getOutputType', () => {
   it('identifies upgrade as electric type', () => {
-    expect(getOutputType('Upgrade')).toBe('Electric');
+    expect(getOutputTypes('Upgrade')).toEqual(['Electric']);
   });
 });
 
@@ -10,7 +10,7 @@ describe('cram-o-matic-reverse', () => {
   describe('validateIngredients', () => {
     it('validates a correct recipe', () => {
       expect(
-        validateIngredients('Strawberry Sweet', [
+        validateIngredients('Strawberry, Love, Berry, Clover or Flower Sweet', [
           'Flower Sweet',
           'Amulet Coin',
           'Air Balloon',
@@ -21,7 +21,7 @@ describe('cram-o-matic-reverse', () => {
 
     it('invalidates an incorrect recipe', () => {
       expect(
-        validateIngredients('Strawberry Sweet', [
+        validateIngredients('Strawberry, Love, Berry, Clover or Flower Sweet', [
           'Flower Sweet',
           'Amulet Coin',
           'Adamant Mint',
@@ -32,22 +32,34 @@ describe('cram-o-matic-reverse', () => {
 
     it('validates a correct recipe with one ingredient missing', () => {
       expect(
-        validateIngredients('Strawberry Sweet', ['Flower Sweet', 'Amulet Coin', 'Air Balloon']),
+        validateIngredients('Strawberry, Love, Berry, Clover or Flower Sweet', [
+          'Flower Sweet',
+          'Amulet Coin',
+          'Air Balloon',
+        ]),
       ).toBe(true);
     });
 
     it('invalidates an incorrect recipe with one ingredient missing', () => {
       expect(
-        validateIngredients('Strawberry Sweet', ['Fighting Memory', 'Amulet Coin', 'Adamant Mint']),
+        validateIngredients('Strawberry, Love, Berry, Clover or Flower Sweet', [
+          'Fighting Memory',
+          'Amulet Coin',
+          'Adamant Mint',
+        ]),
       ).toBe(false);
     });
 
     it('validates first ingredient only', () => {
-      expect(validateIngredients('Strawberry Sweet', ['Flower Sweet'])).toBe(true);
+      expect(
+        validateIngredients('Strawberry, Love, Berry, Clover or Flower Sweet', ['Flower Sweet']),
+      ).toBe(true);
     });
 
     it('invalidates first ingredient only', () => {
-      expect(validateIngredients('Strawberry Sweet', ['Fighting Memory'])).toBe(false);
+      expect(
+        validateIngredients('Strawberry, Love, Berry, Clover or Flower Sweet', ['Fighting Memory']),
+      ).toBe(false);
     });
 
     it('validates a valid "special recipe"', () => {
@@ -63,6 +75,14 @@ describe('cram-o-matic-reverse', () => {
 
     it('expects an upgrade to require electric type inputs', () => {
       expect(validateIngredients('Upgrade', ['Electric Memory'])).toBe(true);
+    });
+
+    it('recognizes the first recipe of an output with multiple recipes', () => {
+      expect(validateIngredients('Pearl String', ['Ground Memory'])).toBe(true);
+    });
+
+    it('recognizes the second recipe of an output with multiple recipes', () => {
+      expect(validateIngredients('Pearl String', ['Bug Memory'])).toBe(true);
     });
   });
 });
