@@ -79,10 +79,12 @@ describe('cram-o-matic-reverse', () => {
 
     it('recognizes the first recipe of an output with multiple recipes', () => {
       expect(validateIngredients('Pearl String', ['Ground Memory'])).toBe(true);
+      expect(validateIngredients('Rare Candy', ['Fighting Memory'])).toBe(true);
     });
 
     it('recognizes the second recipe of an output with multiple recipes', () => {
       expect(validateIngredients('Pearl String', ['Bug Memory'])).toBe(true);
+      expect(validateIngredients('Rare Candy', ['Bug Memory'])).toBe(true);
     });
   });
 });
