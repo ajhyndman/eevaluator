@@ -35,6 +35,7 @@
     "start": "next start",
     "test": "jest",
     "build-storybook": "build-storybook -s public",
+    "patch-smogon": "./scripts/patch_smogon_calc.sh",
     "postinstall": "patch-package",
     "scrape-images": "(cd scripts && ts-node scrape-images.ts)",
     "scrape-cramorant": "(cd scripts && ts-node --transpile-only scrape-cram-o-matic.ts)",
