@@ -1683,12 +1683,12 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@smogon/calc@0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.4.2.tgz#1b59b07d4be92f4b2dfd0cd42088e3772a193e69"
-  integrity sha512-/9cfvuqIOXdufoRTEBXPl4IIY8LkE09Q5l2tj1Zxhh7k4oKYE91vnpWhgPAnYtps39Tb2X1OLTT1PuBN/gsPlw==
+"@smogon/calc@0.4.3":
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.4.3.tgz#7a6ab8789ddafadd49adda22ab853e8be690b188"
+  integrity sha512-G1GgMFs2iFjSZn3ankboP+0e4ghbX7ZGd/NINB1Trzh20JGbgcdNUeoGwDIYEgky7nf5i5ErGsLLv4hLqqb2hQ==
   dependencies:
-    "@types/node" "^14.0.13"
+    "@types/node" "^14.0.14"
 
 "@storybook/addon-actions@^5.3.17":
   version "5.3.19"
@@ -2344,7 +2344,7 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.158.tgz#b38ea8b6fe799acd076d7a8d7ab71c26ef77f785"
   integrity sha512-InCEXJNTv/59yO4VSfuvNrZHt7eeNtWQEgnieIA+mIC+MOWM9arOWG2eQ8Vhk6NbOre6/BidiXhkZYeDY9U35w==
 
-"@types/node@*", "@types/node@^14.0.13":
+"@types/node@*":
   version "14.0.24"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.24.tgz#b0f86f58564fa02a28b68f8b55d4cdec42e3b9d6"
   integrity sha512-btt/oNOiDWcSuI721MdL8VQGnjsKjlTMdrKyTcLCKeQp/n4AAMFJ961wMbp+09y8WuGPClDEv07RIItdXKIXAA==
@@ -2353,6 +2353,11 @@
   version "12.12.51"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.51.tgz#446a67af8c5ff98947d7cef296484c6ad47ddb16"
   integrity sha512-6ILqt8iNThALrxDv2Q4LyYFQxULQz96HKNIFd4s9QRQaiHINYeUpLqeU/2IU7YMtvipG1fQVAy//vY8/fX1Y9w==
+
+"@types/node@^14.0.14":
+  version "14.0.27"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.27.tgz#a151873af5a5e851b51b3b065c9e63390a9e0eb1"
+  integrity sha512-kVrqXhbclHNHGu9ztnAwSncIgJv/FaxmzXJvGXNdcCpV1b8u1/Mi6z6m0vwy0LzKeXFTPLH0NzwmoJ3fNCIq0g==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
