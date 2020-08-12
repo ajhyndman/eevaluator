@@ -32,6 +32,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "test": "jest",
     "build-storybook": "build-storybook -s public",
@@ -58,6 +59,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
+    "@next/bundle-analyzer": "9.5.2",
     "@storybook/addon-actions": "^5.3.17",
     "@storybook/addon-links": "^5.3.17",
     "@storybook/addons": "^5.3.17",
