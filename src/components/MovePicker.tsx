@@ -48,8 +48,8 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
     const damage = [result.damage].flat();
 
     if (damage.some((value) => value !== 0)) {
-      const minDamage = damage[0] * move.hits;
-      const maxDamage = damage[damage.length - 1] * move.hits;
+      const minDamage = (damage[0] as number) * move.hits;
+      const maxDamage = (damage[damage.length - 1] as number) * move.hits;
       const { chance, n } = result.kochance();
 
       description =
