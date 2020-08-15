@@ -1,4 +1,4 @@
-import { compose, drop, pickBy, sortBy, toLower } from 'ramda';
+import { drop, pickBy, sortBy, toLower } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { Grid, TextField, Typography } from '@material-ui/core';
