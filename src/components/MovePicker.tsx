@@ -1,14 +1,12 @@
-import { drop, pickBy, sortBy, toLower } from 'ramda';
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 
-import { Grid, TextField, Typography } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
-import { calculate, Field, Move, MOVES, Pokemon } from '@smogon/calc';
-import { MoveData } from '@smogon/calc/dist/data/moves';
+import { Grid, Typography } from '@material-ui/core';
+import { calculate, Field, Move, Pokemon } from '@smogon/calc';
 import { getMaxMoveName } from '@smogon/calc/dist/move';
 
+import { getMoveEffectiveness } from '../util/getMoveEffectiveness';
 import { GENERATION } from '../util/misc';
-import TypeIcon from './TypeIcon';
+import MoveSelect from './MoveSelect';
 
 type Props = {
   index: number;
@@ -18,11 +16,6 @@ type Props = {
   defender: Pokemon;
   field: Field;
 };
-
-export const USEFUL_MOVES: { string: MoveData } = pickBy(
-  (move) => !(move.isMax || move.category === 'Status' || move.category == null),
-  MOVES[GENERATION],
-);
 
 const printPercent = (numerator: number, denominator: number) =>
   Math.round((numerator / denominator) * 100);
@@ -72,33 +65,28 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
     window.navigator.clipboard.writeText(fullDescription);
   };
 
-  const options = sortBy(toLower)(drop(1, Object.keys(USEFUL_MOVES)));
+  const effectivenessMultiplier =
+    move == null || move.category === 'Status'
+      ? NaN
+      : getMoveEffectiveness(move.name, attacker, defender, field);
+  const effectivenessDescription = Number.isNaN(effectivenessMultiplier)
+    ? ''
+    : effectivenessMultiplier === 0
+    ? 'No effect'
+    : effectivenessMultiplier < 1
+    ? 'Not very effective'
+    : effectivenessMultiplier > 1
+    ? 'Super effective'
+    : 'Effective';
 
   return (
     <>
       <Grid item xs={6}>
-        <Autocomplete
-          style={{ flexGrow: 1 }}
-          onChange={(e: ChangeEvent<any>, value: any) => {
-            onChangeMove(value);
-          }}
-          options={options}
-          renderInput={(params) => (
-            <TextField
-              {...{
-                ...params,
-                InputProps: {
-                  ...params.InputProps,
-                  startAdornment: move && <TypeIcon size="small" type={move.type} />,
-                },
-              }}
-              size="small"
-              label={`Move ${index + 1}`}
-              variant="outlined"
-            />
-          )}
-          selectOnFocus
+        <MoveSelect
           value={moveDisplayName}
+          onChange={onChangeMove}
+          placeholder={`Move ${index + 1}`}
+          effectiveness={effectivenessDescription}
         />
       </Grid>
       <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>
