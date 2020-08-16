@@ -29,5 +29,5 @@ export const getMoveEffectiveness = (
   const type2Effectiveness = defender.types[1]
     ? getMoveEffectivenessSmogon(GEN, move, defender.types[1], isGhostRevealed, field.isGravity)
     : 1;
-  return type1Effectiveness * type2Effectiveness;
+  return (type1Effectiveness * type2Effectiveness) as Effectiveness;
 };
