@@ -1,7 +1,7 @@
 import { compose, drop, pickBy, prop, sortBy, toLower } from 'ramda';
-import Select, { components, SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
+import Select, { SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
 
-import { Generations, MOVES } from '@smogon/calc';
+import { MOVES } from '@smogon/calc';
 import { MoveCategory, SpeciesName } from '@smogon/calc/dist/data/interface';
 import { MoveData } from '@smogon/calc/dist/data/moves';
 import { Move } from '@smogon/calc/dist/move';
@@ -45,12 +45,11 @@ type MoveOption = {
   value: string;
 };
 
-const GEN = Generations.get(GENERATION);
 const HEIGHT = 40;
 
 export const USEFUL_MOVES: { [name: string]: MoveData } = pickBy(
   (move) => !(move.isMax || move.category == null),
-  MOVES[GENERATION],
+  MOVES[GENERATION.num],
 );
 
 const MOVE_OPTIONS = sortBy(compose(toLower, prop('value')))(
@@ -186,7 +185,7 @@ const MoveSelect = ({
   const move =
     value == null
       ? value
-      : new Move(GEN, value, {
+      : new Move(GENERATION, value, {
           useMax: isMax,
           species: attackerSpecies as SpeciesName,
         });

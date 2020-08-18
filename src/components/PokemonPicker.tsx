@@ -126,9 +126,9 @@ function PokemonPicker({
   const boosts = pokemon.boosts;
 
   const sortCaseInsensitive = sortBy(toLower);
-  const abilityOptions = sortCaseInsensitive(ABILITIES[GENERATION]);
-  const speciesOptions = sortCaseInsensitive(Object.keys(SPECIES[GENERATION]));
-  const itemOptions = sortCaseInsensitive(ITEMS[GENERATION]);
+  const abilityOptions = sortCaseInsensitive(ABILITIES[GENERATION.num]);
+  const speciesOptions = sortCaseInsensitive(Object.keys(SPECIES[GENERATION.num]));
+  const itemOptions = sortCaseInsensitive(ITEMS[GENERATION.num]);
 
   return (
     <>

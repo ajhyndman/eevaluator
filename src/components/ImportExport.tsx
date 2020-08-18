@@ -29,7 +29,7 @@ const ImportExport = ({ pokemon, onImport }: Props) => {
       const rawPokemon = importPokemon(value);
       const sanitizedPokemon = clonePokemon(rawPokemon, {
         level: 50,
-        moves: rawPokemon.moves.filter(move => Object.keys(MOVES[GENERATION]).includes(move)),
+        moves: rawPokemon.moves.filter((move) => Object.keys(MOVES[GENERATION.num]).includes(move)),
       });
       onImport(sanitizedPokemon);
     } catch (e) {

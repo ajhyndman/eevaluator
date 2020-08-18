@@ -1,9 +1,9 @@
 import ReactGA from 'react-ga';
 
-import { NATURES, Pokemon } from '@smogon/calc';
+import { Generations, NATURES, Pokemon } from '@smogon/calc';
 import { NatureName, StatName } from '@smogon/calc/dist/data/interface';
 
-export const GENERATION = 8;
+export const GENERATION = Generations.get(8);
 export const STAT_LABEL: { [key in StatName]: string } = {
   atk: 'Attack',
   def: 'Defense',
