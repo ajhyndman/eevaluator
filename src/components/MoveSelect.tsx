@@ -1,5 +1,5 @@
 import { compose, drop, pickBy, prop, sortBy, toLower } from 'ramda';
-import Select, { SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
+import Select, { components, SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
 
 import { Generations, MOVES } from '@smogon/calc';
 import { MoveCategory, SpeciesName } from '@smogon/calc/dist/data/interface';
@@ -43,7 +43,6 @@ type Props = {
 
 type MoveOption = {
   value: string;
-  label: string;
 };
 
 const GEN = Generations.get(GENERATION);
@@ -59,7 +58,6 @@ const MOVE_OPTIONS = sortBy(compose(toLower, prop('value')))(
     1,
     Object.keys(USEFUL_MOVES).map((name) => ({
       value: name,
-      label: name,
     })),
   ),
 );
@@ -179,7 +177,7 @@ const MoveSelect = ({
   isMax = false,
   attackerSpecies,
 }: Props) => {
-  const currentOption: ValueType<MoveOption> = MOVE_OPTIONS.find(
+  const currentOption: ValueType<MoveOption> = MOVE_OPTIONS.filter(
     (option) => option.value === value,
   );
   const handleChange = (option: ValueType<MoveOption>) =>
@@ -205,6 +203,7 @@ const MoveSelect = ({
       escapeClearsValue
       placeholder={placeholder}
       value={currentOption}
+      getOptionLabel={prop('value')}
       onChange={handleChange}
       options={MOVE_OPTIONS}
       styles={{
@@ -232,6 +231,7 @@ const MoveSelect = ({
         DropdownIndicator: null,
         SingleValue,
         ValueContainer,
+        // Input: ({...rest}) -> <components.Input {...rest} />
       }}
     />
   );
