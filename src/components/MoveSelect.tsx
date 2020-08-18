@@ -1,8 +1,10 @@
 import { compose, drop, pickBy, prop, sortBy, toLower } from 'ramda';
-import Select, { components, SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
+import Select, { SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
 
-import { MOVES } from '@smogon/calc';
+import { Generations, MOVES } from '@smogon/calc';
+import { MoveCategory, SpeciesName } from '@smogon/calc/dist/data/interface';
 import { MoveData } from '@smogon/calc/dist/data/moves';
+import { Move } from '@smogon/calc/dist/move';
 
 import physicalIcon from '../assets/Physical.svg';
 import specialIcon from '../assets/Special.svg';
@@ -34,14 +36,17 @@ type Props = {
   onChange: (value?: string) => void;
   placeholder?: string;
   effectiveness?: string;
+  isMax?: boolean;
+  // needed to correctly identify gmax moves
+  attackerSpecies?: string;
 };
 
 type MoveOption = {
   value: string;
   label: string;
-  move: MoveData;
 };
 
+const GEN = Generations.get(GENERATION);
 const HEIGHT = 40;
 
 export const USEFUL_MOVES: { [name: string]: MoveData } = pickBy(
@@ -52,10 +57,9 @@ export const USEFUL_MOVES: { [name: string]: MoveData } = pickBy(
 const MOVE_OPTIONS = sortBy(compose(toLower, prop('value')))(
   drop(
     1,
-    Object.entries(USEFUL_MOVES).map(([name, move]) => ({
+    Object.keys(USEFUL_MOVES).map((name) => ({
       value: name,
       label: name,
-      move,
     })),
   ),
 );
@@ -88,12 +92,11 @@ const TYPE_COLORS = {
   '???': '#EEE',
 };
 
-const SingleValue = (props: SingleValueProps<MoveOption>) => {
-  const {
-    children,
-    innerProps,
-    selectProps: { effectiveness },
-  } = props;
+const SingleValue = ({
+  children,
+  innerProps,
+  selectProps: { effectiveness, move },
+}: SingleValueProps<MoveOption>) => {
   return (
     <div
       style={{
@@ -109,24 +112,17 @@ const SingleValue = (props: SingleValueProps<MoveOption>) => {
         style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis' }}
         {...innerProps}
       >
-        {children}
+        {move?.name ?? children}
       </span>
       {effectiveness && <span style={{ display: 'block', fontSize: 10 }}>{effectiveness}</span>}
     </div>
   );
 };
 
-const ValueContainer = ({
-  getValue,
-  children,
-  selectProps: { effectiveness },
-}: ValueContainerProps<MoveOption>) => {
-  const value = getValue();
-
-  const option: MoveOption | undefined = Array.isArray(value) ? value[0] : value;
-  const moveCategory = option?.move.category;
-  const moveType = option?.move.type ?? '???';
-  const basePower = (option?.move.bp || '—').toString();
+const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps<MoveOption>) => {
+  const moveCategory: MoveCategory = move?.category;
+  const moveType = move?.type ?? '???';
+  const basePower = (move?.bp || '—').toString();
   // const background = TYPE_COLORS[moveType];
   const color = ['Dark', 'Dragon', 'Fighting', 'Ghost', 'Poison'].includes(moveType) ? 'white' : '';
 
@@ -175,22 +171,40 @@ const ValueContainer = ({
   );
 };
 
-const MoveSelect = ({ value, onChange, placeholder, effectiveness }: Props) => {
-  const move: ValueType<MoveOption> = MOVE_OPTIONS.find((option) => option.value === value);
+const MoveSelect = ({
+  value,
+  onChange,
+  placeholder,
+  effectiveness,
+  isMax = false,
+  attackerSpecies,
+}: Props) => {
+  const currentOption: ValueType<MoveOption> = MOVE_OPTIONS.find(
+    (option) => option.value === value,
+  );
   const handleChange = (option: ValueType<MoveOption>) =>
     onChange((option as MoveOption)?.value as string);
 
-  const moveType = move?.move.type ?? '???';
+  const move =
+    value == null
+      ? value
+      : new Move(GEN, value, {
+          useMax: isMax,
+          species: attackerSpecies as SpeciesName,
+        });
+  const moveType = move?.type ?? '???';
   const background = TYPE_COLORS[moveType];
 
   return (
     <Select
-      // isClearable
+      // custom props
+      effectiveness={effectiveness}
+      move={move}
+      // react-select props
       openMenuOnFocus
       escapeClearsValue
-      effectiveness={effectiveness}
       placeholder={placeholder}
-      value={move}
+      value={currentOption}
       onChange={handleChange}
       options={MOVE_OPTIONS}
       styles={{

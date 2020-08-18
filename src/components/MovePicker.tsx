@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Grid, Typography } from '@material-ui/core';
 import { calculate, Field, Move, Pokemon } from '@smogon/calc';
-import { getMaxMoveName } from '@smogon/calc/dist/move';
 
 import { getMoveEffectiveness } from '../util/getMoveEffectiveness';
 import { GENERATION } from '../util/misc';
@@ -54,13 +53,6 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
     }
   }
 
-  const moveDisplayName =
-    move == null
-      ? ''
-      : attacker.isDynamaxed
-      ? getMaxMoveName(move.type, attacker.name, move.category === 'Status')
-      : moveName;
-
   const copyDescription = () => {
     window.navigator.clipboard.writeText(fullDescription);
   };
@@ -83,10 +75,12 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
     <>
       <Grid item xs={6}>
         <MoveSelect
-          value={moveDisplayName}
+          value={moveName}
           onChange={onChangeMove}
           placeholder={`Move ${index + 1}`}
           effectiveness={effectivenessDescription}
+          isMax={attacker.isDynamaxed}
+          attackerSpecies={attacker.name}
         />
       </Grid>
       <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>
