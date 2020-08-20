@@ -32,7 +32,7 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
   const defenderMaxHp = defender.maxHP();
 
   let description;
-  let fullDescription: string;
+  let fullDescription: string = '';
   let move: Move | undefined;
   if (moveName) {
     move = new Move(GENERATION, moveName, { useMax: attacker.isDynamaxed });
@@ -87,6 +87,7 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
         <button
           onClick={copyDescription}
           style={{ border: 'none', boxShadow: 'none', background: 'none', cursor: 'pointer' }}
+          title={fullDescription as string}
         >
           <Typography>{description}</Typography>
         </button>
