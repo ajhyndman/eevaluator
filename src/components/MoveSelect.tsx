@@ -120,13 +120,10 @@ const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps
   const moveCategory: MoveCategory = move?.category;
   const moveType = move?.type ?? '???';
   const basePower = (move?.bp || '—').toString();
-  // const background = TYPE_COLORS[moveType];
-  const color = ['Dark', 'Dragon', 'Fighting', 'Ghost', 'Poison'].includes(moveType) ? 'white' : '';
 
   return (
     <div
       style={{
-        color,
         // background,
         boxSizing: 'border-box',
         height: HEIGHT,
@@ -147,7 +144,7 @@ const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps
       >
         <div
           style={{
-            background: 'black',
+            background: '#555555',
             position: 'absolute',
             right: -HEIGHT,
             left: 0,
@@ -198,6 +195,7 @@ const MoveSelect = ({
       effectiveness={effectiveness}
       move={move}
       // react-select props
+      // isClearable
       openMenuOnFocus
       escapeClearsValue
       placeholder={placeholder}
