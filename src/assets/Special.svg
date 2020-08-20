@@ -2,8 +2,8 @@
 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Special</title>
     <g id="Special" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <ellipse id="Oval-3" stroke="black" transform="translate(11.862262, 12.264589) rotate(70.000000) translate(-11.862262, -12.264589) " cx="11.8622618" cy="12.2645893" rx="1.5" ry="2.5"></ellipse>
-        <ellipse id="Oval-2" stroke="black" transform="translate(11.945929, 12.152911) rotate(70.000000) translate(-11.945929, -12.152911) " cx="11.9459289" cy="12.1529115" rx="4" ry="7"></ellipse>
-        <ellipse id="Oval-1" stroke="black" transform="translate(12.029596, 12.041234) rotate(70.000000) translate(-12.029596, -12.041234) " cx="12.0295961" cy="12.0412337" rx="6.5" ry="11.5"></ellipse>
+        <ellipse id="Oval-3" stroke="white" transform="translate(11.862262, 12.264589) rotate(70.000000) translate(-11.862262, -12.264589) " cx="11.8622618" cy="12.2645893" rx="1.5" ry="2.5"></ellipse>
+        <ellipse id="Oval-2" stroke="white" transform="translate(11.945929, 12.152911) rotate(70.000000) translate(-11.945929, -12.152911) " cx="11.9459289" cy="12.1529115" rx="4" ry="7"></ellipse>
+        <ellipse id="Oval-1" stroke="white" transform="translate(12.029596, 12.041234) rotate(70.000000) translate(-12.029596, -12.041234) " cx="12.0295961" cy="12.0412337" rx="6.5" ry="11.5"></ellipse>
     </g>
 </svg>
