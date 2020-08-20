@@ -105,7 +105,6 @@ const MoveStats = ({
   <div
     style={{
       alignItems: 'center',
-      color: 'white',
       display: 'flex',
       position: 'relative',
       paddingLeft: 5,
@@ -113,7 +112,7 @@ const MoveStats = ({
   >
     <div
       style={{
-        background: '#555555',
+        background: '#EEE',
         position: 'absolute',
         right: -HEIGHT,
         left: 0,
