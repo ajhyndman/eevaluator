@@ -1,5 +1,11 @@
 import { compose, drop, pickBy, prop, sortBy, toLower } from 'ramda';
-import Select, { SingleValueProps, ValueContainerProps, ValueType } from 'react-select';
+import Select, {
+  components,
+  IndicatorProps,
+  SingleValueProps,
+  ValueContainerProps,
+  ValueType,
+} from 'react-select';
 
 import { MOVES } from '@smogon/calc';
 import { MoveCategory, SpeciesName } from '@smogon/calc/dist/data/interface';
@@ -123,34 +129,42 @@ const MoveStats = ({
   </div>
 );
 
+const ClearIndicator = (props: IndicatorProps<MoveOption>) => {
+  const {
+    selectProps: { menuIsOpen },
+  } = props;
+  return !menuIsOpen ? null : <components.ClearIndicator {...props} />;
+};
+
 const SingleValue = ({
   children,
   innerProps,
   selectProps: { effectiveness, move },
-}: SingleValueProps<MoveOption>) => {
-  return (
-    <div
-      style={{
-        whiteSpace: 'nowrap',
-        position: 'absolute',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        left: 0,
-        right: 0,
-      }}
+}: SingleValueProps<MoveOption>) => (
+  <div
+    style={{
+      whiteSpace: 'nowrap',
+      position: 'absolute',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      left: 0,
+      right: 0,
+    }}
+  >
+    <span
+      style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis' }}
+      {...innerProps}
     >
-      <span
-        style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis' }}
-        {...innerProps}
-      >
-        {move?.name ?? children}
-      </span>
-      {effectiveness && <span style={{ display: 'block', fontSize: 10 }}>{effectiveness}</span>}
-    </div>
-  );
-};
+      {move?.name ?? children}
+    </span>
+    {effectiveness && <span style={{ display: 'block', fontSize: 10 }}>{effectiveness}</span>}
+  </div>
+);
 
-const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps<MoveOption>) => {
+const ValueContainer = ({
+  children,
+  selectProps: { menuIsOpen, move },
+}: ValueContainerProps<MoveOption>) => {
   const moveCategory: MoveCategory = move?.category;
   const basePower = (move?.bp || '—').toString();
 
@@ -162,10 +176,11 @@ const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps
         padding: '2px 8px 2px 16px',
         position: 'relative',
         display: 'flex',
+        flexGrow: 1,
       }}
     >
       <div style={{ flexGrow: 1, position: 'relative' }}>{children}</div>
-      <MoveStats basePower={basePower} moveCategory={moveCategory} />
+      {!menuIsOpen && <MoveStats basePower={basePower} moveCategory={moveCategory} />}
     </div>
   );
 };
@@ -200,7 +215,7 @@ const MoveSelect = ({
       effectiveness={effectiveness}
       move={move}
       // react-select props
-      // isClearable
+      isClearable
       openMenuOnFocus
       escapeClearsValue
       placeholder={placeholder}
@@ -210,6 +225,7 @@ const MoveSelect = ({
       options={MOVE_OPTIONS}
       styles={{
         control: () => ({
+          display: 'flex',
           background,
           borderRadius: HEIGHT / 2,
           cursor: 'pointer',
@@ -233,6 +249,7 @@ const MoveSelect = ({
         DropdownIndicator: null,
         SingleValue,
         ValueContainer,
+        ClearIndicator,
       }}
     />
   );
