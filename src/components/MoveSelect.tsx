@@ -89,6 +89,40 @@ const TYPE_COLORS = {
   '???': '#EEE',
 };
 
+const MoveStats = ({
+  basePower,
+  moveCategory,
+}: {
+  basePower: number;
+  moveCategory: MoveCategory;
+}) => (
+  <div
+    style={{
+      alignItems: 'center',
+      color: 'white',
+      display: 'flex',
+      position: 'relative',
+      paddingLeft: 5,
+    }}
+  >
+    <div
+      style={{
+        background: '#555555',
+        position: 'absolute',
+        right: -HEIGHT,
+        left: 0,
+        top: -HEIGHT,
+        bottom: -HEIGHT,
+        transform: 'rotate(25deg)',
+      }}
+    />
+    <div style={{ position: 'relative' }}>{basePower}</div>
+    {moveCategory && (
+      <img style={{ paddingLeft: 4, position: 'relative' }} src={CATEGORY_ICONS[moveCategory]} />
+    )}
+  </div>
+);
+
 const SingleValue = ({
   children,
   innerProps,
@@ -118,13 +152,11 @@ const SingleValue = ({
 
 const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps<MoveOption>) => {
   const moveCategory: MoveCategory = move?.category;
-  const moveType = move?.type ?? '???';
   const basePower = (move?.bp || '—').toString();
 
   return (
     <div
       style={{
-        // background,
         boxSizing: 'border-box',
         height: HEIGHT,
         padding: '2px 8px 2px 16px',
@@ -133,34 +165,7 @@ const ValueContainer = ({ children, selectProps: { move } }: ValueContainerProps
       }}
     >
       <div style={{ flexGrow: 1, position: 'relative' }}>{children}</div>
-      <div
-        style={{
-          alignItems: 'center',
-          color: 'white',
-          display: 'flex',
-          position: 'relative',
-          paddingLeft: 5,
-        }}
-      >
-        <div
-          style={{
-            background: '#555555',
-            position: 'absolute',
-            right: -HEIGHT,
-            left: 0,
-            top: -HEIGHT,
-            bottom: -HEIGHT,
-            transform: 'rotate(25deg)',
-          }}
-        />
-        <div style={{ position: 'relative' }}>{basePower}</div>
-        {moveCategory && (
-          <img
-            style={{ paddingLeft: 4, position: 'relative' }}
-            src={CATEGORY_ICONS[moveCategory]}
-          />
-        )}
-      </div>
+      <MoveStats basePower={basePower} moveCategory={moveCategory} />
     </div>
   );
 };
@@ -204,7 +209,7 @@ const MoveSelect = ({
       onChange={handleChange}
       options={MOVE_OPTIONS}
       styles={{
-        control: (styles) => ({
+        control: () => ({
           background,
           borderRadius: HEIGHT / 2,
           cursor: 'pointer',
@@ -228,7 +233,6 @@ const MoveSelect = ({
         DropdownIndicator: null,
         SingleValue,
         ValueContainer,
-        // Input: ({...rest}) -> <components.Input {...rest} />
       }}
     />
   );
