@@ -49,6 +49,7 @@ const matchIvLine = /^\s*IVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s
 const matchNatureLine = /^\s*(.*?)\s*Nature\s*$/i;
 const matchHappinessLine = /^\s*Happiness:\s*(\d{1,3})$/i;
 const matchShinyLine = /^\s*Shiny:\s*(Yes|No)\s*$/i;
+const matchGigantamaxLine = /^\s*Gigantamax:\s*(Yes|No)\s*$/i;
 const matchMoveLine = /^\s*-\s*(.*?)\s*$/i;
 
 function lineMatches(condition: boolean, matcher: RegExp, line: string): boolean {
@@ -155,6 +156,13 @@ export function importPokemon(text: string): Pokemon {
     if (lineMatches(config.shiny == null, matchShinyLine, line)) {
       const [, shiny] = matchShinyLine.exec(line)!;
       config.shiny = shiny.toLocaleLowerCase() === 'yes';
+      continue;
+    }
+
+    // if not already parsed, accept gigantamax line
+    if (lineMatches(config.shiny == null, matchGigantamaxLine, line)) {
+      const [, gmax] = matchGigantamaxLine.exec(line)!;
+      // TODO: Not sure what the semantic of this attribute is, going forward.
       continue;
     }
 
