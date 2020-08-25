@@ -119,6 +119,13 @@ describe('importPokemon', () => {
   });
 
   describe('remaining row parsers', () => {
+    it('accepts gigantamax', () => {
+      const pokemon = importPokemon(`
+        Pikachu
+        Gigantamax: Yes
+      `);
+    });
+
     it('handle ability', () => {
       const pokemon = importPokemon(`
         Pikachu
