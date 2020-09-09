@@ -22,6 +22,8 @@ const collectImage = async (species: string) => {
     .replace(/ /g, '-')
     .replace(/-totem$/, '')
     .replace(/^cherrim-sunshine/, 'cherrim-sunny')
+    .replace(/^sinistea-antique/, 'sinistea')
+    .replace(/^polteageist-antique/, 'polteageist')
     .replace(/^giratina$/, 'giratina-altered')
     .replace(/^eiscue$/, 'eiscue-ice')
     .replace(/^lycanroc$/, 'lycanroc-midday')
