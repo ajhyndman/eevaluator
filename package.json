@@ -84,7 +84,7 @@
     "file-loader": "6.0.0",
     "jest": "26.1.0",
     "jsdom": "16.2.2",
-    "next": "9.5.4",
+    "next": "9.5.5",
     "node-fetch": "3.0.0-beta.9",
     "patch-package": "6.2.2",
     "postinstall-postinstall": "2.1.0",
