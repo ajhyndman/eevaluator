@@ -32,6 +32,9 @@ import {
 
 type PokemonKey = 'pokemon-left' | 'pokemon-right';
 
+const META_DESCRIPTION =
+  'Eevaluator is a modern Pokemon VGC damage calculator. Quickly run calcs from your computer or phone and get clear easy-to-read feedback with a clean, simple interface.  Now supports Crown Tundra and VGC 2021!';
+
 const WEATHER: Partial<{ [key in Weather]: string }> = {
   Sun: '/images/weather/Sun_Nobg_orange.png',
   Rain: '/images/weather/rainnobg.png',
@@ -147,15 +150,9 @@ const Eevaluator = () => {
     <>
       <Head>
         <title>Eevaluator</title>
-        <meta
-          name="description"
-          content="A Pokemon Sword and Shield damage calculator. Evaluate the strengths and weaknesses of your favourite pokemon with a human-friendly interface!"
-        />
+        <meta name="description" content={META_DESCRIPTION} />
         <meta property="og:title" content="Eevaluator" />
-        <meta
-          property="og:description"
-          content="A Pokemon damage calculator optimized for usability. Evaluate the strengths and weaknesses of your favourite pokemon!"
-        />
+        <meta property="og:description" content={META_DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}`} />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_URL}/preview.png`} />
