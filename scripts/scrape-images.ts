@@ -41,6 +41,7 @@ const collectImage = async (species: string) => {
     .replace(/-alola$/, '-alolan')
     .replace(/-galar/, '-galarian')
     .replace(/^(zacian|zamazenta)$/, '$1-hero')
+    .replace(/^(calyrex-.*)$/, '$1-rider')
     .replace(/(?<!nidoran)-f$/, '-female')
     .replace(/gmax$/, 'gigantamax')
     .replace(/[^a-z0-9-]/g, '');
