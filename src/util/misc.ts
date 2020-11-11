@@ -27,6 +27,14 @@ export const clonePokemon = (
   options: Partial<Omit<Pokemon, 'curHP'> & { curHP: number }>,
 ) => new Pokemon(GENERATION, pokemon.name, { ...pokemon, ...options });
 
+/**
+ * A reverse lookup helper.  Given a pair of benefitted and hindered stats,
+ * retrieve the name of the associated nature.
+ *
+ * @param plusStat The stat key for the nature-benefitted stat.
+ * @param minusStat The stat key for the nature-hindered stat.
+ * @returns The name of the matching nature, as a string.
+ */
 export const getNature = (plusStat?: StatName, minusStat?: StatName): NatureName => {
   return Object.keys(NATURES).find((name: string) => {
     const [a, b] = NATURES[name];
@@ -59,6 +67,23 @@ export const pageview = () => {
   }
 };
 
+/**
+ * Transform a polar coordinate to a cartesian coordinate.
+ *
+ * @example
+ * // r = 1, θ = 0 -> x = 1, y = 0
+ * polarToCartesian([1, 0]) // = [1, 0]
+ *
+ * // r = 1, θ = π/2 -> x = 0, y = 1
+ * polarToCartesian([1, Math.PI / 2]) // = [0, 1]
+ *
+ * // r = 1, θ = π -> x = -1, y = 0
+ * polarToCartesian([1, Math.PI]) // = [-1, 0]
+ *
+ * @param polarCoordinate A polar coordinate of the form [r, θ] (theta should be
+ * supplied in radians)
+ * @returns A cartesian coordinate of the form [x, y]
+ */
 export const polarToCartesian = ([radius, angle]: [number, number]) => [
   Math.sin(angle) * radius,
   -Math.cos(angle) * radius,

@@ -164,8 +164,10 @@ const Eevaluator = () => {
         />
       </Head>
       <Background weather={field.weather} terrain={field.terrain} />
+
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
         <Grid container spacing={2}>
+          {/* POKEMON 1 */}
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
               {range(0, 4).map((n) => (
@@ -194,6 +196,8 @@ const Eevaluator = () => {
               </Grid>
             </Grid>
           </Grid>
+
+          {/* POKEMON 2 */}
           <Grid item xs={12} md={6}>
             <Grid container spacing={1}>
               {range(0, 4).map((n) => (
@@ -221,6 +225,7 @@ const Eevaluator = () => {
         </Grid>
       </Container>
 
+      {/* FOOTER */}
       <Toolbar variant="dense">
         <div style={{ flexGrow: 1 }} />
         <Link href={GITHUB_URL}>
@@ -236,6 +241,7 @@ const Eevaluator = () => {
         </Fab>
       </div>
 
+      {/* SETTINGS MENU */}
       <SwipeableDrawer
         open={showFieldDrawer}
         anchor="left"
@@ -247,6 +253,7 @@ const Eevaluator = () => {
         </div>
       </SwipeableDrawer>
 
+      {/* MODALS */}
       <Dialog open={showImportExport != null} onClose={handleCloseImportExport} fullWidth>
         {showImportExport != null && (
           <ImportExport
