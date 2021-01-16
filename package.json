@@ -17,7 +17,7 @@
     "@material-ui/core": "4.9.5",
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.45",
-    "@smogon/calc": "0.5.0",
+    "@smogon/calc": "0.6.0",
     "@storybook/react": "6.0.10",
     "@wisersolutions/heap-analytics": "0.1.1",
     "d3-path": "1.0.9",
