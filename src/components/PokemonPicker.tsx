@@ -16,11 +16,17 @@ import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
 import SaveIcon from '@material-ui/icons/Save';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon/calc';
-import { AbilityName, ItemName, StatName, StatusName } from '@smogon/calc/dist/data/interface';
+import {
+  AbilityName,
+  ItemName,
+  StatName,
+  StatusName,
+  TypeName,
+} from '@smogon/calc/dist/data/interface';
 
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemPicker from './ItemPicker';
-import PokemonIllustration from './PokemonIllustration';
+import PokemonIllustration, { TYPES } from './PokemonIllustration';
 import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
@@ -82,11 +88,18 @@ function PokemonPicker({
   const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
-  const setIsMax = (nextIsMax: boolean) => {
-    const nextPokemon = clonePokemon(pokemon, { isDynamaxed: nextIsMax });
+  const [isTera, setIsTera] = useState(false);
+
+  const setTeraType = (nextTeraType?: TypeName) => {
+    setIsTera(nextTeraType != null);
+    const nextPokemon = clonePokemon(pokemon, {
+      overrides: { types: nextTeraType && [nextTeraType, null] },
+    });
     onChange(nextPokemon);
   };
-  const isMax = pokemon.isDynamaxed || false;
+  const teraType = isTera ? pokemon.types[0] : undefined;
+
+  // const [teraType, setTeraType] = useState<keyof typeof TYPES>();
 
   const setSpecies = (nextSpecies: string) => {
     if (nextSpecies != null) {
@@ -202,17 +215,24 @@ function PokemonPicker({
           ))}
         </TextField>
         <div style={{ flexGrow: 1 }} />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={isMax}
-              onChange={(e: any, value: any) => setIsMax(value)}
-              color="primary"
-            />
-          }
-          label="Dynamax"
-          labelPlacement="start"
-        />
+        <div style={{ minWidth: 125 }}>
+          <TextField
+            fullWidth
+            size="small"
+            variant="outlined"
+            select
+            label="Tera Type"
+            value={teraType}
+            onChange={(event) => setTeraType(event.target.value as TypeName)}
+          >
+            <MenuItem value={undefined}>None</MenuItem>
+            {Object.keys(TYPES).map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </TextField>
+        </div>
       </Grid>
 
       <Grid item xs={12}>
@@ -223,7 +243,7 @@ function PokemonPicker({
             position: 'relative',
           }}
         >
-          <PokemonIllustration flip={index !== 0} pokemon={pokemon} />
+          <PokemonIllustration index={index} pokemon={pokemon} teraType={teraType} />
           <StatHexagon
             boosts={boosts}
             item={item}

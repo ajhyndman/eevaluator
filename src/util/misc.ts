@@ -1,6 +1,6 @@
 import ReactGA from 'react-ga';
 
-import { Generations, NATURES, Pokemon } from '@smogon/calc';
+import { Generations, NATURES, Pokemon, State } from '@smogon/calc';
 import { NatureName, StatName } from '@smogon/calc/dist/data/interface';
 
 export const GENERATION = Generations.get(8);
@@ -24,8 +24,8 @@ export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issu
  */
 export const clonePokemon = (
   pokemon: Pokemon,
-  options: Partial<Omit<Pokemon, 'curHP'> & { curHP: number }>,
-) => new Pokemon(GENERATION, pokemon.name, { ...pokemon, ...options });
+  options: Partial<State.Pokemon & { curHP: number; overrides: any }>,
+) => new Pokemon(GENERATION, pokemon.name, { ...pokemon, overrides: pokemon.species, ...options });
 
 /**
  * A reverse lookup helper.  Given a pair of benefitted and hindered stats,
