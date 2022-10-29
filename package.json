@@ -19,6 +19,7 @@
     "@material-ui/lab": "4.0.0-alpha.45",
     "@smogon/calc": "0.6.0",
     "@wisersolutions/heap-analytics": "0.1.1",
+    "color": "4.2.3",
     "d3-path": "1.0.9",
     "d3-scale": "3.2.1",
     "focus-visible": "5.0.2",
