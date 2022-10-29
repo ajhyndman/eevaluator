@@ -18,10 +18,9 @@ import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon/calc';
 import { AbilityName, ItemName, StatName, StatusName } from '@smogon/calc/dist/data/interface';
 
-import { TRANSITION } from '../styles';
-import { escapeFilename } from '../util/escapeFilename';
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemPicker from './ItemPicker';
+import PokemonIllustration from './PokemonIllustration';
 import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
@@ -224,35 +223,7 @@ function PokemonPicker({
             position: 'relative',
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              top: -48,
-              right: 0,
-              bottom: 0,
-              left: 0,
-              backgroundImage: `url(/images/pokemon/${
-                pokemon.isDynamaxed
-                  ? escapeFilename(pokemonName)
-                  : escapeFilename(pokemonName.replace(/-Gmax$/, ''))
-              }.jpg)`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              filter: 'opacity(25%)',
-              mixBlendMode: 'multiply',
-              transform:
-                index === 0
-                  ? pokemon.isDynamaxed
-                    ? 'scale(-2, 2)'
-                    : 'scale(-1, 1)'
-                  : pokemon.isDynamaxed
-                  ? 'scale(2, 2)'
-                  : 'scale(1, 1)',
-              transition: `transform ${TRANSITION}`,
-              zIndex: -1,
-            }}
-          />
+          <PokemonIllustration flip={index !== 0} pokemon={pokemon} />
           <StatHexagon
             boosts={boosts}
             onBoostsChange={setBoosts}
