@@ -7,12 +7,14 @@ set -e
 #
 # `yarn run patch-smogon`
 
+repo_root="$(pwd)"
+
 (
   cd ../damage-calc
   # Rebuild package
   npm run build
   # Copy compilation artifacts to target node modules
-  cp -r dist/calc/* ../visual-pokemon-calc/node_modules/@smogon/calc/dist
+  cp -r dist/calc/* "$repo_root/node_modules/@smogon/calc/dist"
 )
 # Run patch-package to save changes to visual-pokemon-calc
 yarn patch-package @smogon/calc
