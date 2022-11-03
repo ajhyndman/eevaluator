@@ -12,7 +12,7 @@ const { escapeFilename } = require('../src/util/escapeFilename');
 // forever.
 // https://github.com/node-fetch/node-fetch/issues/309
 const FETCH_TIMEOUT = 5000;
-const SPECIES_NAMES = Object.keys(SPECIES[8]);
+const SPECIES_NAMES = Object.keys(SPECIES[9]);
 
 const pipeline = util.promisify(stream.pipeline);
 
@@ -41,6 +41,7 @@ const collectImage = async (species: string) => {
     .replace(/^gourgeist.*/, 'gourgeist')
     .replace(/-alola$/, '-alolan')
     .replace(/-galar/, '-galarian')
+    .replace(/-hisui/, '-hisuian')
     .replace(/^(zacian|zamazenta)$/, '$1-hero')
     .replace(/^(calyrex-.*)$/, '$1-rider')
     .replace(/(?<!nidoran)-f$/, '-female')
