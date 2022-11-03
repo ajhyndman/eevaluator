@@ -1,15 +1,7 @@
 import { sortBy, toLower } from 'ramda';
 import React, { ChangeEvent, useState } from 'react';
 
-import {
-  FormControlLabel,
-  Grid,
-  IconButton,
-  MenuItem,
-  Slider,
-  Switch,
-  TextField,
-} from '@material-ui/core';
+import { Grid, IconButton, MenuItem, Slider, Switch, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
@@ -19,7 +11,7 @@ import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon
 import {
   AbilityName,
   ItemName,
-  StatName,
+  StatID,
   StatusName,
   TypeName,
 } from '@smogon/calc/dist/data/interface';
@@ -31,7 +23,7 @@ import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
 
-type ModernStat = Exclude<StatName, 'spc'>;
+type ModernStat = Exclude<StatID, 'spc'>;
 
 type Props = {
   index: number;
