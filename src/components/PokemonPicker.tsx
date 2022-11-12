@@ -226,6 +226,8 @@ function PokemonPicker({
           <PokemonIllustration flip={index !== 0} pokemon={pokemon} />
           <StatHexagon
             boosts={boosts}
+            item={item}
+            species={pokemon.species}
             onBoostsChange={setBoosts}
             natureFavoredStat={plusStat!}
             natureUnfavoredStat={minusStat!}
