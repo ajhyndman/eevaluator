@@ -5,20 +5,23 @@ import React, { ChangeEvent } from 'react';
 
 import { TextField } from '@material-ui/core';
 import { StatName } from '@smogon/calc';
+import { ItemName, Specie } from '@smogon/calc/dist/data/interface';
 
 import { BLUE, RED } from '../styles';
-import { polarToCartesian, STAT_LABEL } from '../util/misc';
+import { GENERATION, polarToCartesian, STAT_LABEL } from '../util/misc';
 import TriangleSlider from './TriangleSlider';
 
 export type Stats = { [stat in StatName]: number };
 
 type Props = {
   boosts: Stats;
+  item?: ItemName;
   onBoostsChange: (boosts: Stats) => void;
   natureFavoredStat: StatName;
   natureUnfavoredStat: StatName;
   onStatsChange: (stats: Stats) => void;
   realStats: Stats;
+  species: Specie;
   statKey: 'ivs' | 'evs';
   stats: Stats;
 };
@@ -65,11 +68,13 @@ const drawHexagon = ([first, ...rest]: number[]) => {
 
 const StatHexagon = ({
   boosts,
+  item,
   onBoostsChange,
   natureFavoredStat,
   natureUnfavoredStat,
   onStatsChange,
   realStats,
+  species,
   statKey,
   stats,
 }: Props) => {
@@ -123,8 +128,27 @@ const StatHexagon = ({
       {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as StatName[]).map((key, i) => {
         const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (4 / 5), 2 * Math.PI * (i / 6)]);
 
+        // calculate stat stage effect, if any
         const boostStage = boosts[key];
         const boostMultiplier = boostStage >= 0 ? (2 + boostStage) / 2 : 2 / (2 - boostStage);
+
+        // calculate item effect, if any
+        let itemMultiplier = 1;
+        if ((key === 'def' || key === 'spd') && item === 'Eviolite' && species.nfe) {
+          itemMultiplier = 1.5;
+        } else if (key === 'spe' && item === 'Iron Ball') {
+          itemMultiplier = 0.5;
+        } else if (key === 'spd' && item === 'Assault Vest') {
+          itemMultiplier = 1.5;
+        } else if (key === 'atk' && item === 'Choice Band') {
+          itemMultiplier = 1.5;
+        } else if (key === 'spa' && item === 'Choice Specs') {
+          itemMultiplier = 1.5;
+        } else if (key === 'spe' && item === 'Choice Scarf') {
+          itemMultiplier = 1.5;
+        }
+
+        const finalStat = Math.floor(Math.floor(realStats[key] * boostMultiplier) * itemMultiplier);
 
         return (
           <div
@@ -175,10 +199,10 @@ const StatHexagon = ({
                     ? BLUE
                     : 'inherit',
                 margin: '4px 0 0',
-                fontWeight: boostMultiplier !== 1 ? 'bold' : 'normal',
+                fontWeight: boostMultiplier !== 1 || itemMultiplier !== 1 ? 'bold' : 'normal',
               }}
             >
-              {Math.floor(realStats[key] * boostMultiplier)}
+              {finalStat}
             </p>
           </div>
         );
