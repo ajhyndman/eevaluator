@@ -80,18 +80,13 @@ function PokemonPicker({
   const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
-  const [isTera, setIsTera] = useState(false);
-
   const setTeraType = (nextTeraType?: TypeName) => {
-    setIsTera(nextTeraType != null);
     const nextPokemon = clonePokemon(pokemon, {
-      overrides: { types: nextTeraType && [nextTeraType, null] },
+      teraType: nextTeraType,
     });
     onChange(nextPokemon);
   };
-  const teraType = isTera ? pokemon.types[0] : undefined;
-
-  // const [teraType, setTeraType] = useState<keyof typeof TYPES>();
+  const teraType = pokemon.teraType;
 
   const setSpecies = (nextSpecies: string) => {
     if (nextSpecies != null) {
