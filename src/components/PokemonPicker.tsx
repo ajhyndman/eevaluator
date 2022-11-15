@@ -192,7 +192,7 @@ function PokemonPicker({
           SelectProps={{ style: { width: 175 } }}
           select
           label="Status"
-          value={pokemon.status === '' ? '' : pokemon.status}
+          value={pokemon.status}
           onChange={(event: any) => setStatus(event.target.value)}
         >
           {STATUS.map((status) => (
