@@ -31,5 +31,15 @@ export const getMoveEffectiveness = (
         field.isGravity,
       )
     : 1;
-  return (type1Effectiveness * type2Effectiveness) as Effectiveness;
+
+  const teraTypeEffectiveness =
+    defender.teraType &&
+    getMoveEffectivenessSmogon(
+      GENERATION,
+      move,
+      defender.teraType,
+      isGhostRevealed,
+      field.isGravity,
+    );
+  return (teraTypeEffectiveness ?? type1Effectiveness * type2Effectiveness) as Effectiveness;
 };
