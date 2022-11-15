@@ -178,9 +178,9 @@ function PokemonPicker({
 
       {/* Pokemon type, status and Dynamax toggle */}
       <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
-        <TypeIcon type={pokemon.types[0]} />
+        <TypeIcon type={teraType ?? pokemon.types[0]} />
         <div style={{ width: 8 }} />
-        {pokemon.types[1] && (
+        {!teraType && pokemon.types[1] && (
           <>
             <TypeIcon type={pokemon.types[1]} />
             <div style={{ width: 8 }} />
