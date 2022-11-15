@@ -209,7 +209,7 @@ function PokemonPicker({
             variant="outlined"
             select
             label="Tera Type"
-            value={teraType}
+            value={teraType ?? ''}
             onChange={(event) => setTeraType(event.target.value as TypeName)}
           >
             <MenuItem value={undefined}>None</MenuItem>
