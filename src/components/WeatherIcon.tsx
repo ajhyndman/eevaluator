@@ -22,7 +22,7 @@ const IMAGES: { [key in Weather]: string } = {
 };
 
 const WeatherIcon = ({ weather }: Props) => (
-  <img title={weather} style={{ width: 28, margin: -2 }} src={IMAGES[weather]} alt={weather} />
+  <img style={{ width: 28, margin: -2 }} src={IMAGES[weather]} alt={weather} />
 );
 
 export default WeatherIcon;

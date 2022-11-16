@@ -35,7 +35,7 @@ const FieldPicker = ({ field, onChange }: Props) => {
           </InputLabel>
           <ToggleButtonGroup size="small" exclusive value={field.weather} onChange={setWeather}>
             {(['Sun', 'Hail', 'Rain', 'Sand'] as const).map((weather) => (
-              <ToggleButton value={weather}>
+              <ToggleButton value={weather} title={weather}>
                 <WeatherIcon weather={weather} />
               </ToggleButton>
             ))}
@@ -48,16 +48,16 @@ const FieldPicker = ({ field, onChange }: Props) => {
             </Typography>
           </InputLabel>
           <ToggleButtonGroup size="small" exclusive value={field.terrain} onChange={setTerrain}>
-            <ToggleButton value="Grassy">
+            <ToggleButton value="Grassy" title="Grassy Terrain">
               <EcoIcon />
             </ToggleButton>
-            <ToggleButton value="Electric">
+            <ToggleButton value="Electric" title="Electric Terrain">
               <FlashOnIcon />
             </ToggleButton>
-            <ToggleButton value="Psychic">
+            <ToggleButton value="Psychic" title="Psychic Terrain">
               <AlbumOutlinedIcon />
             </ToggleButton>
-            <ToggleButton value="Misty">
+            <ToggleButton value="Misty" title="Misty Terrain">
               <WavesIcon />
             </ToggleButton>
           </ToggleButtonGroup>
