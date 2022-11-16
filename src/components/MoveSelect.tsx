@@ -124,7 +124,10 @@ const MoveStats = ({
     />
     <div style={{ position: 'relative' }}>{basePower}</div>
     {moveCategory && (
-      <img style={{ paddingLeft: 4, position: 'relative' }} src={CATEGORY_ICONS[moveCategory]} />
+      <img
+        style={{ paddingLeft: 4, position: 'relative' }}
+        src={CATEGORY_ICONS[moveCategory].src}
+      />
     )}
   </div>
 );

@@ -22,12 +22,12 @@ const Header = () => {
         <div style={{ flexGrow: 1 }} />
         {isLargeScreen ? (
           <>
-            <Link href="/" passHref>
+            <Link href="/" legacyBehavior passHref>
               <Button component="a" color="inherit">
                 Damage Calculator
               </Button>
             </Link>
-            <Link href="/cram-o-matic" passHref>
+            <Link href="/cram-o-matic" legacyBehavior passHref>
               <Button component="a" color="inherit">
                 Cram-O-Matic
               </Button>
@@ -44,12 +44,12 @@ const Header = () => {
               open={Boolean(menuAnchor)}
               onClose={handleClose}
             >
-              <Link href="/" passHref>
+              <Link href="/" legacyBehavior passHref>
                 <MenuItem component="a" onClick={handleClose}>
                   Damage Calculator
                 </MenuItem>
               </Link>
-              <Link href="/cram-o-matic" passHref>
+              <Link href="/cram-o-matic" legacyBehavior passHref>
                 <MenuItem component="a" onClick={handleClose}>
                   Cram-O-Matic
                 </MenuItem>

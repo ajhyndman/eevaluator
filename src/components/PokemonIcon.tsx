@@ -29,7 +29,7 @@ const PokemonIcon = ({ species }: Props) => {
   return (
     <div
       style={{
-        backgroundImage: `url(${pokemonSpritesheet})`,
+        backgroundImage: `url(${pokemonSpritesheet.src})`,
         backgroundPosition: `${-x}px ${-y}px`,
         backgroundRepeat: 'no-repeat',
         height: HEIGHT,

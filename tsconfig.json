@@ -22,7 +22,8 @@
       "./@types",
       "./node_modules/@types"
     ],
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true
   },
   "include": [
     "@types",
