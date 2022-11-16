@@ -18,17 +18,17 @@
     "@material-ui/icons": "4.9.1",
     "@material-ui/lab": "4.0.0-alpha.45",
     "@smogon/calc": "0.6.0",
-    "@storybook/react": "6.0.10",
     "@wisersolutions/heap-analytics": "0.1.1",
     "d3-path": "1.0.9",
     "d3-scale": "3.2.1",
     "focus-visible": "5.0.2",
     "lodash.throttle": "4.1.1",
     "logrocket": "1.0.6",
+    "next": "9.5.5",
     "ramda": "0.27.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-ga": "2.7.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-ga": "3.3.1",
     "react-select": "3.1.0"
   },
   "scripts": {
@@ -66,6 +66,7 @@
     "@storybook/addon-actions": "^5.3.17",
     "@storybook/addon-links": "^5.3.17",
     "@storybook/addons": "^5.3.17",
+    "@storybook/react": "6.0.10",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -75,16 +76,15 @@
     "@types/lodash.throttle": "4.1.6",
     "@types/node": "^12.0.0",
     "@types/ramda": "0.26.43",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-helmet": "6.0.0",
+    "@types/react": "18.x",
+    "@types/react-dom": "18.x",
+    "@types/react-helmet": "6.1.5",
     "@types/react-select": "3.0.17",
     "babel-jest": "26.1.0",
     "babel-loader": "8.1.0",
     "file-loader": "6.0.0",
     "jest": "26.1.0",
     "jsdom": "16.5.0",
-    "next": "9.5.5",
     "node-fetch": "3.0.0-beta.9",
     "patch-package": "6.2.2",
     "postinstall-postinstall": "2.1.0",
@@ -93,6 +93,7 @@
     "url-loader": "4.1.0"
   },
   "resolutions": {
-    "node-fetch": "3.0.0-beta.9"
+    "node-fetch": "3.0.0-beta.9",
+    "@types/react": "18.0.25"
   }
 }
