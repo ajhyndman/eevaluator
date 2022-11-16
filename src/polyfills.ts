@@ -5,7 +5,7 @@ import 'focus-visible/dist/focus-visible.min';
  * @see {@link https://gist.github.com/lgarron/d1dee380f4ed9d825ca7#gistcomment-2934251}
  */
 function writeText(str: string) {
-  return new Promise(function(resolve, reject) {
+  return new Promise<void>(function (resolve, reject) {
     /********************************/
     var range = document.createRange();
     range.selectNodeContents(document.body);
