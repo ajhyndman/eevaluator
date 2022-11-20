@@ -52,6 +52,9 @@ const TERRAIN: { [key in Terrain]: string } = {
 const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain }) => {
   const weatherImg = weather ? WEATHER[weather] : '';
   const terrainImg = terrain ? TERRAIN[terrain] : '';
+
+  const showSky = ['Hail', 'Sun'].includes(weather as Weather);
+
   return (
     <>
       <Head>
@@ -65,7 +68,7 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
             z-index: -1;
           }
           .terrain {
-            background-color: ${weather ? '#c6e8f5' : 'transparent'};
+            background-color: ${showSky ? '#99c8da' : 'transparent'};
             background-image: ${`url(${terrainImg})`};
             background-size: 100% auto;
             background-repeat: no-repeat;
@@ -77,7 +80,7 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
             background-size: cover;
             background-repeat: no-repeat;
             background-position: top center;
-            opacity: ${weather === 'Hail' ? 1 : 0.5} ;
+            opacity: ${showSky ? 1 : 0.5} ;
           }
         `}</style>
       </Head>
@@ -151,18 +154,15 @@ const Eevaluator = () => {
     handleCloseFavorites();
   };
 
-  const handleMoveChange = (
-    prevPokemon: Pokemon,
-    setState: any,
-    key: PokemonKey,
-    index: number,
-  ) => (move: string | undefined) => {
-    const nextMoves: any = prevPokemon.moves.slice();
-    nextMoves[index] = move;
-    const nextPokemon = clonePokemon(prevPokemon, { moves: nextMoves });
+  const handleMoveChange =
+    (prevPokemon: Pokemon, setState: any, key: PokemonKey, index: number) =>
+    (move: string | undefined) => {
+      const nextMoves: any = prevPokemon.moves.slice();
+      nextMoves[index] = move;
+      const nextPokemon = clonePokemon(prevPokemon, { moves: nextMoves });
 
-    savePokemon(setState, key)(nextPokemon);
-  };
+      savePokemon(setState, key)(nextPokemon);
+    };
 
   return (
     <>
