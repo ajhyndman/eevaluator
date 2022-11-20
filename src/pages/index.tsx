@@ -11,6 +11,7 @@ import {
   Link,
   SwipeableDrawer,
   Toolbar,
+  Typography,
 } from '@material-ui/core';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import TerrainIcon from '@material-ui/icons/Terrain';
@@ -36,36 +37,56 @@ const META_DESCRIPTION =
   'Eevaluator is a modern Pokemon VGC damage calculator. Quickly run calcs from your computer or phone and get clear easy-to-read feedback with a clean, simple interface.  Now supports Crown Tundra and VGC 2021!';
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
-  Sun: '/images/weather/Sun_Nobg_orange.png',
-  Rain: '/images/weather/rainnobg.png',
-  Sand: '/images/weather/Sandstorm-nobg_darker.png',
-  Hail: '/images/weather/snownobg.png',
+  Sun: '/images/background/sun.png',
+  Rain: '/images/background/rain.png',
+  Sand: '/images/background/sand.png',
+  Hail: '/images/background/hail.png',
 };
 const TERRAIN: { [key in Terrain]: string } = {
-  Electric: '/images/terrain/electerrainopacityhigh.png',
-  Grassy: '/images/terrain/grassyterrainopacityhigh.png',
-  Misty: '/images/terrain/mistyOpacityhigh.png',
-  Psychic: '/images/terrain/psychicterrainNEWopacityhigh.png',
+  Electric: '/images/background/electric-nosky.png',
+  Grassy: '/images/background/grass-nosky.png',
+  Misty: '/images/background/mist-nosky.png',
+  Psychic: '/images/background/psychic-nosky.png',
 };
 
 const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain }) => {
   const weatherImg = weather ? WEATHER[weather] : '';
   const terrainImg = terrain ? TERRAIN[terrain] : '';
+
+  const showSky = ['Hail', 'Sun'].includes(weather as Weather);
+
   return (
-    <div
-      style={{
-        backgroundImage: `url(${terrainImg}), url(${weatherImg})`,
-        backgroundSize: 'cover',
-        backgroundRepeat: 'noRepeat',
-        position: 'fixed',
-        top: 0,
-        right: 0,
-        bottom: 0,
-        left: 0,
-        zIndex: -1,
-        opacity: 0.5,
-      }}
-    />
+    <>
+      <Head>
+        <style>{`
+          .overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+          }
+          .terrain {
+            background-color: ${showSky ? '#99c8da' : 'transparent'};
+            background-image: ${`url(${terrainImg})`};
+            background-size: 100% auto;
+            background-repeat: no-repeat;
+            background-position: bottom -200px center;
+            opacity: 0.5;
+          }
+          .weather {
+            background-image: url(${weatherImg});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top center;
+            opacity: ${showSky ? 1 : 0.5} ;
+          }
+        `}</style>
+      </Head>
+      <div className="overlay terrain" />
+      <div className="overlay weather" />
+    </>
   );
 };
 
@@ -133,18 +154,15 @@ const Eevaluator = () => {
     handleCloseFavorites();
   };
 
-  const handleMoveChange = (
-    prevPokemon: Pokemon,
-    setState: any,
-    key: PokemonKey,
-    index: number,
-  ) => (move: string | undefined) => {
-    const nextMoves: any = prevPokemon.moves.slice();
-    nextMoves[index] = move;
-    const nextPokemon = clonePokemon(prevPokemon, { moves: nextMoves });
+  const handleMoveChange =
+    (prevPokemon: Pokemon, setState: any, key: PokemonKey, index: number) =>
+    (move: string | undefined) => {
+      const nextMoves: any = prevPokemon.moves.slice();
+      nextMoves[index] = move;
+      const nextPokemon = clonePokemon(prevPokemon, { moves: nextMoves });
 
-    savePokemon(setState, key)(nextPokemon);
-  };
+      savePokemon(setState, key)(nextPokemon);
+    };
 
   return (
     <>
@@ -163,6 +181,7 @@ const Eevaluator = () => {
           content="Gigantamax Eevee deals 121–144% damage to its opponent for a gauaranteed knockout. Eevee is currently poisoned."
         />
       </Head>
+
       <Background weather={field.weather} terrain={field.terrain} />
 
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
@@ -228,6 +247,15 @@ const Eevaluator = () => {
       {/* FOOTER */}
       <Toolbar variant="dense">
         <div style={{ flexGrow: 1 }} />
+        <div>
+          <Typography color="textSecondary" variant="body2" component="em">
+            background illustrations ©{' '}
+            <Link target="_blank" href="https://www.behance.net/lucas95garcia">
+              Lucas Garcia
+            </Link>
+          </Typography>
+        </div>
+        <div style={{ width: '1em' }} />
         <Link href={GITHUB_URL}>
           <Button startIcon={<GitHubIcon />} size="small">
             GitHub
