@@ -1,31 +1,29 @@
 import { sortBy, toLower } from 'ramda';
 import React, { ChangeEvent, useState } from 'react';
 
-import {
-  FormControlLabel,
-  Grid,
-  IconButton,
-  MenuItem,
-  Slider,
-  Switch,
-  TextField,
-} from '@material-ui/core';
+import { Grid, IconButton, MenuItem, Slider, Switch, TextField } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
 import SaveIcon from '@material-ui/icons/Save';
 import { Autocomplete } from '@material-ui/lab';
 import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon/calc';
-import { AbilityName, ItemName, StatName, StatusName } from '@smogon/calc/dist/data/interface';
+import {
+  AbilityName,
+  ItemName,
+  StatID,
+  StatusName,
+  TypeName,
+} from '@smogon/calc/dist/data/interface';
 
 import { clonePokemon, GENERATION, getNature, STAT_LABEL } from '../util/misc';
 import ItemPicker from './ItemPicker';
-import PokemonIllustration from './PokemonIllustration';
+import PokemonIllustration, { TYPES } from './PokemonIllustration';
 import StatHexagon from './StatHexagon';
 import StatusLabel, { STATUS } from './StatusLabel';
 import TypeIcon from './TypeIcon';
 
-type ModernStat = Exclude<StatName, 'spc'>;
+type ModernStat = Exclude<StatID, 'spc'>;
 
 type Props = {
   index: number;
@@ -82,11 +80,13 @@ function PokemonPicker({
   const stats = pokemon[statKey];
   const pokemonName = pokemon.name;
 
-  const setIsMax = (nextIsMax: boolean) => {
-    const nextPokemon = clonePokemon(pokemon, { isDynamaxed: nextIsMax });
+  const setTeraType = (nextTeraType?: TypeName) => {
+    const nextPokemon = clonePokemon(pokemon, {
+      teraType: nextTeraType,
+    });
     onChange(nextPokemon);
   };
-  const isMax = pokemon.isDynamaxed || false;
+  const teraType = pokemon.teraType;
 
   const setSpecies = (nextSpecies: string) => {
     if (nextSpecies != null) {
@@ -178,9 +178,9 @@ function PokemonPicker({
 
       {/* Pokemon type, status and Dynamax toggle */}
       <Grid item xs={12} style={{ alignItems: 'center', display: 'flex' }}>
-        <TypeIcon type={pokemon.types[0]} />
+        <TypeIcon type={teraType ?? pokemon.types[0]} />
         <div style={{ width: 8 }} />
-        {pokemon.types[1] && (
+        {!teraType && pokemon.types[1] && (
           <>
             <TypeIcon type={pokemon.types[1]} />
             <div style={{ width: 8 }} />
@@ -192,7 +192,7 @@ function PokemonPicker({
           SelectProps={{ style: { width: 175 } }}
           select
           label="Status"
-          value={pokemon.status === '' ? '' : pokemon.status}
+          value={pokemon.status}
           onChange={(event: any) => setStatus(event.target.value)}
         >
           {STATUS.map((status) => (
@@ -202,17 +202,24 @@ function PokemonPicker({
           ))}
         </TextField>
         <div style={{ flexGrow: 1 }} />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={isMax}
-              onChange={(e: any, value: any) => setIsMax(value)}
-              color="primary"
-            />
-          }
-          label="Dynamax"
-          labelPlacement="start"
-        />
+        <div style={{ minWidth: 125 }}>
+          <TextField
+            fullWidth
+            size="small"
+            variant="outlined"
+            select
+            label="Tera Type"
+            value={teraType ?? ''}
+            onChange={(event) => setTeraType(event.target.value as TypeName)}
+          >
+            <MenuItem value={undefined}>None</MenuItem>
+            {Object.keys(TYPES).map((type) => (
+              <MenuItem key={type} value={type}>
+                {type}
+              </MenuItem>
+            ))}
+          </TextField>
+        </div>
       </Grid>
 
       <Grid item xs={12}>
@@ -223,7 +230,7 @@ function PokemonPicker({
             position: 'relative',
           }}
         >
-          <PokemonIllustration flip={index !== 0} pokemon={pokemon} />
+          <PokemonIllustration index={index} pokemon={pokemon} teraType={teraType} />
           <StatHexagon
             boosts={boosts}
             item={item}

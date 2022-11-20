@@ -16,7 +16,7 @@
  */
 import { clamp } from 'ramda';
 
-import { Pokemon, StatName, StatsTable } from '@smogon/calc';
+import { Pokemon, StatID, StatsTable } from '@smogon/calc';
 
 import { GENERATION } from './misc';
 
@@ -41,7 +41,8 @@ type PokemonConfiguration = {
 // diagram visualizer, such as: https://regexper.com/
 
 const matchBlankLine = /^\s*$/;
-const matchFirstLine = /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*?))?\s*$/i;
+const matchFirstLine =
+  /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*?))?\s*$/i;
 const matchLevelLine = /^\s*Level:\s*(\d{1,3})\s*$/i;
 const matchAbilityLine = /^\s*Ability:\s*(.*?)\s*$/i;
 const matchEvLine = /^\s*EVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
@@ -72,7 +73,7 @@ function parseStatText(statsText: string): Partial<StatsTable> {
   // reduce list into object map
   return statEntries.reduce((acc, statEntry) => {
     const [value, key] = statEntry.trim().split(/\s+/);
-    const normalizedKey = key.toLocaleLowerCase() as StatName;
+    const normalizedKey = key.toLocaleLowerCase() as StatID;
     return { ...acc, [normalizedKey]: clamp(0, 255, parseInt(value)) };
   }, {});
 }

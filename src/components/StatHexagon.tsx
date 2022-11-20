@@ -4,26 +4,24 @@ import { clamp, sum } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { TextField } from '@material-ui/core';
-import { StatName } from '@smogon/calc';
+import { StatID, StatsTable } from '@smogon/calc';
 import { ItemName, Specie } from '@smogon/calc/dist/data/interface';
 
 import { BLUE, RED } from '../styles';
-import { GENERATION, polarToCartesian, STAT_LABEL } from '../util/misc';
+import { polarToCartesian, STAT_LABEL } from '../util/misc';
 import TriangleSlider from './TriangleSlider';
 
-export type Stats = { [stat in StatName]: number };
-
 type Props = {
-  boosts: Stats;
+  boosts: StatsTable;
   item?: ItemName;
-  onBoostsChange: (boosts: Stats) => void;
-  natureFavoredStat: StatName;
-  natureUnfavoredStat: StatName;
-  onStatsChange: (stats: Stats) => void;
-  realStats: Stats;
+  onBoostsChange: (boosts: StatsTable) => void;
+  natureFavoredStat: StatID;
+  natureUnfavoredStat: StatID;
+  onStatsChange: (stats: StatsTable) => void;
+  realStats: StatsTable;
   species: Specie;
   statKey: 'ivs' | 'evs';
-  stats: Stats;
+  stats: StatsTable;
 };
 
 const SIZE = 120;
@@ -42,7 +40,7 @@ const MAX_TOTAL_EVS = 508;
  * @param scale A scale function (e.g. a function of the form f(x) = y where x and y are both real numbers)
  * @returns a list of scaled data points ready to be consumed by a visualization.
  */
-const dataFromStats = (stats: Stats, scale: ScaleLinear<number, number>) => {
+const dataFromStats = (stats: StatsTable, scale: ScaleLinear<number, number>) => {
   return [stats.hp, stats.atk, stats.def, stats.spe, stats.spd, stats.spa].map(scale);
 };
 
@@ -80,14 +78,14 @@ const StatHexagon = ({
 }: Props) => {
   const statMax = statKey === 'ivs' ? MAX_IV : MAX_EV;
 
-  const handleStatChange = (key: StatName) => (event: ChangeEvent<HTMLInputElement>) => {
+  const handleStatChange = (key: StatID) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
     const newValue = clamp(0, statMax, numericValue);
 
     onStatsChange({ ...stats, [key]: newValue });
   };
 
-  const handleBoostChange = (key: StatName) => (value: number) =>
+  const handleBoostChange = (key: StatID) => (value: number) =>
     onBoostsChange({ ...boosts, [key]: value });
 
   const statScale = scaleLinear().domain([0, statMax]).range([10, RADIUS]);
@@ -125,7 +123,7 @@ const StatHexagon = ({
       </svg>
 
       {/* EV/IV INPUTS */}
-      {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as StatName[]).map((key, i) => {
+      {(['hp', 'atk', 'def', 'spe', 'spd', 'spa'] as StatID[]).map((key, i) => {
         const [x, y] = polarToCartesian([RADIUS + INPUT_SIZE * (4 / 5), 2 * Math.PI * (i / 6)]);
 
         // calculate stat stage effect, if any

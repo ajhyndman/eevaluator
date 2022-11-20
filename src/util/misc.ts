@@ -1,10 +1,10 @@
 import ReactGA from 'react-ga';
 
-import { Generations, NATURES, Pokemon } from '@smogon/calc';
-import { NatureName, StatName } from '@smogon/calc/dist/data/interface';
+import { Generations, NATURES, Pokemon, State } from '@smogon/calc';
+import { NatureName, StatID } from '@smogon/calc/dist/data/interface';
 
-export const GENERATION = Generations.get(8);
-export const STAT_LABEL: { [key in StatName]: string } = {
+export const GENERATION = Generations.get(9);
+export const STAT_LABEL: { [key in StatID]: string } = {
   atk: 'Attack',
   def: 'Defense',
   hp: 'HP',
@@ -24,8 +24,8 @@ export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issu
  */
 export const clonePokemon = (
   pokemon: Pokemon,
-  options: Partial<Omit<Pokemon, 'curHP'> & { curHP: number }>,
-) => new Pokemon(GENERATION, pokemon.name, { ...pokemon, ...options });
+  options: Partial<State.Pokemon & { curHP: number; overrides: any }>,
+) => new Pokemon(GENERATION, pokemon.name, { ...pokemon, overrides: pokemon.species, ...options });
 
 /**
  * A reverse lookup helper.  Given a pair of benefitted and hindered stats,
@@ -35,7 +35,7 @@ export const clonePokemon = (
  * @param minusStat The stat key for the nature-hindered stat.
  * @returns The name of the matching nature, as a string.
  */
-export const getNature = (plusStat?: StatName, minusStat?: StatName): NatureName => {
+export const getNature = (plusStat?: StatID, minusStat?: StatID): NatureName => {
   return Object.keys(NATURES).find((name: string) => {
     const [a, b] = NATURES[name];
     return a === plusStat && b === minusStat;

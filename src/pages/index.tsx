@@ -34,7 +34,7 @@ import {
 type PokemonKey = 'pokemon-left' | 'pokemon-right';
 
 const META_DESCRIPTION =
-  'Eevaluator is a modern Pokemon VGC damage calculator. Quickly run calcs from your computer or phone and get clear easy-to-read feedback with a clean, simple interface.  Now supports Crown Tundra and VGC 2021!';
+  'Pokemon damage calculator for Scarlet and Violet VGC 2022 & 2023. Quickly run calcs from your computer or phone and get clear easy-to-read feedback with a clean, simple interface.';
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
   Sun: '/images/background/sun.png',

@@ -14,12 +14,12 @@
  * https://pokepast.es/syntax.html
  *
  */
-import { Pokemon, StatName, StatsTable } from '@smogon/calc';
+import { Pokemon, StatID, StatsTable } from '@smogon/calc';
 
 const DEFAULT_IV = 31;
 const DEFAULT_EV = 0;
 
-const STAT_PRINT_NAMES: { [key in StatName]: string } = {
+const STAT_PRINT_NAMES: { [key in StatID]: string } = {
   hp: 'HP',
   atk: 'Atk',
   def: 'Def',
@@ -28,7 +28,7 @@ const STAT_PRINT_NAMES: { [key in StatName]: string } = {
   spe: 'Spe',
 };
 
-const STAT_PRINT_ORDER: { [key in StatName]: number } = {
+const STAT_PRINT_ORDER: { [key in StatID]: number } = {
   hp: 1,
   atk: 2,
   def: 3,
@@ -48,7 +48,7 @@ function statsAllDefault(defaultValue: number, stats: StatsTable): boolean {
 }
 
 export function printStats(defaultValue: number, stats: StatsTable): string {
-  const ivEntries = (Object.entries(stats) as [StatName, number][])
+  const ivEntries = (Object.entries(stats) as [StatID, number][])
     .sort(([a], [b]) => STAT_PRINT_ORDER[a] - STAT_PRINT_ORDER[b])
     .filter(([, value]) => value !== defaultValue)
     .map(([key, value]) => `${value} ${STAT_PRINT_NAMES[key]}`, '');

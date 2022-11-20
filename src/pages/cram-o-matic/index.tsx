@@ -1,9 +1,8 @@
 import Head from 'next/head';
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Container, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import { RouteComponentProps } from '@reach/router';
 import { ItemName } from '@smogon/calc/dist/data/interface';
 
 import INPUTS from '../../assets/cram-o-matic-inputs.json';
