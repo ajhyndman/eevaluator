@@ -247,6 +247,15 @@ const Eevaluator = () => {
       {/* FOOTER */}
       <Toolbar variant="dense">
         <div style={{ flexGrow: 1 }} />
+        <div>
+          <Typography color="textSecondary" variant="body2" component="em">
+            background illustrations ©{' '}
+            <Link target="_blank" href="https://www.behance.net/lucas95garcia">
+              Lucas Garcia
+            </Link>
+          </Typography>
+        </div>
+        <div style={{ width: '1em' }} />
         <Link href={GITHUB_URL}>
           <Button startIcon={<GitHubIcon />} size="small">
             GitHub
