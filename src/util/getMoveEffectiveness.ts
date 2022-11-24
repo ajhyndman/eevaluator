@@ -15,6 +15,10 @@ export const getMoveEffectiveness = (
   const move = new Move(GENERATION, moveName);
   const isGhostRevealed = attacker.hasAbility('Scrappy') || field.defenderSide.isForesight;
 
+  if (move.name === 'Tera Blast' && attacker.teraType != null) {
+    move.type = attacker.teraType;
+  }
+
   const type1Effectiveness = getMoveEffectivenessSmogon(
     GENERATION,
     move,

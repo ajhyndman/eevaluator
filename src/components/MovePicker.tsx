@@ -79,8 +79,7 @@ const MovePicker = ({ index, attacker, defender, field, move: moveName, onChange
           onChange={onChangeMove}
           placeholder={`Move ${index + 1}`}
           effectiveness={effectivenessDescription}
-          isMax={attacker.isDynamaxed}
-          attackerSpecies={attacker.name}
+          attacker={attacker}
         />
       </Grid>
       <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>

@@ -7,7 +7,7 @@ import Select, {
   ValueType,
 } from 'react-select';
 
-import { MOVES } from '@smogon/calc';
+import { MOVES, Pokemon } from '@smogon/calc';
 import { MoveCategory, SpeciesName } from '@smogon/calc/dist/data/interface';
 import { MoveData } from '@smogon/calc/dist/data/moves';
 import { Move } from '@smogon/calc/dist/move';
@@ -42,9 +42,7 @@ type Props = {
   onChange: (value?: string) => void;
   placeholder?: string;
   effectiveness?: string;
-  isMax?: boolean;
-  // needed to correctly identify gmax moves
-  attackerSpecies?: string;
+  attacker?: Pokemon;
 };
 
 type MoveOption = {
@@ -188,14 +186,7 @@ const ValueContainer = ({
   );
 };
 
-const MoveSelect = ({
-  value,
-  onChange,
-  placeholder,
-  effectiveness,
-  isMax = false,
-  attackerSpecies,
-}: Props) => {
+const MoveSelect = ({ value, onChange, placeholder, effectiveness, attacker }: Props) => {
   const currentOption: ValueType<MoveOption> = MOVE_OPTIONS.filter(
     (option) => option.value === value,
   );
@@ -206,10 +197,13 @@ const MoveSelect = ({
     value == null
       ? value
       : new Move(GENERATION, value, {
-          useMax: isMax,
-          species: attackerSpecies as SpeciesName,
+          useMax: attacker?.isDynamaxed,
+          species: attacker?.species?.kind as SpeciesName,
         });
-  const moveType = move?.type ?? '???';
+  let moveType = move?.type ?? '???';
+  if (move?.name === 'Tera Blast' && attacker?.teraType != null) {
+    moveType = attacker?.teraType;
+  }
   const background = TYPE_COLORS[moveType];
 
   return (
