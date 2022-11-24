@@ -1779,12 +1779,12 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@smogon/calc@0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.6.0.tgz#ffc2bbdb9ee41b09932b0105a81b7032e36db24d"
-  integrity sha512-0HMOKOFOuHY0GIQont/3gtQjZltY13PzsWX5SAn7ws26uL20yG2RYC2V7kG/EYT2lZB48H/ZpBLm52totI65Sw==
+"@smogon/calc@0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.7.0.tgz#4145f73971210f0b1efdb3f7356ce0ef73a4eb89"
+  integrity sha512-2+AGILYtqwRBceIIYkxH1dvtLwzSdyEwAAFWDfjYVwwNohmsNKjU5RVsDal8matpmNJptHF2FekSbHONNZTlUg==
   dependencies:
-    "@types/node" "^14.11.2"
+    "@types/node" "^18.11.9"
 
 "@storybook/addon-actions@6.5.13":
   version "6.5.13"
@@ -2778,7 +2778,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*":
+"@types/node@*", "@types/node@^18.11.9":
   version "18.11.9"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.9.tgz#02d013de7058cea16d36168ef2fc653464cfbad4"
   integrity sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==
@@ -2792,11 +2792,6 @@
   version "16.18.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.3.tgz#d7f7ba828ad9e540270f01ce00d391c54e6e0abc"
   integrity sha512-jh6m0QUhIRcZpNv7Z/rpN+ZWXOicUUQbSoWks7Htkbb9IjFQj4kzcX/xFCkjstCj5flMsN8FiSvt+q+Tcs4Llg==
-
-"@types/node@^14.11.2":
-  version "14.18.33"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.33.tgz#8c29a0036771569662e4635790ffa9e057db379b"
-  integrity sha512-qelS/Ra6sacc4loe/3MSjXNL1dNQ/GjxNHVzuChwMfmk7HuycRLVQN2qNY3XahK+fZc5E2szqQSKUyAF0E+2bg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
