@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import { range } from 'ramda';
+import { omit, range } from 'ramda';
 import React, { useEffect, useState } from 'react';
 
 import {
+  Badge,
   Button,
   Container,
   Dialog,
@@ -132,6 +133,12 @@ const Eevaluator = () => {
   const [field, setField] = useState(new Field({ gameType: 'Doubles' }));
   const [showFieldDrawer, setShowFieldDrawer] = useState(false);
 
+  console.log(field);
+  const countFieldEffects = [
+    field.gameType === 'Singles',
+    ...Object.values(field.attackerSide),
+  ].reduce((acc, value) => acc + (value ? 1 : 0), 0);
+
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     return [];
   });
@@ -203,6 +210,7 @@ const Eevaluator = () => {
               <PokemonPicker
                 index={0}
                 pokemon={pokemonLeft}
+                field={field}
                 onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
                 onExportClick={handleOpenImportExport('pokemon-left')}
                 onOpenFavorites={handleOpenFavorites('pokemon-left')}
@@ -233,6 +241,7 @@ const Eevaluator = () => {
               <PokemonPicker
                 index={1}
                 pokemon={pokemonRight}
+                field={field}
                 onChange={savePokemon(setPokemonRight, 'pokemon-right')}
                 onExportClick={handleOpenImportExport('pokemon-right')}
                 onOpenFavorites={handleOpenFavorites('pokemon-right')}
@@ -264,9 +273,11 @@ const Eevaluator = () => {
       </Toolbar>
 
       <div style={{ position: 'fixed', left: 16, bottom: 16 }}>
-        <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
-          <TerrainIcon />
-        </Fab>
+        <Badge badgeContent={countFieldEffects} color="primary" overlap="circle">
+          <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
+            <TerrainIcon />
+          </Fab>
+        </Badge>
       </div>
 
       {/* SETTINGS MENU */}

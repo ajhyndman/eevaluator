@@ -4,7 +4,7 @@ import { clamp, sum } from 'ramda';
 import React, { ChangeEvent } from 'react';
 
 import { TextField } from '@material-ui/core';
-import { StatID, StatsTable } from '@smogon/calc';
+import { Field, StatID, StatsTable } from '@smogon/calc';
 import { ItemName, Specie } from '@smogon/calc/dist/data/interface';
 
 import { BLUE, RED } from '../styles';
@@ -19,6 +19,7 @@ type Props = {
   natureUnfavoredStat: StatID;
   onStatsChange: (stats: StatsTable) => void;
   realStats: StatsTable;
+  field: Field;
   species: Specie;
   statKey: 'ivs' | 'evs';
   stats: StatsTable;
@@ -66,6 +67,7 @@ const drawHexagon = ([first, ...rest]: number[]) => {
 
 const StatHexagon = ({
   boosts,
+  field,
   item,
   onBoostsChange,
   natureFavoredStat,
@@ -146,7 +148,11 @@ const StatHexagon = ({
           itemMultiplier = 1.5;
         }
 
-        const finalStat = Math.floor(Math.floor(realStats[key] * boostMultiplier) * itemMultiplier);
+        const fieldMultiplier = key === 'spe' && field.attackerSide.isTailwind ? 2 : 1;
+
+        const finalStat =
+          Math.floor(Math.floor(realStats[key] * boostMultiplier) * itemMultiplier) *
+          fieldMultiplier;
 
         return (
           <div
@@ -197,7 +203,10 @@ const StatHexagon = ({
                     ? BLUE
                     : 'inherit',
                 margin: '4px 0 0',
-                fontWeight: boostMultiplier !== 1 || itemMultiplier !== 1 ? 'bold' : 'normal',
+                fontWeight:
+                  boostMultiplier !== 1 || itemMultiplier !== 1 || fieldMultiplier !== 1
+                    ? 'bold'
+                    : 'normal',
               }}
             >
               {finalStat}
