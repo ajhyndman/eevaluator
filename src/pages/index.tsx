@@ -273,8 +273,13 @@ const Eevaluator = () => {
       </Toolbar>
 
       <div style={{ position: 'fixed', left: 16, bottom: 16 }}>
-        <Badge badgeContent={countFieldEffects} color="primary" overlap="circle">
-          <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
+        <Badge
+          badgeContent={countFieldEffects}
+          color="primary"
+          overlap="circle"
+          aria-label="number of active field effects"
+        >
+          <Fab color="default" title="Field Settings" onClick={() => setShowFieldDrawer(true)}>
             <TerrainIcon />
           </Fab>
         </Badge>
