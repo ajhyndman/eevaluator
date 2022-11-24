@@ -23,6 +23,9 @@ const FieldPicker = ({ field, onChange }: Props) => {
   const setTerrain = (event: any, value: Terrain) => {
     onChange(new Field({ ...field, terrain: value }));
   };
+  const setSingleTarget = (event: any, isSingleTarget: boolean) => {
+    onChange(new Field({ ...field, gameType: isSingleTarget ? 'Singles' : 'Doubles' }));
+  };
 
   const setSideProperty = (property: keyof Side) => (event: any, value: boolean) => {
     onChange(
@@ -142,6 +145,18 @@ const FieldPicker = ({ field, onChange }: Props) => {
               />
             }
             label="Tailwind"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.gameType === 'Singles'}
+                onChange={setSingleTarget}
+                color="primary"
+              />
+            }
+            label="Single Target"
           />
         </Grid>
       </Grid>

@@ -134,10 +134,10 @@ const Eevaluator = () => {
   const [showFieldDrawer, setShowFieldDrawer] = useState(false);
 
   console.log(field);
-  const countFieldEffects = Object.values(field.attackerSide).reduce(
-    (acc, value) => acc + (value ? 1 : 0),
-    0,
-  );
+  const countFieldEffects = [
+    field.gameType === 'Singles',
+    ...Object.values(field.attackerSide),
+  ].reduce((acc, value) => acc + (value ? 1 : 0), 0);
 
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     return [];
