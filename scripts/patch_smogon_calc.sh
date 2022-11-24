@@ -18,3 +18,6 @@ repo_root="$(pwd)"
 )
 # Run patch-package to save changes to visual-pokemon-calc
 yarn patch-package @smogon/calc
+
+# clear next cache (otherwise compiler won't pick up changes to @smogon/calc)
+rm -rf "$repo_root/.next"
