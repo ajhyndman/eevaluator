@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { Grid, InputLabel, Typography } from '@material-ui/core';
+import { FormControlLabel, Grid, InputLabel, Switch, Typography } from '@material-ui/core';
 import AlbumOutlinedIcon from '@material-ui/icons/AlbumOutlined';
 import EcoIcon from '@material-ui/icons/Eco';
 import FlashOnIcon from '@material-ui/icons/FlashOn';
 import WavesIcon from '@material-ui/icons/Waves';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { Field } from '@smogon/calc';
+import { Field, Side } from '@smogon/calc';
 import { Terrain, Weather } from '@smogon/calc/dist/data/interface';
 
 import WeatherIcon from './WeatherIcon';
@@ -22,6 +22,16 @@ const FieldPicker = ({ field, onChange }: Props) => {
   };
   const setTerrain = (event: any, value: Terrain) => {
     onChange(new Field({ ...field, terrain: value }));
+  };
+
+  const setSideProperty = (property: keyof Side) => (event: any, value: boolean) => {
+    onChange(
+      new Field({
+        ...field,
+        attackerSide: { ...field.attackerSide, [property]: value },
+        defenderSide: { ...field.defenderSide, [property]: value },
+      }),
+    );
   };
 
   return (
@@ -63,7 +73,76 @@ const FieldPicker = ({ field, onChange }: Props) => {
           </ToggleButtonGroup>
         </Grid>
         <Grid item xs={12}>
-          <Typography>🚧 More field effects under construction. 🚧</Typography>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isAuroraVeil}
+                onChange={setSideProperty('isAuroraVeil')}
+                color="primary"
+              />
+            }
+            label="Light Screen / Reflect"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isHelpingHand}
+                onChange={setSideProperty('isHelpingHand')}
+                color="primary"
+              />
+            }
+            label="Helping Hand"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isFriendGuard}
+                onChange={setSideProperty('isFriendGuard')}
+                color="primary"
+              />
+            }
+            label="Friend Guard"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isBattery}
+                onChange={setSideProperty('isBattery')}
+                color="primary"
+              />
+            }
+            label="Battery"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isPowerSpot}
+                onChange={setSideProperty('isPowerSpot')}
+                color="primary"
+              />
+            }
+            label="Power Spot"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isTailwind}
+                onChange={setSideProperty('isTailwind')}
+                color="primary"
+              />
+            }
+            label="Tailwind"
+          />
         </Grid>
       </Grid>
     </>

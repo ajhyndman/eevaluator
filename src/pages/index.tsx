@@ -1,8 +1,9 @@
 import Head from 'next/head';
-import { range } from 'ramda';
+import { omit, range } from 'ramda';
 import React, { useEffect, useState } from 'react';
 
 import {
+  Badge,
   Button,
   Container,
   Dialog,
@@ -131,6 +132,12 @@ const Eevaluator = () => {
 
   const [field, setField] = useState(new Field({ gameType: 'Doubles' }));
   const [showFieldDrawer, setShowFieldDrawer] = useState(false);
+
+  console.log(field);
+  const countFieldEffects = Object.values(field.attackerSide).reduce(
+    (acc, value) => acc + (value ? 1 : 0),
+    0,
+  );
 
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {
     return [];
@@ -264,9 +271,11 @@ const Eevaluator = () => {
       </Toolbar>
 
       <div style={{ position: 'fixed', left: 16, bottom: 16 }}>
-        <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
-          <TerrainIcon />
-        </Fab>
+        <Badge badgeContent={countFieldEffects} color="primary" overlap="circle">
+          <Fab color="default" aria-label="Settings" onClick={() => setShowFieldDrawer(true)}>
+            <TerrainIcon />
+          </Fab>
+        </Badge>
       </div>
 
       {/* SETTINGS MENU */}
