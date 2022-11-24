@@ -76,16 +76,7 @@ const FieldPicker = ({ field, onChange }: Props) => {
           </ToggleButtonGroup>
         </Grid>
         <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={field.attackerSide.isAuroraVeil}
-                onChange={setSideProperty('isAuroraVeil')}
-                color="primary"
-              />
-            }
-            label="Light Screen / Reflect"
-          />
+          <Typography variant="body2">Offensive Boosts</Typography>
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
@@ -97,18 +88,6 @@ const FieldPicker = ({ field, onChange }: Props) => {
               />
             }
             label="Helping Hand"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={field.attackerSide.isFriendGuard}
-                onChange={setSideProperty('isFriendGuard')}
-                color="primary"
-              />
-            }
-            label="Friend Guard"
           />
         </Grid>
         <Grid item xs={12}>
@@ -136,16 +115,34 @@ const FieldPicker = ({ field, onChange }: Props) => {
           />
         </Grid>
         <Grid item xs={12}>
+          <Typography variant="body2">Defensive Boosts</Typography>
+        </Grid>
+        <Grid item xs={12}>
           <FormControlLabel
             control={
               <Switch
-                checked={field.attackerSide.isTailwind}
-                onChange={setSideProperty('isTailwind')}
+                checked={field.attackerSide.isAuroraVeil}
+                onChange={setSideProperty('isAuroraVeil')}
                 color="primary"
               />
             }
-            label="Tailwind"
+            label="Light Screen / Reflect"
           />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isFriendGuard}
+                onChange={setSideProperty('isFriendGuard')}
+                color="primary"
+              />
+            }
+            label="Friend Guard"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="body2">Other</Typography>
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
@@ -157,6 +154,18 @@ const FieldPicker = ({ field, onChange }: Props) => {
               />
             }
             label="Single Target"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.attackerSide.isTailwind}
+                onChange={setSideProperty('isTailwind')}
+                color="primary"
+              />
+            }
+            label="Tailwind"
           />
         </Grid>
       </Grid>
