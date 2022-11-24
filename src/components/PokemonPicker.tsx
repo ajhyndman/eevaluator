@@ -7,7 +7,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import FolderSpecialIcon from '@material-ui/icons/FolderSpecial';
 import SaveIcon from '@material-ui/icons/Save';
 import { Autocomplete } from '@material-ui/lab';
-import { ABILITIES, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon/calc';
+import { ABILITIES, Field, ITEMS, NATURES, Pokemon, SPECIES, StatsTable } from '@smogon/calc';
 import {
   AbilityName,
   ItemName,
@@ -28,6 +28,7 @@ type ModernStat = Exclude<StatID, 'spc'>;
 type Props = {
   index: number;
   pokemon: Pokemon;
+  field: Field;
   onChange: (pokemon: Pokemon) => void;
   onExportClick: () => void;
   onSaveFavorite: (pokemon: Pokemon) => void;
@@ -37,6 +38,7 @@ type Props = {
 function PokemonPicker({
   index,
   pokemon,
+  field,
   onChange,
   onExportClick,
   onOpenFavorites,
@@ -240,6 +242,7 @@ function PokemonPicker({
             natureUnfavoredStat={minusStat!}
             onStatsChange={handleStatsChange}
             realStats={{ ...pokemon.stats, hp: pokemon.maxHP() }}
+            field={field}
             statKey={statKey}
             stats={stats}
           />

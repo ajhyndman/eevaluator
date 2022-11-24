@@ -210,6 +210,7 @@ const Eevaluator = () => {
               <PokemonPicker
                 index={0}
                 pokemon={pokemonLeft}
+                field={field}
                 onChange={savePokemon(setPokemonLeft, 'pokemon-left')}
                 onExportClick={handleOpenImportExport('pokemon-left')}
                 onOpenFavorites={handleOpenFavorites('pokemon-left')}
@@ -240,6 +241,7 @@ const Eevaluator = () => {
               <PokemonPicker
                 index={1}
                 pokemon={pokemonRight}
+                field={field}
                 onChange={savePokemon(setPokemonRight, 'pokemon-right')}
                 onExportClick={handleOpenImportExport('pokemon-right')}
                 onOpenFavorites={handleOpenFavorites('pokemon-right')}
