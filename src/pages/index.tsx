@@ -133,7 +133,6 @@ const Eevaluator = () => {
   const [field, setField] = useState(new Field({ gameType: 'Doubles' }));
   const [showFieldDrawer, setShowFieldDrawer] = useState(false);
 
-  console.log(field);
   const countFieldEffects = [
     field.gameType === 'Singles',
     ...Object.values(field.attackerSide),
