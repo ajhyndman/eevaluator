@@ -198,11 +198,16 @@ const MoveSelect = ({ value, onChange, placeholder, effectiveness, attacker }: P
       ? value
       : new Move(GENERATION, value, {
           useMax: attacker?.isDynamaxed,
-          species: attacker?.species?.kind as SpeciesName,
+          species: attacker?.name,
         });
   let moveType = move?.type ?? '???';
   if (move?.name === 'Tera Blast' && attacker?.teraType != null) {
     moveType = attacker?.teraType;
+  }
+  if (move?.name === 'Raging Bull') {
+    if (attacker?.name === 'Tauros-Paldea') move.type = 'Fighting';
+    if (attacker?.name === 'Tauros-Paldea-Fire') move.type = 'Fire';
+    if (attacker?.name === 'Tauros-Paldea-Water') move.type = 'Water';
   }
   const background = TYPE_COLORS[moveType];
 

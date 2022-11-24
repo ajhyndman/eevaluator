@@ -18,6 +18,11 @@ export const getMoveEffectiveness = (
   if (move.name === 'Tera Blast' && attacker.teraType != null) {
     move.type = attacker.teraType;
   }
+  if (move.name === 'Raging Bull') {
+    if (attacker.name === 'Tauros-Paldea') move.type = 'Fighting';
+    if (attacker.name === 'Tauros-Paldea-Fire') move.type = 'Fire';
+    if (attacker.name === 'Tauros-Paldea-Water') move.type = 'Water';
+  }
 
   const type1Effectiveness = getMoveEffectivenessSmogon(
     GENERATION,
