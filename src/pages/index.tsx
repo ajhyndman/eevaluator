@@ -173,7 +173,7 @@ const Eevaluator = () => {
   return (
     <>
       <Head>
-        <title>Eevaluator</title>
+        <title>Eevaluator :: Pokemon VGC Damage Calculator</title>
         <meta name="description" content={META_DESCRIPTION} />
         <meta property="og:title" content="Eevaluator" />
         <meta property="og:description" content={META_DESCRIPTION} />
