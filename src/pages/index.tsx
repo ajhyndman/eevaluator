@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { omit, range } from 'ramda';
+import { omit, pick, range } from 'ramda';
 import React, { useEffect, useState } from 'react';
 
 import {
@@ -136,6 +136,9 @@ const Eevaluator = () => {
   const countFieldEffects = [
     field.gameType === 'Singles',
     ...Object.values(field.attackerSide),
+    ...Object.values(
+      pick(['isBeadsOfRuin', 'isSwordOfRuin', 'isTabletsOfRuin', 'isVesselOfRuin'], field),
+    ),
   ].reduce((acc, value) => acc + (value ? 1 : 0), 0);
 
   const [favorites, setFavorites] = useState<Pokemon[]>(() => {

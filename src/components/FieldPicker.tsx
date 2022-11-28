@@ -27,6 +27,9 @@ const FieldPicker = ({ field, onChange }: Props) => {
     onChange(new Field({ ...field, gameType: isSingleTarget ? 'Singles' : 'Doubles' }));
   };
 
+  const setFieldProperty = (property: keyof Field) => (event: any, value: boolean) => {
+    onChange(new Field({ ...field, [property]: value }));
+  };
   const setSideProperty = (property: keyof Side) => (event: any, value: boolean) => {
     onChange(
       new Field({
@@ -166,6 +169,54 @@ const FieldPicker = ({ field, onChange }: Props) => {
               />
             }
             label="Tailwind"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.isBeadsOfRuin}
+                onChange={setFieldProperty('isBeadsOfRuin')}
+                color="primary"
+              />
+            }
+            label="Beads of Ruin (Sp. Def)"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.isSwordOfRuin}
+                onChange={setFieldProperty('isSwordOfRuin')}
+                color="primary"
+              />
+            }
+            label="Sword of Ruin (Defense)"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.isTabletsOfRuin}
+                onChange={setFieldProperty('isTabletsOfRuin')}
+                color="primary"
+              />
+            }
+            label="Tablets of Ruin (Attack)"
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={field.isVesselOfRuin}
+                onChange={setFieldProperty('isVesselOfRuin')}
+                color="primary"
+              />
+            }
+            label="Vessel of Ruin (Sp. Atk)"
           />
         </Grid>
       </Grid>
