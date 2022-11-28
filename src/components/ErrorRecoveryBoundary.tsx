@@ -21,16 +21,23 @@ export class ErrorRecoveryBoundary extends Component<{ children: any }> {
       // You can render any custom fallback UI
       return (
         <Container maxWidth="md" style={{ paddingTop: 16 }}>
-          <h1>Something went wrong.</h1>
+          <h1>Yikes! Looks like I broke something</h1>
 
           <p>
             <Link href="#" onClick={this.clearLocalStorage}>
               Click here
             </Link>{' '}
-            to try clearing your saved pokemon and reload the page.
+            to clear your saved pokemon and reload the page.
           </p>
 
-          <p>If the issue persists, consider reaching out on Twitter, Reddit, or GitHub.</p>
+          <p>
+            If the issue persists, consider reaching out on{' '}
+            <Link href="https://twitter.com/AnkhaduVGC">Twitter</Link>,{' '}
+            <Link href="https://www.reddit.com/r/VGC/comments/z3u0pi/scarlet_violet_vgc_damage_calculator/">
+              Reddit
+            </Link>
+            , or <Link href="https://github.com/ajhyndman/eevaluator/issues">GitHub</Link>.
+          </p>
         </Container>
       );
     }
