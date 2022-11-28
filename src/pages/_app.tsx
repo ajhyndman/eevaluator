@@ -8,6 +8,7 @@ import { ThemeProvider } from '@material-ui/core';
 import { createMuiTheme } from '@material-ui/core/styles';
 import createPalette from '@material-ui/core/styles/createPalette';
 
+import { ErrorRecoveryBoundary } from '../components/ErrorRecoveryBoundary';
 import Header from '../components/Header';
 import { unregister } from '../serviceWorker';
 import { RED, STEEL_GRAY } from '../styles';
@@ -64,7 +65,9 @@ export default function App({ Component, pageProps }: any) {
       </Head>
       <ThemeProvider theme={THEME}>
         <Header />
-        <Component {...pageProps} />
+        <ErrorRecoveryBoundary>
+          <Component {...pageProps} />
+        </ErrorRecoveryBoundary>
       </ThemeProvider>
     </>
   );
