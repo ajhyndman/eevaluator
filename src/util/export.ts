@@ -78,6 +78,12 @@ export function exportPokemon(pokemon: Pokemon): string {
     lines.push(levelLine);
   }
 
+  // Print tera type
+  if (pokemon.teraType) {
+    const teraLine = `Tera Type: ${pokemon.teraType}`;
+    lines.push(teraLine);
+  }
+
   // Print IVs
   if (!statsAllDefault(DEFAULT_IV, pokemon.ivs)) {
     const ivLine = `IVs: ${printStats(DEFAULT_IV, pokemon.ivs)}`;

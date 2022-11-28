@@ -17,8 +17,9 @@
 import { clamp } from 'ramda';
 
 import { Pokemon, StatID, StatsTable } from '@smogon/calc';
+import { TypeName } from '@smogon/calc/dist/data/interface';
 
-import { GENERATION } from './misc';
+import { GENERATION, TYPE_NAMES } from './misc';
 
 type PokemonConfiguration = {
   firstLine?: {
@@ -27,6 +28,7 @@ type PokemonConfiguration = {
     nickname?: string;
     species: string;
   };
+  teraType?: TypeName;
   ability?: string;
   level?: number;
   nature?: string;
@@ -44,6 +46,7 @@ const matchBlankLine = /^\s*$/;
 const matchFirstLine =
   /^\s*([^()]*?)\s*(?:\(([^()]{2,}?)\))?\s*(?:\(([MF])\))?\s*(?:@\s*(.*?))?\s*$/i;
 const matchLevelLine = /^\s*Level:\s*(\d{1,3})\s*$/i;
+const matchTeraLine = /^\s*Tera Type:\s*(.*?)\s*$/i;
 const matchAbilityLine = /^\s*Ability:\s*(.*?)\s*$/i;
 const matchEvLine = /^\s*EVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
 const matchIvLine = /^\s*IVs:\s*((?:\d{1,3}\s*(?:HP|Atk|Def|SpA|SpD|Spe)\s*\/?\s*){0,6})$/i;
@@ -132,6 +135,14 @@ export function importPokemon(text: string): Pokemon {
       continue;
     }
 
+    if (lineMatches(config.teraType == null, matchTeraLine, line)) {
+      const [, teraType] = matchTeraLine.exec(line)!;
+      if (TYPE_NAMES.includes(teraType)) {
+        config.teraType = teraType as TypeName;
+      }
+      continue;
+    }
+
     // if not already parsed, accept ability
     if (lineMatches(config.ability == null, matchAbilityLine, line)) {
       const [, ability] = matchAbilityLine.exec(line)!;
@@ -183,6 +194,7 @@ export function importPokemon(text: string): Pokemon {
 
   return new Pokemon(GENERATION, config.firstLine.species, {
     level: config.level,
+    teraType: config.teraType,
     ability: config.ability,
     item: config.firstLine.item,
     evs: config.evs,

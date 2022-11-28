@@ -3,7 +3,12 @@ import ReactGA from 'react-ga';
 import { Generations, NATURES, Pokemon, State } from '@smogon/calc';
 import { NatureName, StatID } from '@smogon/calc/dist/data/interface';
 
+const PROPERTY_ID = 'UA-97182834-3';
+
+export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issues/1';
+
 export const GENERATION = Generations.get(9);
+
 export const STAT_LABEL: { [key in StatID]: string } = {
   atk: 'Attack',
   def: 'Defense',
@@ -13,9 +18,26 @@ export const STAT_LABEL: { [key in StatID]: string } = {
   spe: 'Speed',
 };
 
-const PROPERTY_ID = 'UA-97182834-3';
-
-export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issues/1';
+export const TYPE_NAMES = [
+  'Normal',
+  'Fighting',
+  'Flying',
+  'Poison',
+  'Ground',
+  'Rock',
+  'Bug',
+  'Ghost',
+  'Steel',
+  'Fire',
+  'Water',
+  'Grass',
+  'Electric',
+  'Psychic',
+  'Ice',
+  'Dragon',
+  'Dark',
+  'Fairy',
+];
 
 /**
  * Creates a new pokemon with the properties of the first pokemon merged with

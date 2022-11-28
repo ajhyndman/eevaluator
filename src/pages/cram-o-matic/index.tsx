@@ -11,6 +11,7 @@ import ItemIcon from '../../components/ItemIcon';
 import ItemPicker from '../../components/ItemPicker';
 import { computeRecipe, POKE_BALL } from '../../util/cram-o-matic';
 import { SPECIAL_RECIPE_OUTPUTS, validateIngredients } from '../../util/cram-o-matic-reverse';
+import { TYPE_NAMES } from '../../util/misc';
 
 type Recipe = [ItemName, ItemName, ItemName, ItemName];
 type PartialRecipe = [
@@ -18,27 +19,6 @@ type PartialRecipe = [
   ItemName | undefined,
   ItemName | undefined,
   ItemName | undefined,
-];
-
-const TYPE_NAMES = [
-  'Normal',
-  'Fighting',
-  'Flying',
-  'Poison',
-  'Ground',
-  'Rock',
-  'Bug',
-  'Ghost',
-  'Steel',
-  'Fire',
-  'Water',
-  'Grass',
-  'Electric',
-  'Psychic',
-  'Ice',
-  'Dragon',
-  'Dark',
-  'Fairy',
 ];
 
 const outputSet = new Set([
