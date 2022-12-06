@@ -42,6 +42,7 @@ const collectImage = async (species: string) => {
     .replace(/-alola$/, '-alolan')
     .replace(/-galar/, '-galarian')
     .replace(/-hisui/, '-hisuian')
+    .replace(/-paldea/, '-paldean')
     .replace(/^(zacian|zamazenta)$/, '$1-hero')
     .replace(/^(calyrex-.*)$/, '$1-rider')
     .replace(/(?<!nidoran)-f$/, '-female')
