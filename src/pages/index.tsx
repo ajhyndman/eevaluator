@@ -192,6 +192,11 @@ const Eevaluator = () => {
         />
       </Head>
 
+      {/* SEO title */}
+      <h1 style={{ position: 'absolute', left: -9999 }}>
+        VGC 2023: Scarlet &amp; Violet Damage Calculator
+      </h1>
+
       <Background weather={field.weather} terrain={field.terrain} />
 
       <Container maxWidth="md" style={{ paddingTop: 16 }}>
