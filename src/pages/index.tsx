@@ -35,7 +35,7 @@ import {
 type PokemonKey = 'pokemon-left' | 'pokemon-right';
 
 const META_DESCRIPTION =
-  'Pokemon damage calculator for Scarlet and Violet VGC 2022 & 2023. Quickly run calcs from your computer or phone and get clear easy-to-read feedback with a clean, simple interface.';
+  'Damage calculator for Pokemon Scarlet and Violet VGC 2023. Run damage calculations for competitive pokemon battles with a mobile-friendly interface.';
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
   Sun: '/images/background/sun.png',
