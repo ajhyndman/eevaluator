@@ -14,6 +14,8 @@ import { unregister } from '../serviceWorker';
 import { RED, STEEL_GRAY } from '../styles';
 import { pageview } from '../util/misc';
 
+const LOGROCKET_SAMPLE_RATE = 0.1;
+
 const THEME = createMuiTheme({
   palette: createPalette({
     primary: { main: RED },
@@ -35,7 +37,10 @@ export default function App({ Component, pageProps }: any) {
       pageview();
 
       // Set up logrocket: https://app.logrocket.com/
-      LogRocket.init('ltma3j/eevaluator');
+      LogRocket.init('ltma3j/eevaluator', {
+        shouldCaptureIP: false,
+        shouldSendData: () => Math.random() < LOGROCKET_SAMPLE_RATE,
+      });
 
       import('@wisersolutions/heap-analytics/lib/heap').then(() => {
         // Set up Heap Analytivcs: https://heap.io/
