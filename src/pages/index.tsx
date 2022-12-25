@@ -190,6 +190,10 @@ const Eevaluator = () => {
           property="og:image:alt"
           content="Gigantamax Eevee deals 121–144% damage to its opponent for a gauaranteed knockout. Eevee is currently poisoned."
         />
+
+        {/* enable fullscreen mode */}
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="yes" name="mobile-web-app-capable" />
       </Head>
 
       {/* SEO title */}
