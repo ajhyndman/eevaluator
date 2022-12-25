@@ -34,6 +34,8 @@ import {
 
 type PokemonKey = 'pokemon-left' | 'pokemon-right';
 
+const MOBILE_APP_SHORT_NAME = 'Eevaluator';
+
 const META_DESCRIPTION =
   'Damage calculator for Pokemon Scarlet and Violet VGC 2023. Run damage calculations for competitive pokemon battles with a mobile-friendly interface.';
 
@@ -179,7 +181,7 @@ const Eevaluator = () => {
         <title>Eevaluator :: Pokemon VGC Damage Calculator</title>
         <meta httpEquiv="content-language" content="en-us" />
         <meta name="description" content={META_DESCRIPTION} />
-        <meta property="og:title" content="Eevaluator" />
+        <meta property="og:title" content={MOBILE_APP_SHORT_NAME} />
         <meta property="og:description" content={META_DESCRIPTION} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${process.env.NEXT_PUBLIC_URL}`} />
@@ -191,9 +193,14 @@ const Eevaluator = () => {
           content="Gigantamax Eevee deals 121–144% damage to its opponent for a gauaranteed knockout. Eevee is currently poisoned."
         />
 
-        {/* enable fullscreen mode */}
-        <meta content="yes" name="apple-mobile-web-app-capable" />
-        <meta content="yes" name="mobile-web-app-capable" />
+        {/* PWA settings */}
+        <meta name="application-name" content={MOBILE_APP_SHORT_NAME} />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content={MOBILE_APP_SHORT_NAME} />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-tap-highlight" content="no" />
       </Head>
 
       {/* SEO title */}
