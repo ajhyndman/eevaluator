@@ -30,7 +30,6 @@ const ItemIcon = ({ item }: Props) => {
   }
 
   const [x, y] = computeOffset(showdownItem);
-  console.log({ itemSpritesheet });
   const background = `url(${itemSpritesheet.src}) no-repeat scroll -${x}px -${y}px`;
 
   return <div style={{ background, width: SIZE, height: SIZE }} />;
