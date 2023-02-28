@@ -13,6 +13,7 @@ type Props = {
 
 const IMAGES: { [key in Weather]: string } = {
   Sun: sunIcon.src,
+  Snow: hailIcon.src,
   Hail: hailIcon.src,
   Rain: rainIcon.src,
   Sand: sandIcon.src,
