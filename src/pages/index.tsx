@@ -43,7 +43,7 @@ const WEATHER: Partial<{ [key in Weather]: string }> = {
   Sun: '/images/background/sun.png',
   Rain: '/images/background/rain.png',
   Sand: '/images/background/sand.png',
-  Hail: '/images/background/hail.png',
+  Snow: '/images/background/hail.png',
 };
 const TERRAIN: { [key in Terrain]: string } = {
   Electric: '/images/background/electric-nosky.png',
@@ -56,7 +56,7 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
   const weatherImg = weather ? WEATHER[weather] : '';
   const terrainImg = terrain ? TERRAIN[terrain] : '';
 
-  const showSky = ['Hail', 'Sun'].includes(weather as Weather);
+  const showSky = ['Snow', 'Sun'].includes(weather as Weather);
 
   return (
     <>

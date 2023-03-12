@@ -50,8 +50,8 @@ const FieldPicker = ({ field, onChange }: Props) => {
             </Typography>
           </InputLabel>
           <ToggleButtonGroup size="small" exclusive value={field.weather} onChange={setWeather}>
-            {(['Sun', 'Hail', 'Rain', 'Sand'] as const).map((weather) => (
-              <ToggleButton value={weather} title={weather === 'Hail' ? 'Snow' : weather}>
+            {(['Sun', 'Snow', 'Rain', 'Sand'] as const).map((weather) => (
+              <ToggleButton value={weather} title={weather}>
                 <WeatherIcon weather={weather} />
               </ToggleButton>
             ))}
