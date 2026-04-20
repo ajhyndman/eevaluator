@@ -11,6 +11,8 @@ repo_root="$(pwd)"
 
 (
   cd ../damage-calc
+  # update dependencies
+  npm install
   # Rebuild package
   npm run build
   # Copy compilation artifacts to target node modules
