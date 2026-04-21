@@ -7,7 +7,7 @@ const PROPERTY_ID = 'UA-97182834-3';
 
 export const GITHUB_URL = 'https://github.com/ajhyndman/visual-pokemon-calc/issues/1';
 
-export const GENERATION = Generations.get(9);
+export const GENERATION = Generations.get(0); // champions
 
 export const STAT_LABEL: { [key in StatID]: string } = {
   atk: 'Attack',

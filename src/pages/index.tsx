@@ -94,10 +94,11 @@ const Background = ({ weather, terrain }: { weather?: Weather; terrain?: Terrain
 };
 
 const Eevaluator = () => {
-  const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
+  // const eevee = new Pokemon(GENERATION, 'Eevee', { level: 50 });
+  const pikachu = new Pokemon(GENERATION, 'Pikachu', { level: 50 });
 
-  const [pokemonLeft, setPokemonLeft] = useState(eevee);
-  const [pokemonRight, setPokemonRight] = useState(eevee);
+  const [pokemonLeft, setPokemonLeft] = useState(pikachu);
+  const [pokemonRight, setPokemonRight] = useState(pikachu);
 
   // Attempt to load state from LocalStorage on mount.
   useEffect(() => {
