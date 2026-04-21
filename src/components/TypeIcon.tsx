@@ -19,6 +19,7 @@ import iconPoison from '../assets/Poison_icon_SwSh.png';
 import iconPsychic from '../assets/Psychic_icon_SwSh.png';
 import iconRock from '../assets/Rock_icon_SwSh.png';
 import iconSteel from '../assets/Steel_icon_SwSh.png';
+import iconStellar from '../assets/StellarIC_Masters.png';
 import iconWater from '../assets/Water_icon_SwSh.png';
 
 type Props = {
@@ -45,6 +46,7 @@ const TYPE_ICONS = {
   Rock: iconRock.src,
   Steel: iconSteel.src,
   Water: iconWater.src,
+  Stellar: iconStellar.src,
 };
 
 const SIZES = {

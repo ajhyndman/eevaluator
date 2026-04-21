@@ -22,6 +22,7 @@ import {
   PSYCHIC,
   ROCK,
   STEEL,
+  STELLAR,
   TRANSITION,
   WATER,
 } from '../styles';
@@ -52,6 +53,7 @@ export const TYPES = {
   Dark: DARK,
   Steel: STEEL,
   Fairy: FAIRY,
+  Stellar: STELLAR,
 } as const;
 
 function PokemonIllustration({ index, pokemon, teraType }: Props) {
