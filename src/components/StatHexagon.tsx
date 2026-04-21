@@ -21,7 +21,7 @@ type Props = {
   realStats: StatsTable;
   field: Field;
   species: Specie;
-  statKey: 'ivs' | 'evs';
+  statKey: 'ivs' | 'evs' | 'sps';
   stats: StatsTable;
 };
 
@@ -29,8 +29,10 @@ const SIZE = 120;
 export const INPUT_SIZE = 55;
 export const RADIUS = SIZE / 2;
 
+const MAX_SP = 32;
 const MAX_IV = 31;
 const MAX_EV = 252;
+const MAX_TOTAL_SPS = 32 + 32 + 2;
 const MAX_TOTAL_EVS = 508;
 
 /**
@@ -78,7 +80,8 @@ const StatHexagon = ({
   statKey,
   stats,
 }: Props) => {
-  const statMax = statKey === 'ivs' ? MAX_IV : MAX_EV;
+  const statMax = statKey === 'ivs' ? MAX_IV : statKey === 'evs' ? MAX_EV : MAX_SP;
+  const statTotalMax = statKey === 'sps' ? MAX_TOTAL_SPS : MAX_TOTAL_EVS;
 
   const handleStatChange = (key: StatID) => (event: ChangeEvent<HTMLInputElement>) => {
     const numericValue = parseInt(event.target.value || '0');
@@ -114,9 +117,9 @@ const StatHexagon = ({
           <path
             d={drawHexagon(dataFromStats(stats, statScale))}
             fill={
-              sum(Object.values(stats)) === MAX_TOTAL_EVS
+              sum(Object.values(stats)) === statTotalMax
                 ? 'powderBlue'
-                : sum(Object.values(stats)) < MAX_TOTAL_EVS
+                : sum(Object.values(stats)) < statTotalMax
                 ? 'gold'
                 : 'red'
             }

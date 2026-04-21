@@ -45,7 +45,7 @@ function PokemonPicker({
   onSaveFavorite,
 }: Props) {
   const [statTab, setStatTab] = useState(1);
-  const statKey = statTab === 0 ? 'ivs' : 'evs';
+  // const statKey = statTab === 0 ? 'ivs' : 'evs';
 
   const nature = pokemon.nature;
   const [plusStat, minusStat] = NATURES[nature];
@@ -71,7 +71,7 @@ function PokemonPicker({
     const nextHP = pokemon.isDynamaxed ? Math.floor(curHP / 2) : curHP;
 
     const nextPokemon = clonePokemon(pokemon, {
-      [statKey]: stats,
+      evs: stats,
       // for convenience, if pokemon was at full health, ensure it's still at
       // full health.
       originalCurHP: isFullHp ? undefined : nextHP,
@@ -79,7 +79,7 @@ function PokemonPicker({
 
     onChange(nextPokemon);
   };
-  const stats = pokemon[statKey];
+  const stats = pokemon.evs;
   const pokemonName = pokemon.name;
 
   const setTeraType = (nextTeraType?: TypeName) => {
@@ -206,6 +206,7 @@ function PokemonPicker({
         <div style={{ flexGrow: 1 }} />
         <div style={{ minWidth: 125 }}>
           <TextField
+            disabled
             fullWidth
             size="small"
             variant="outlined"
@@ -243,10 +244,10 @@ function PokemonPicker({
             onStatsChange={handleStatsChange}
             realStats={{ ...pokemon.stats, hp: pokemon.maxHP() }}
             field={field}
-            statKey={statKey}
+            statKey="sps"
             stats={stats}
           />
-          <label
+          {/* <label
             style={{
               alignItems: 'center',
               cursor: 'pointer',
@@ -263,7 +264,7 @@ function PokemonPicker({
               color="default"
             />
             <Typography>EV</Typography>
-          </label>
+          </label> */}
         </div>
       </Grid>
 
