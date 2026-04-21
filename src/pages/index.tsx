@@ -37,7 +37,7 @@ type PokemonKey = 'pokemon-left' | 'pokemon-right';
 const MOBILE_APP_SHORT_NAME = 'Eevaluator';
 
 const META_DESCRIPTION =
-  'Damage calculator for Pokemon Scarlet and Violet VGC 2023. Run damage calculations for competitive pokemon battles with a mobile-friendly interface.';
+  'Damage calculator for Pokemon Champions! Run damage calculations for competitive pokemon battles with a mobile-friendly interface.';
 
 const WEATHER: Partial<{ [key in Weather]: string }> = {
   Sun: '/images/background/sun.png',
@@ -205,9 +205,7 @@ const Eevaluator = () => {
       </Head>
 
       {/* SEO title */}
-      <h1 style={{ position: 'absolute', left: -9999 }}>
-        VGC 2023: Scarlet &amp; Violet Damage Calculator
-      </h1>
+      <h1 style={{ position: 'absolute', left: -9999 }}>Pokemon Champions Damage Calculator</h1>
 
       <Background weather={field.weather} terrain={field.terrain} />
 
