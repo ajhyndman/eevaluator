@@ -8,7 +8,7 @@ import Select, {
 } from 'react-select';
 
 import { MOVES, Pokemon } from '@smogon/calc';
-import { MoveCategory, SpeciesName } from '@smogon/calc/dist/data/interface';
+import { MoveCategory } from '@smogon/calc/dist/data/interface';
 import { MoveData } from '@smogon/calc/dist/data/moves';
 import { Move } from '@smogon/calc/dist/move';
 
@@ -33,6 +33,7 @@ import {
   PSYCHIC,
   ROCK,
   STEEL,
+  STELLAR,
   WATER,
 } from '../styles';
 import { GENERATION } from '../util/misc';
@@ -90,6 +91,7 @@ const TYPE_COLORS = {
   Dragon: DRAGON,
   Dark: DARK,
   Fairy: FAIRY,
+  Stellar: STELLAR,
   '???': '#EEE',
 };
 

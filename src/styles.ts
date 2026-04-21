@@ -23,6 +23,7 @@ export const TRANSITION = '0.2s ease-in-out';
 // export const DARK = '#5A5366';
 // export const STEEL = '#7CA9BA';
 // export const FAIRY = '#EC8FE6';
+// export const STELLAR = '#40B5A5';
 
 // 50% white
 export const NORMAL = '#C8CCD0';
@@ -43,6 +44,7 @@ export const DRAGON = '#85B6E2';
 export const DARK = '#ADA9B3';
 export const STEEL = '#BED4DD';
 export const FAIRY = '#F6C7F3';
+export const STELLAR = '#A0DAD2';
 
 // rebalanced lightness
 // export const NORMAL = '#BABFC4';
