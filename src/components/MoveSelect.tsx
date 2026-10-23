@@ -200,7 +200,7 @@ const MoveSelect = ({ value, onChange, placeholder, effectiveness, attacker }: P
       ? value
       : new Move(GENERATION, value, {
           useMax: attacker?.isDynamaxed,
-          species: attacker?.name,
+          // TODO: overrideMove must be set for proper GMAX support.
         });
   let moveType = move?.type ?? '???';
   if (move?.name === 'Tera Blast' && attacker?.teraType != null) {
