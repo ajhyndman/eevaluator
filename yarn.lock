@@ -1940,10 +1940,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@smogon/calc@0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.11.0.tgz#6516800e5ae3118a55c11095c890139971b16259"
-  integrity sha512-ixP+IgQhI12R68FXxyt8+f4EZM/jdqBXZ2oCKu5zuUWXls4kYbIVdgE7t6+pkn/y6VxU+cXJhRgMkiU7wG8JHQ==
+"@smogon/calc@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@smogon/calc/-/calc-0.12.0.tgz#19a6c68e78d7339b4ad1d6f3f5a5d1cbcadda2c8"
+  integrity sha512-rNkdYV/ZGIugxD+hZlHdDaZLdGPYRIm+AaMFM18X2T2Pf8jpuuro9aoeiaZh51zcRR4tN3NRjSPoEXZ5ZDTuuA==
   dependencies:
     "@types/node" "^18.14.2"
 
